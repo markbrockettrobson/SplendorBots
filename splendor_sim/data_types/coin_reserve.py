@@ -4,6 +4,9 @@ from copy import deepcopy
 from splendor_sim.interfaces.data_types.i_coin_reserve import ICoinReserve
 
 
+# todo document this
+
+
 class CoinReserve(ICoinReserve):
 
     def __init__(self, color_names: List[str], max_number_of_coin: int):
