@@ -1,8 +1,7 @@
-from splendor_sim.interfaces.data_types.i_coin_reserve import ICoinReserve
 from splendor_sim.data_types.coin_reserve import CoinReserve
 
 
-class TestCoinReserve(object):
+class TestCoinReserve:
 
     def setup(self, color_names=None, max_number_of_coin=None):
 
@@ -48,7 +47,7 @@ class TestCoinReserve(object):
         # ASSEMBLE
         self.setup(color_names=['a_very_long_name_that_will_push_table_right',
                                 'a'],
-                   max_number_of_coin=[1,100])
+                   max_number_of_coin=[1, 100])
         expected = "a_very_long_name_that_will_push_table_right |   1/1\n" \
                    "a                                           | 100/100\n"
 
