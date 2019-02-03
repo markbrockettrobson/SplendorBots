@@ -1,23 +1,27 @@
+from unittest.mock import MagicMock
 from splendor_sim.data_types.coin_reserve import CoinReserve
+
+# todo type checking
 
 
 class TestCoinReserve:
 
-    def setup(self, color_names=None, max_number_of_coin=None):
+    @staticmethod
+    def setup(color_names=None, max_number_of_coin=None):
 
         if not color_names:
             color_names = ["green", "red", "blue", "wight", "black", "yellow"]
         if not max_number_of_coin:
             max_number_of_coin = [7, 7, 7, 7, 7, 5]
 
-        self.color_names = color_names
-        self.max_number_of_coin = max_number_of_coin
-        self.coin_reserve = CoinReserve(color_names=self.color_names,
-                                        max_number_of_coin=self.max_number_of_coin)
+        coin_reserve = CoinReserve(color_names=color_names,
+                                   max_number_of_coin=max_number_of_coin)
+
+        return color_names, max_number_of_coin, coin_reserve
 
     def test_coin_reserve_str(self):
         # ASSEMBLE
-        self.setup()
+        _, _, coin_reserve = self.setup()
         expected = "green  |   7/7\n" \
                    "red    |   7/7\n" \
                    "blue   |   7/7\n" \
@@ -26,40 +30,41 @@ class TestCoinReserve:
                    "yellow |   5/5\n"
 
         # ACT
-        real = str(self.coin_reserve)
+        real = str(coin_reserve)
 
         # ASSERT
         assert expected == real
 
     def test_coin_reserve_str_short_names(self):
         # ASSEMBLE
-        self.setup(color_names=['a'],
-                   max_number_of_coin=[1])
+        _, _, coin_reserve = self.setup(color_names=['a'],
+                                        max_number_of_coin=[1])
         expected = "a |   1/1\n"
 
         # ACT
-        real = str(self.coin_reserve)
+        real = str(coin_reserve)
 
         # ASSERT
         assert expected == real
 
     def test_coin_reserve_str_long_names(self):
         # ASSEMBLE
-        self.setup(color_names=['a_very_long_name_that_will_push_table_right',
-                                'a'],
-                   max_number_of_coin=[1, 100])
+        _, _, coin_reserve = self.setup(color_names=['a_very_long_name_that_will_push_table_right',
+                                                     'a'],
+                                        max_number_of_coin=[1, 100])
+
         expected = "a_very_long_name_that_will_push_table_right |   1/1\n" \
                    "a                                           | 100/100\n"
 
         # ACT
-        real = str(self.coin_reserve)
+        real = str(coin_reserve)
 
         # ASSERT
         assert expected == real
 
     def test_coin_reserve_str_custom_format(self):
         # ASSEMBLE
-        self.setup()
+        _, _, coin_reserve = self.setup()
         expected = "green|7/7" \
                    "red|7/7" \
                    "blue|7/7" \
@@ -68,7 +73,29 @@ class TestCoinReserve:
                    "yellow|5/5"
 
         # ACT
-        real = self.coin_reserve.__str__("{0}|{1}/{2}")
+        real = coin_reserve.__str__("{0}|{1}/{2}")
 
         # ASSERT
         assert expected == real
+
+    def test_coin_reserve_empty_rules(self):
+        # ASSEMBLE
+        _, _, coin_reserve = self.setup()
+        expected = 0
+
+        # ACT
+        real = len(coin_reserve.get_rules())
+
+        # ASSERT
+        assert expected == real
+
+    def test_coin_reserve_add_rule(self):
+        # ASSEMBLE
+        _, _, coin_reserve = self.setup()
+        collection_rule = MagicMock()
+
+        # ACT
+        coin_reserve.add_rule(collection_rule)
+
+        # ASSERT
+        assert collection_rule == coin_reserve.get_rules()[0]
