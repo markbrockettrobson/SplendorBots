@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY splendor_sim ./splendor_sim
 
-CMD [ "python", "-m", "pytest"]
+RUN python -m pytest
