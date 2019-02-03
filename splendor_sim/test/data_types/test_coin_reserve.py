@@ -1,8 +1,7 @@
-from splendor_sim.interfaces.data_types.i_coin_reserve import ICoinReserve
 from splendor_sim.data_types.coin_reserve import CoinReserve
 
 
-class TestCoinReserve(object):
+class TestCoinReserve:
 
     def setup(self, color_names=None, max_number_of_coin=None):
 
