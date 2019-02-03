@@ -4,6 +4,9 @@ from splendor_sim.data_types.coin_reserve import CoinReserve
 
 class TestCoinReserve(object):
 
+    def test_will_fail(self):
+        assert False
+
     def setup(self, color_names=None, max_number_of_coin=None):
 
         if not color_names:
