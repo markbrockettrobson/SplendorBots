@@ -2,7 +2,7 @@ from unittest.mock import MagicMock
 from splendor_sim.data_types.coin_reserve import CoinReserve
 
 # todo type checking
-
+# todo refactor tests
 
 class TestCoinReserve:
 
