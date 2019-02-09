@@ -1,4 +1,5 @@
 import unittest
+
 from splendor_sim.collection_rules.select_n_different_rule import SelectNDifferentRule
 # Todo test for in-valid vars
 

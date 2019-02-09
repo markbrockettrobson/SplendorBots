@@ -1,3 +1,5 @@
+import typing
+
 from splendor_sim.interfaces.collection_rules.i_collection_rule import ICollectionRule
 
 
@@ -10,7 +12,10 @@ class CollectionRule(ICollectionRule):
     def __str__(self) -> str:
         return self._description
 
-    def is_valid(self, requested_coins, current_reserves) -> bool:
+    def is_valid(self,
+                 requested_coins: typing.List[int],
+                 current_reserves: typing.List[int]) -> bool:
+
         return False
 
     def get_description(self) -> str:
