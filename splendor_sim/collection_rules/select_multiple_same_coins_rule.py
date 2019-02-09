@@ -1,10 +1,10 @@
 import typing
 
-from splendor_sim.collection_rules.collection_rule import CollectionRule
+from splendor_sim.interfaces.collection_rules.i_collection_rule import ICollectionRule
 # todo document this
 
 
-class SelectMultipleSameCoinsRule(CollectionRule):
+class SelectMultipleSameCoinsRule(ICollectionRule):
 
     _description_format = 'select up to {0} coins from one of {1}'
 
