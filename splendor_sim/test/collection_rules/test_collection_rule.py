@@ -1,4 +1,5 @@
 import unittest
+
 from splendor_sim.collection_rules.collection_rule import CollectionRule
 
 
