@@ -3,34 +3,21 @@ import abc
 
 class ICoinType(abc.ABC):
     @abc.abstractmethod
-    def __init__(self,
-                 coin_id: int,
-                 long_name: str,
-                 short_name: str,
-                 color_name: str,
-                 is_wildcard: bool):
-        pass
+    def __init__(self, name: str, total_number: int):
+        """
 
-    @abc.abstractmethod
-    def __str__(self) -> str:
-        pass
+        :param name: <str>
+        :param total_number: <int>
+        """
 
-    @abc.abstractmethod
-    def get_coin_id(self) -> int:
-        pass
+    def get_name(self) -> str:
+        """
 
-    @abc.abstractmethod
-    def get_long_name(self) -> str:
-        pass
+        :return: <str>
+        """
 
-    @abc.abstractmethod
-    def get_short_name(self) -> str:
-        pass
+    def get_total_number(self) -> int:
+        """
 
-    @abc.abstractmethod
-    def get_color_name(self) -> str:
-        pass
-
-    @abc.abstractmethod
-    def is_wildcard(self) -> bool:
-        pass
+        :return: <int>
+        """
