@@ -5,14 +5,5 @@ steps:
          'gcr.io/my-project/my-image',
          '.',
          '-f',
-         'DockerPylint.docker']
-  timeout: 600s
-
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build',
-         '-t',
-         'gcr.io/my-project/my-image',
-         '.',
-         '-f',
          'DockerPytest.docker']
   timeout: 600s
