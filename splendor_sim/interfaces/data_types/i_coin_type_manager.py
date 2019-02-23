@@ -8,7 +8,7 @@ class ICoinTypeManager(abc.ABC):
     @abc.abstractmethod
     def __init__(self,
                  coin_type_list: typing.List[i_coin_type.ICoinType],
-                 coin_equivelances: typing.List[typing.Tuple[i_coin_type.ICoinType, i_coin_type.ICoinType]]):
+                 coin_equivalents: typing.List[typing.Tuple[i_coin_type.ICoinType, i_coin_type.ICoinType]]):
         pass
 
     def get_coin_list(self) -> typing.List[i_coin_type.ICoinType]:

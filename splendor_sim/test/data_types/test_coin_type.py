@@ -21,7 +21,7 @@ class TestCoinReserve(unittest.TestCase):
         self._total_number = 0
         # Act
         # Assert
-        with self.assertRaises(AssertionError):
+        with self.assertRaises(ValueError):
             _ = coin_type.CoinType(self._name, self._total_number)
 
     def test_coin_type_init_invalid_argument_total_number_negative(self):
@@ -29,5 +29,5 @@ class TestCoinReserve(unittest.TestCase):
         self._total_number = -1
         # Act
         # Assert
-        with self.assertRaises(AssertionError):
+        with self.assertRaises(ValueError):
             _ = coin_type.CoinType(self._name, self._total_number)
