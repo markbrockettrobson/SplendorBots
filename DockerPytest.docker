@@ -4,8 +4,12 @@ RUN mkdir /usr/splendor
 WORKDIR /usr/splendor
 
 COPY requirements.txt ./
+COPY pylintrc ./
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY splendor_sim ./splendor_sim
 
 RUN python -m pytest
+RUN python -m pytest --pylint -m pylint
+RUN python -m pytest --mypy -m mypy
