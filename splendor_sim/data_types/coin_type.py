@@ -4,9 +4,8 @@ import splendor_sim.interfaces.data_types.i_coin_type as i_coin_type
 class CoinType(i_coin_type.ICoinType):
 
     def __init__(self, name: str, total_number: int):
-        assert isinstance(name, str)
-        assert isinstance(total_number, int)
-        assert total_number > 0
+        if not total_number > 0:
+            raise ValueError("total_number must be > 0 was" +str(total_number))
 
         self._name = name
         self._total_number = total_number
