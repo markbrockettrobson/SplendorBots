@@ -7,21 +7,21 @@ import splendor_sim.interfaces.card.i_card as i_card
 
 class Card(i_card.ICoinType):
     def __init__(self,
-                 level: int,
+                 tier: int,
                  victory_points: int,
                  discount: i_coin_type.ICoinType,
                  cost: typing.Dict[i_coin_type.ICoinType, int]):
-        self._validate_level(level)
+        self._validate_tier(tier)
         self._validate_victory_points(victory_points)
         self._validate_cost(cost)
 
-        self._level = level
+        self._tier = tier
         self._victory_points = victory_points
         self._discount = discount
         self._cost = cost
 
-    def get_level(self) -> int:
-        return self._level
+    def get_tier(self) -> int:
+        return self._tier
 
     def get_victory_points(self) -> int:
         return self._victory_points
@@ -33,7 +33,7 @@ class Card(i_card.ICoinType):
         return copy.copy(self._cost)
 
     @staticmethod
-    def _validate_level(level: int) -> None:
+    def _validate_tier(level: int) -> None:
         if level <= 0:
             raise ValueError("level must be greater than 0")
 

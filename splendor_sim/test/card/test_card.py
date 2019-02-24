@@ -7,7 +7,7 @@ import splendor_sim.card.card as card
 class TestCard(unittest.TestCase):
 
     def setUp(self):
-        self._level = 1
+        self._tier = 1
         self._victory_points = 0
         self._discount = mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True)
         self._cost = {mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True): 1 for _ in range(3)}
@@ -15,24 +15,24 @@ class TestCard(unittest.TestCase):
     def test_card_init_valid(self):
         # Arrange
         # Act
-        test_card = card.Card(self._level,
+        test_card = card.Card(self._tier,
                               self._victory_points,
                               self._discount,
                               self._cost)
 
         # Assert
-        self.assertEqual(test_card.get_level(), self._level)
+        self.assertEqual(test_card.get_tier(), self._tier)
         self.assertEqual(test_card.get_victory_points(), self._victory_points)
         self.assertEqual(test_card.get_discount(), self._discount)
         self.assertEqual(test_card.get_cost(), self._cost)
 
-    def test_card_init_invalid_level(self):
+    def test_card_init_invalid_tier(self):
         # Arrange
-        self._level = 0
+        self._tier = 0
         # Act
         # Assert
         with self.assertRaises(ValueError):
-            _ = card.Card(self._level,
+            _ = card.Card(self._tier,
                           self._victory_points,
                           self._discount,
                           self._cost)
@@ -43,7 +43,7 @@ class TestCard(unittest.TestCase):
         # Act
         # Assert
         with self.assertRaises(ValueError):
-            _ = card.Card(self._level,
+            _ = card.Card(self._tier,
                           self._victory_points,
                           self._discount,
                           self._cost)
@@ -54,7 +54,7 @@ class TestCard(unittest.TestCase):
         # Act
         # Assert
         with self.assertRaises(ValueError):
-            _ = card.Card(self._level,
+            _ = card.Card(self._tier,
                           self._victory_points,
                           self._discount,
                           self._cost)

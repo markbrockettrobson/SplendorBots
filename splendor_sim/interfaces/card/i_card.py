@@ -4,16 +4,16 @@ import typing
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 
 
-class ICoinType(abc.ABC):
+class ICard(abc.ABC):
     @abc.abstractmethod
     def __init__(self,
-                 level: int,
+                 tier: int,
                  victory_points: int,
                  discount: i_coin_type.ICoinType,
                  cost: typing.Dict[i_coin_type.ICoinType, int]):
         """
 
-        :param level: the level or tier of the card
+        :param tier: the level or tier of the card
                <int>
         :param victory_points: the number of victory points that this card gives the payer
                <int>
@@ -24,10 +24,10 @@ class ICoinType(abc.ABC):
         """
 
     @abc.abstractmethod
-    def get_level(self) -> int:
+    def get_tier(self) -> int:
         """
 
-        :return: level: the level or tier of the card
+        :return: the level or tier of the card
                  <int>
         """
 
