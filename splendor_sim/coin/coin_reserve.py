@@ -1,9 +1,9 @@
 import copy
 import typing
 
-import splendor_sim.interfaces.data_types.i_coin_reserve as i_coin_reserve
-import splendor_sim.interfaces.data_types.i_coin_type_manager as i_coin_type_manager
-import splendor_sim.interfaces.data_types.i_coin_type as i_coin_type
+import splendor_sim.interfaces.coin.i_coin_reserve as i_coin_reserve
+import splendor_sim.interfaces.coin.i_coin_type_manager as i_coin_type_manager
+import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 
 
 class CoinReserve(i_coin_reserve.ICoinReserve):

@@ -1,4 +1,4 @@
-import splendor_sim.interfaces.data_types.i_coin_type as i_coin_type
+import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 
 
 class CoinType(i_coin_type.ICoinType):
