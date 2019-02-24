@@ -5,7 +5,7 @@ import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 import splendor_sim.interfaces.card.i_card as i_card
 
 
-class Card(i_card.ICoinType):
+class Card(i_card.ICard):
     def __init__(self,
                  tier: int,
                  victory_points: int,
