@@ -67,7 +67,7 @@ class TestCardManager(unittest.TestCase):
             # Act
             card_list = test_card_manager.get_card_tier(i)
             # Assert
-            self.assertEqual(expected[i],card_list)
+            self.assertEqual(expected[i], card_list)
 
     def test_card_manager_get_card_tier_unknown_tier(self):
         # Arrange
