@@ -13,8 +13,8 @@ class CoinTypeManager(i_coin_type_manager.ICoinTypeManager):
 
         self._coin_type_list = coin_type_list
 
-        self._usage_map = {}
-        self._equivalent_map = {}
+        self._usage_map = {}  # type: typing.Dict[i_coin_type.ICoinType, typing.List[i_coin_type.ICoinType]]
+        self._equivalent_map = {}  # type: typing.Dict[i_coin_type.ICoinType, typing.List[i_coin_type.ICoinType]]
         for coin in self._coin_type_list:
             self._usage_map[coin] = [coin]
             self._equivalent_map[coin] = [coin]
@@ -26,14 +26,14 @@ class CoinTypeManager(i_coin_type_manager.ICoinTypeManager):
             self._equivalent_map[use].append(coin)
 
     def get_coin_list(self) -> typing.List[i_coin_type.ICoinType]:
-        return copy.deepcopy(self._coin_type_list)
+        return copy.copy(self._coin_type_list)
 
     def get_equivalent_coins(self,
                              coin_type: i_coin_type.ICoinType
                              ) -> typing.List[i_coin_type.ICoinType]:
-        return copy.deepcopy(self._usage_map[coin_type])
+        return copy.copy(self._usage_map[coin_type])
 
     def get_coin_usage(self,
                        coin_type: i_coin_type.ICoinType
                        ) -> typing.List[i_coin_type.ICoinType]:
-        return copy.deepcopy(self._equivalent_map[coin_type])
+        return copy.copy(self._equivalent_map[coin_type])

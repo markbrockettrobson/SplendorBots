@@ -5,7 +5,7 @@ class CoinType(i_coin_type.ICoinType):
 
     def __init__(self, name: str, total_number: int):
         if not total_number > 0:
-            raise ValueError("total_number must be > 0 was" + total_number)
+            raise ValueError("total_number must be > 0 was" +str(total_number))
 
         self._name = name
         self._total_number = total_number
