@@ -39,7 +39,6 @@ class ICoinReserve(abc.ABC):
         :return: true if the reserve has at least minimum coins of each type
         """
 
-
     @abc.abstractmethod
     def add_coins(self, added_coins: typing.Dict[i_coin_type.ICoinType, int]) -> None:
         """
@@ -55,5 +54,5 @@ class ICoinReserve(abc.ABC):
 
         :param removed_coins: dictionary mapping each coin type in the manager to the amount to remove
                <typing.Dict[i_coin_type.ICoinType, int]>
-        :return:
+        :return: None
         """
