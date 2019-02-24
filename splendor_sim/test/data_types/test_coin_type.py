@@ -2,7 +2,7 @@ import unittest
 import splendor_sim.data_types.coin_type as coin_type
 
 
-class TestCoinReserve(unittest.TestCase):
+class TestCoinType(unittest.TestCase):
 
     def setUp(self):
         self._name = "emerald"

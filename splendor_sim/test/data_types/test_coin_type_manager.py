@@ -1,13 +1,13 @@
 import unittest
 import unittest.mock as mock
-import splendor_sim.data_types.coin_type as coin_type
+import splendor_sim.interfaces.data_types.i_coin_type as i_coin_type
 import splendor_sim.data_types.coin_type_manager as coin_type_manager
 
 
 class TestCoinTypeManager(unittest.TestCase):
 
     def setUp(self):
-        self._mock_coin_type_list = [mock.create_autospec(spec=coin_type.CoinType, spec_set=True) for _ in range(6)]
+        self._mock_coin_type_list = [mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True) for _ in range(6)]
         self._mock_coin_equivalents = [(self._mock_coin_type_list[i],
                                         self._mock_coin_type_list[5])
                                        for i in range(5)]
