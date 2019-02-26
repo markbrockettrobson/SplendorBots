@@ -1,3 +1,4 @@
+import copy
 import unittest
 import unittest.mock as mock
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
@@ -30,7 +31,7 @@ class TestCardManager(unittest.TestCase):
         self.assertEqual(len(test_card_manager.get_card_tier(2)), 10)
         self.assertEqual(len(test_card_manager.get_card_tier(3)), 10)
 
-    def test_card_manager_init_invalid_card_discout(self):
+    def test_card_manager_init_invalid_card_discount(self):
         # Arrange
         self._mock_card_list[2].get_discount.return_value = \
             mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True)
@@ -76,3 +77,21 @@ class TestCardManager(unittest.TestCase):
         # Assert
         with self.assertRaises(ValueError):
             _ = test_card_manager.get_card_tier(20)
+
+    def test_card_manager_card_list_post_init_immutability(self):
+        # Arrange
+        test_card_manager = card_manager.CardManager(self._mock_card_list, self._mock_coin_type_manger)
+        pre_mutation = copy.copy(self._mock_card_list)
+        # Act
+        self._mock_card_list.pop()
+        # Assert
+        self.assertEqual(pre_mutation, test_card_manager.get_card_list())
+
+    def test_card_manager_card_list_immutability(self):
+        # Arrange
+        test_card_manager = card_manager.CardManager(self._mock_card_list, self._mock_coin_type_manger)
+        pre_mutation = test_card_manager.get_card_list()
+        # Act
+        pre_mutation.pop()
+        # Assert
+        self.assertEqual(self._mock_card_list, test_card_manager.get_card_list())

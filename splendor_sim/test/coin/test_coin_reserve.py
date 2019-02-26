@@ -136,3 +136,19 @@ class TestCoinReserve(unittest.TestCase):
         # Assert
         with self.assertRaises(ValueError):
             self.test_coin_reserve.remove_coins(remove)
+
+    def test_coin_reserve_get_coins_maximum_immutability(self):
+        # Arrange
+        pre_mutation = self.test_coin_reserve.get_coins_maximum()
+        # Act
+        pre_mutation.pop(list(pre_mutation.keys())[0])
+        # Assert
+        self.assertNotEqual(pre_mutation, self.test_coin_reserve.get_coins_maximum())
+
+    def test_coin_reserve_get_coins_remaining_immutability(self):
+        # Arrange
+        pre_mutation = self.test_coin_reserve.get_coins_remaining()
+        # Act
+        pre_mutation.pop(list(pre_mutation.keys())[0])
+        # Assert
+        self.assertNotEqual(pre_mutation, self.test_coin_reserve.get_coins_remaining())
