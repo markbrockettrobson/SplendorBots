@@ -11,7 +11,7 @@ class CoinTypeManager(i_coin_type_manager.ICoinTypeManager):
                  coin_type_list: typing.List[i_coin_type.ICoinType],
                  coin_equivalents: typing.List[typing.Tuple[i_coin_type.ICoinType, i_coin_type.ICoinType]]):
 
-        self._coin_type_list = coin_type_list
+        self._coin_type_list = copy.copy(coin_type_list)
 
         self._usage_map = {}  # type: typing.Dict[i_coin_type.ICoinType, typing.List[i_coin_type.ICoinType]]
         self._equivalent_map = {}  # type: typing.Dict[i_coin_type.ICoinType, typing.List[i_coin_type.ICoinType]]
@@ -31,9 +31,13 @@ class CoinTypeManager(i_coin_type_manager.ICoinTypeManager):
     def get_equivalent_coins(self,
                              coin_type: i_coin_type.ICoinType
                              ) -> typing.List[i_coin_type.ICoinType]:
-        return copy.copy(self._usage_map[coin_type])
+        if coin_type not in self._coin_type_list:
+            raise ValueError("coin type must be in coin type list")
+        return copy.copy(self._equivalent_map[coin_type])
 
     def get_coin_usage(self,
                        coin_type: i_coin_type.ICoinType
                        ) -> typing.List[i_coin_type.ICoinType]:
-        return copy.copy(self._equivalent_map[coin_type])
+        if coin_type not in self._coin_type_list:
+            raise ValueError("coin type must be in coin type list")
+        return copy.copy(self._usage_map[coin_type])

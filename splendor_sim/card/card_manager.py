@@ -14,7 +14,7 @@ class CardManager(i_card_manager.ICardManager):
         self._coin_type_list = self._coin_type_manger.get_coin_list()
         self._validate_card_list(card_list, self._coin_type_list)
 
-        self._card_list = card_list
+        self._card_list = copy.copy(card_list)
         self._cards_by_tier = self._sort_cards_by_tier(self._card_list)
 
     def get_tiers(self) -> typing.List[int]:

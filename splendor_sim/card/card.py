@@ -18,7 +18,7 @@ class Card(i_card.ICard):
         self._tier = tier
         self._victory_points = victory_points
         self._discount = discount
-        self._cost = cost
+        self._cost = copy.copy(cost)
 
     def get_tier(self) -> int:
         return self._tier

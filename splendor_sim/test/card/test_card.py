@@ -1,3 +1,4 @@
+import copy
 import unittest
 import unittest.mock as mock
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
@@ -58,3 +59,27 @@ class TestCard(unittest.TestCase):
                           self._victory_points,
                           self._discount,
                           self._cost)
+
+    def test_card_cost_post_init_immutability(self):
+        # Arrange
+        test_card = card.Card(self._tier,
+                              self._victory_points,
+                              self._discount,
+                              self._cost)
+        pre_mutation = copy.copy(self._cost)
+        # Act
+        self._cost.pop(list(self._cost.keys())[0])
+        # Assert
+        self.assertEqual(pre_mutation, test_card.get_cost())
+
+    def test_card_cost_immutability(self):
+        # Arrange
+        test_card = card.Card(self._tier,
+                              self._victory_points,
+                              self._discount,
+                              self._cost)
+        pre_mutation = test_card.get_cost()
+        # Act
+        pre_mutation.pop(list(pre_mutation.keys())[0])
+        # Assert
+        self.assertEqual(self._cost, test_card.get_cost())
