@@ -50,6 +50,15 @@ class TestCardManager(unittest.TestCase):
         with self.assertRaises(ValueError):
             _ = card_manager.CardManager(self._mock_card_list, self._mock_coin_type_manger)
 
+    def test_card_manager_card_list_post_init_immutability(self):
+        # Arrange
+        test_card_manager = card_manager.CardManager(self._mock_card_list, self._mock_coin_type_manger)
+        pre_mutation = copy.copy(self._mock_card_list)
+        # Act
+        self._mock_card_list.pop()
+        # Assert
+        self.assertEqual(pre_mutation, test_card_manager.get_card_list())
+
     def test_card_manager_get_card_list(self):
         # Arrange
         test_card_manager = card_manager.CardManager(self._mock_card_list, self._mock_coin_type_manger)
@@ -78,14 +87,6 @@ class TestCardManager(unittest.TestCase):
         with self.assertRaises(ValueError):
             _ = test_card_manager.get_card_tier(20)
 
-    def test_card_manager_card_list_post_init_immutability(self):
-        # Arrange
-        test_card_manager = card_manager.CardManager(self._mock_card_list, self._mock_coin_type_manger)
-        pre_mutation = copy.copy(self._mock_card_list)
-        # Act
-        self._mock_card_list.pop()
-        # Assert
-        self.assertEqual(pre_mutation, test_card_manager.get_card_list())
 
     def test_card_manager_card_list_immutability(self):
         # Arrange
