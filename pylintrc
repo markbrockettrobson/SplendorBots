@@ -56,14 +56,11 @@ disable=
     attribute-defined-outside-init,
     duplicate-code,
     fixme,
-    invalid-name,
     missing-docstring,
-    protected-access,
     too-few-public-methods,
-    # handled by black,
-    # format,
     unused-argument,
     super-init-not-called,
+    too-many-public-methods,
 
 
 [REPORTS]
