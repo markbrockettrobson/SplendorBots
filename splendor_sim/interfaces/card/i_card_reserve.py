@@ -6,7 +6,7 @@ import splendor_sim.interfaces.card.i_deck as i_deck
 
 class ICardReserve(abc.ABC):
     @abc.abstractmethod
-    def __init__(self, cards_on_sale: int ,decks: typing.List[i_deck.IDeck]):
+    def __init__(self, cards_on_sale: int, decks: typing.List[i_deck.IDeck]):
         pass
 
     @abc.abstractmethod
