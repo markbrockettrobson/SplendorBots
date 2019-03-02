@@ -22,7 +22,7 @@ class CardReserve(i_card_reserve.ICardReserve):
 
     @staticmethod
     def _validate_decks(decks):
-        if decks:
+        if not decks:
             raise ValueError("must have one or more deck")
 
         tiers = []
@@ -45,7 +45,7 @@ class CardReserve(i_card_reserve.ICardReserve):
                     self._cards_on_sale_by_tier[tier].append(self._decks_by_tier[tier].next())
 
     def get_cards_for_sale(self) -> typing.List[i_card.ICard]:
-        card_list = []
+        card_list = []  # type: typing.List[i_card.ICard]
         for tier in self._cards_on_sale_by_tier:
             card_list.extend(self._cards_on_sale_by_tier[tier])
         return card_list
@@ -73,7 +73,7 @@ class CardReserve(i_card_reserve.ICardReserve):
         raise ValueError("deck is empty")
 
     def get_remaining_cards(self) -> typing.Set[i_card.ICard]:
-        total_cards = set()
+        total_cards = set()  # type: typing.Set[i_card.ICard]
         for tier in self._decks_by_tier:
             total_cards = total_cards.union(self._decks_by_tier[tier].get_remaining_cards())
         return total_cards
