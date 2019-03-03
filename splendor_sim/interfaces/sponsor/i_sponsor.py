@@ -16,7 +16,7 @@ class ISponsor(abc.ABC):
         """
 
     @abc.abstractmethod
-    def get_victory_points(self) -> str:
+    def get_victory_points(self) -> int:
         """
 
         :return: the number of victory points given by the sponsor

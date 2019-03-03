@@ -9,7 +9,7 @@ class TestSponsor(unittest.TestCase):
 
     def setUp(self):
         self._victory_points = 3
-        self._mock_coin_type_list = [mock.create_autospec(spec=i_coin_type.ICoinType,spec_set=True)for _ in range(3)]
+        self._mock_coin_type_list = [mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True) for _ in range(3)]
         self._cost = {}
         for card in self._mock_coin_type_list:
             self._cost[card] = 2
@@ -17,7 +17,7 @@ class TestSponsor(unittest.TestCase):
     def test_sponsor_init_vaild(self):
         # Arrange
         # Act
-        test_sponsor = sponsor.Sponsor(self._victory_points,self._cost)
+        test_sponsor = sponsor.Sponsor(self._victory_points, self._cost)
         # Assert
         self.assertEqual(test_sponsor.get_victory_points(), self._victory_points)
         self.assertEqual(test_sponsor.get_cost(), self._cost)
@@ -30,9 +30,17 @@ class TestSponsor(unittest.TestCase):
         with self.assertRaises(ValueError):
             _ = sponsor.Sponsor(self._victory_points, self._cost)
 
-    def test_sponsor_init_invalid_cost(self):
+    def test_sponsor_init_invalid_cost_empty(self):
         # Arrange
         self._cost = {}
+        # Act
+        # Assert
+        with self.assertRaises(ValueError):
+            _ = sponsor.Sponsor(self._victory_points, self._cost)
+
+    def test_sponsor_init_invalid_cost_negative_cost(self):
+        # Arrange
+        self._cost[self._mock_coin_type_list[0]] = -1
         # Act
         # Assert
         with self.assertRaises(ValueError):
@@ -70,5 +78,3 @@ class TestSponsor(unittest.TestCase):
         return_value.pop(list(return_value)[0])
         # Assert
         self.assertEqual(test_sponsor.get_cost(), pre_mutation)
-
-
