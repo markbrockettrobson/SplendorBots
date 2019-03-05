@@ -24,13 +24,13 @@ class TestSponsorManager(unittest.TestCase):
         # Assert
         self.assertEqual(len(test_sponsor_manager.get_sponsor_list()), self._number_of_sponsors)
 
-
     def test_sponsor_manager_init_seed(self):
         # Arrange
+        test_sponsor_manager1 = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_list)
+        test_sponsor_manager2 = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_list)
         # Act
-        test_sponsor_manager = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_list)
         # Assert
-        self.assertEqual(len(test_sponsor_manager.get_sponsor_list()), self._number_of_sponsors)
+        self.assertEqual(test_sponsor_manager1.get_sponsor_list(), test_sponsor_manager2.get_sponsor_list())
 
     def test_sponsor_manager_init_valid_number_of_sponsors_zero(self):
         # Arrange
