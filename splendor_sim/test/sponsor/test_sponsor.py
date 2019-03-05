@@ -14,7 +14,7 @@ class TestSponsor(unittest.TestCase):
         for card in self._mock_coin_type_list:
             self._cost[card] = 2
 
-    def test_sponsor_init_vaild(self):
+    def test_sponsor_init_valid(self):
         # Arrange
         # Act
         test_sponsor = sponsor.Sponsor(self._victory_points, self._cost)
