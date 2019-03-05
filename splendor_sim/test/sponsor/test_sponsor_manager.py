@@ -24,6 +24,14 @@ class TestSponsorManager(unittest.TestCase):
         # Assert
         self.assertEqual(len(test_sponsor_manager.get_sponsor_list()), self._number_of_sponsors)
 
+
+    def test_sponsor_manager_init_seed(self):
+        # Arrange
+        # Act
+        test_sponsor_manager = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_list)
+        # Assert
+        self.assertEqual(len(test_sponsor_manager.get_sponsor_list()), self._number_of_sponsors)
+
     def test_sponsor_manager_init_valid_number_of_sponsors_zero(self):
         # Arrange
         self._number_of_sponsors = 0
@@ -55,11 +63,11 @@ class TestSponsorManager(unittest.TestCase):
     def test_sponsor_manager_init_sponsor_list_post_init_immutability(self):
         # Arrange
         test_sponsor_manager = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_list)
-        pre_mutation = copy.copy(self._sponsor_list)
         # Act
-        self._sponsor_list.pop()
+        for _ in range(len(self._sponsor_list)):
+            self._sponsor_list.pop()
         # Assert
-        self.assertEqual(test_sponsor_manager.get_sponsor_list(), pre_mutation)
+        self.assertEqual(len(test_sponsor_manager.get_sponsor_list()), self._number_of_sponsors)
 
     def test_sponsor_manager_get_sponsor_list(self):
         # Arrange
