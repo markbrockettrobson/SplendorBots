@@ -1,5 +1,5 @@
 import unittest
-import splendor_sim.coin.coin_type as coin_type
+import splendor_sim.src.coin.coin_type as coin_type
 
 
 class TestCoinType(unittest.TestCase):

@@ -3,7 +3,7 @@ import unittest
 import unittest.mock as mock
 import splendor_sim.interfaces.card.i_card as i_card
 import splendor_sim.interfaces.card.i_deck as i_deck
-import splendor_sim.card.card_reserve as card_reserve
+import splendor_sim.src.card.card_reserve as card_reserve
 
 
 class TestCardReserve(unittest.TestCase):

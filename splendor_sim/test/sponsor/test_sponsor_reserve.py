@@ -3,7 +3,7 @@ import unittest.mock as mock
 import copy
 
 import splendor_sim.interfaces.sponsor.i_sponsor as i_sponsor
-import splendor_sim.sponsor.sponsor_reserve as sponsor_reserve
+import splendor_sim.src.sponsor.sponsor_reserve as sponsor_reserve
 
 
 class TestSponsorReserve(unittest.TestCase):

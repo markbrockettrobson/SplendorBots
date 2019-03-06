@@ -1,7 +1,7 @@
 import unittest
 import unittest.mock as mock
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
-import splendor_sim.coin.coin_type_manager as coin_type_manager
+import splendor_sim.src.coin.coin_type_manager as coin_type_manager
 
 
 class TestCoinTypeManager(unittest.TestCase):

@@ -2,7 +2,7 @@ import copy
 import unittest
 import unittest.mock as mock
 import splendor_sim.interfaces.card.i_card as i_card
-import splendor_sim.card.card_manager as card_manager
+import splendor_sim.src.card.card_manager as card_manager
 
 
 class TestCardManager(unittest.TestCase):
