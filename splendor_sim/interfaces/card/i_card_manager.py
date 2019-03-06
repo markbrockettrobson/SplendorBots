@@ -1,20 +1,16 @@
 import abc
 import typing
-import splendor_sim.interfaces.coin.i_coin_type_manager as i_coin_type_manger
 import splendor_sim.interfaces.card.i_card as i_card
 
 
 class ICardManager(abc.ABC):
     @abc.abstractmethod
     def __init__(self,
-                 card_list: typing.List[i_card.ICard],
-                 coin_type_manger: i_coin_type_manger.ICoinTypeManager):
+                 card_list: typing.List[i_card.ICard]):
         """
 
         :param card_list: a list of cards in the game
                <typing.List[i_card.ICoinType]>
-        :param coin_type_manger: a coin manager holding all coin types
-               <i_coin_type_manger.ICoinTypeManager>
         """
 
     @abc.abstractmethod
