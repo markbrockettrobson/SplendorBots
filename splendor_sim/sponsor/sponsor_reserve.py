@@ -1,4 +1,3 @@
-import abc
 import typing
 
 import splendor_sim.interfaces.sponsor.i_sponsor as i_sponsor
