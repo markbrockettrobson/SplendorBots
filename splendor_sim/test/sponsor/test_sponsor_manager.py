@@ -3,7 +3,7 @@ import unittest.mock as mock
 import copy
 
 import splendor_sim.interfaces.sponsor.i_sponsor as i_sponsor
-import splendor_sim.sponsor.sponsor_manager as sponsor_manager
+import splendor_sim.src.sponsor.sponsor_manager as sponsor_manager
 
 
 class TestSponsorManager(unittest.TestCase):

@@ -2,7 +2,7 @@ import unittest
 import unittest.mock as mock
 import copy
 import splendor_sim.interfaces.card.i_card as i_card
-import splendor_sim.card.deck as deck
+import splendor_sim.src.card.deck as deck
 
 
 class TestDeck(unittest.TestCase):

@@ -2,7 +2,7 @@ import copy
 import unittest
 import unittest.mock as mock
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
-import splendor_sim.sponsor.sponsor as sponsor
+import splendor_sim.src.sponsor.sponsor as sponsor
 
 
 class TestSponsor(unittest.TestCase):
