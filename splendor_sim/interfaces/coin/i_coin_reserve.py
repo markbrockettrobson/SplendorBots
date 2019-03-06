@@ -37,6 +37,7 @@ class ICoinReserve(abc.ABC):
         :param minimum: dictionary mapping each coin type in the manager to the minimum amount to test against
                <typing.Dict[i_coin_type.ICoinType, int]>
         :return: true if the reserve has at least minimum coins of each type
+                 <bool>
         """
 
     @abc.abstractmethod

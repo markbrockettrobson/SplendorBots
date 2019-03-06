@@ -5,8 +5,10 @@ import splendor_sim.interfaces.card.i_card_manager as i_card_manager
 
 
 class CardManager(i_card_manager.ICardManager):
-    def __init__(self,
-                 card_list: typing.List[i_card.ICard]):
+    def __init__(
+            self,
+            card_list: typing.List[i_card.ICard]
+    ):
 
         self._card_list = copy.copy(card_list)
         self._cards_by_tier = self._sort_cards_by_tier(self._card_list)

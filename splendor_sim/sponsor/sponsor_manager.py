@@ -7,10 +7,12 @@ import splendor_sim.interfaces.sponsor.i_sponsor_manager as i_sponsor_manager
 
 class SponsorManager(i_sponsor_manager.ISponsorManager):
 
-    def __init__(self,
-                 seed: int,
-                 number_of_sponsors: int,
-                 sponsor_list: typing.List[i_sponsor.ISponsor]):
+    def __init__(
+            self,
+            seed: int,
+            number_of_sponsors: int,
+            sponsor_list: typing.List[i_sponsor.ISponsor]
+    ):
         random.seed(seed)
 
         if len(sponsor_list) < number_of_sponsors:

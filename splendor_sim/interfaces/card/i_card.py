@@ -6,11 +6,13 @@ import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 
 class ICard(abc.ABC):
     @abc.abstractmethod
-    def __init__(self,
-                 tier: int,
-                 victory_points: int,
-                 discount: i_coin_type.ICoinType,
-                 cost: typing.Dict[i_coin_type.ICoinType, int]):
+    def __init__(
+            self,
+            tier: int,
+            victory_points: int,
+            discount: i_coin_type.ICoinType,
+            cost: typing.Dict[i_coin_type.ICoinType, int]
+    ):
         """
 
         :param tier: the level or tier of the card

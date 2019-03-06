@@ -6,9 +6,11 @@ import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 
 class ICoinTypeManager(abc.ABC):
     @abc.abstractmethod
-    def __init__(self,
-                 coin_type_list: typing.List[i_coin_type.ICoinType],
-                 coin_equivalents: typing.List[typing.Tuple[i_coin_type.ICoinType, i_coin_type.ICoinType]]):
+    def __init__(
+            self,
+            coin_type_list: typing.List[i_coin_type.ICoinType],
+            coin_equivalents: typing.List[typing.Tuple[i_coin_type.ICoinType, i_coin_type.ICoinType]]
+    ):
         """
 
         :param coin_type_list: a list of all coin types
@@ -27,9 +29,10 @@ class ICoinTypeManager(abc.ABC):
         """
 
     @abc.abstractmethod
-    def get_equivalent_coins(self,
-                             coin_type: i_coin_type.ICoinType
-                             ) -> typing.List[i_coin_type.ICoinType]:
+    def get_equivalent_coins(
+            self,
+            coin_type: i_coin_type.ICoinType
+    ) -> typing.List[i_coin_type.ICoinType]:
         """
 
         :param coin_type: the coin type that you need to pay
@@ -39,9 +42,10 @@ class ICoinTypeManager(abc.ABC):
         """
 
     @abc.abstractmethod
-    def get_coin_usage(self,
-                       coin_type: i_coin_type.ICoinType
-                       ) -> typing.List[i_coin_type.ICoinType]:
+    def get_coin_usage(
+            self,
+            coin_type: i_coin_type.ICoinType
+    ) -> typing.List[i_coin_type.ICoinType]:
         """
 
         :param coin_type: the coin type that you have
