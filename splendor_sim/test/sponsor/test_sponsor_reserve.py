@@ -30,14 +30,14 @@ class TestSponsorReserve(unittest.TestCase):
         # Act
         self._sponsor_list.pop()
         # Assert
-        self.assertEqual(test_sponsor_reserve.get_remaining_sponsor_list(), pre_mutation)
+        self.assertEqual(set(test_sponsor_reserve.get_remaining_sponsor_list()), set(pre_mutation))
 
     def test_sponsor_reserve_get_remaining_sponsor_list(self):
         # Arrange
         # Act
         test_sponsor_reserve = sponsor_reserve.SponsorReserve(self._sponsor_list)
         # Assert
-        self.assertEqual(test_sponsor_reserve.get_remaining_sponsor_list(), self._sponsor_list)
+        self.assertEqual(set(test_sponsor_reserve.get_remaining_sponsor_list()), set(self._sponsor_list))
 
     def test_sponsor_reserve_get_remaining_sponsor_list_empty(self):
         # Arrange
