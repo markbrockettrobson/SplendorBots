@@ -6,11 +6,13 @@ import splendor_sim.interfaces.card.i_card as i_card
 
 
 class Card(i_card.ICard):
-    def __init__(self,
-                 tier: int,
-                 victory_points: int,
-                 discount: i_coin_type.ICoinType,
-                 cost: typing.Dict[i_coin_type.ICoinType, int]):
+    def __init__(
+            self,
+            tier: int,
+            victory_points: int,
+            discount: i_coin_type.ICoinType,
+            cost: typing.Dict[i_coin_type.ICoinType, int]
+    ):
         self._validate_tier(tier)
         self._validate_victory_points(victory_points)
         self._validate_cost(cost)

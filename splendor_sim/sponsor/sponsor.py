@@ -7,9 +7,11 @@ import splendor_sim.interfaces.sponsor.i_sponsor as i_sponsor
 
 class Sponsor(i_sponsor.ISponsor):
 
-    def __init__(self,
-                 victory_points: int,
-                 cost: typing.Dict[i_coin_type.ICoinType, int]):
+    def __init__(
+            self,
+            victory_points: int,
+            cost: typing.Dict[i_coin_type.ICoinType, int]
+    ):
         self._validate_victory_points(victory_points)
         self._validate_cost(cost)
         self._victory_points = victory_points

@@ -87,9 +87,11 @@ class CardReserve(i_card_reserve.ICardReserve):
         total_cards = 0
         for tier in self._decks_by_tier:
             total_cards += self._decks_by_tier[tier].number_remaining_cards()
+            total_cards += len(self._cards_on_sale_by_tier[tier])
+
         return total_cards
 
     def get_number_of_remaining_cards_by_tier(self, tier: int) -> int:
         if tier not in self._decks_by_tier:
             raise ValueError("unknown tier")
-        return self._decks_by_tier[tier].number_remaining_cards()
+        return self._decks_by_tier[tier].number_remaining_cards() + len(self._cards_on_sale_by_tier[tier])
