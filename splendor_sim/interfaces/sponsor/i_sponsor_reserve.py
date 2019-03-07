@@ -24,6 +24,7 @@ class ISponsorReserve(abc.ABC):
                  <typing.List[i_sponsor.ISponsor]>
         """
 
+    @abc.abstractmethod
     def remove_sponsor(self, sponsor: i_sponsor.ISponsor) -> None:
         """
 
