@@ -1,13 +1,12 @@
-import abc
 import typing
 
 import splendor_sim.interfaces.card.i_card as i_card
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
+import splendor_sim.interfaces.player.i_player_card_inventory as i_player_card_inventory
 
 
-class IPlayerCardInventory(abc.ABC):
+class PlayerCardInventory(i_player_card_inventory.IPlayerCardInventory):
 
-    @abc.abstractmethod
     def __init__(self, max_reserved_cards: int):
         """
 
@@ -15,7 +14,6 @@ class IPlayerCardInventory(abc.ABC):
                <int>
         """
 
-    @abc.abstractmethod
     def get_max_number_of_reserved_cards(self) -> int:
         """
 
@@ -23,7 +21,6 @@ class IPlayerCardInventory(abc.ABC):
                  <int>
         """
 
-    @abc.abstractmethod
     def get_number_of_reserved_cards(self) -> int:
         """
 
@@ -31,7 +28,6 @@ class IPlayerCardInventory(abc.ABC):
                  <int>
         """
 
-    @abc.abstractmethod
     def add_card(self, card: i_card.ICard) -> None:
         """
 
@@ -40,7 +36,6 @@ class IPlayerCardInventory(abc.ABC):
         :return: None
         """
 
-    @abc.abstractmethod
     def add_card_to_reserved(self, card: i_card.ICard) -> None:
         """
 
@@ -49,7 +44,6 @@ class IPlayerCardInventory(abc.ABC):
         :return: None
         """
 
-    @abc.abstractmethod
     def get_total_discount(self) -> typing.Dict[i_coin_type.ICoinType, int]:
 
         """
@@ -58,7 +52,6 @@ class IPlayerCardInventory(abc.ABC):
                  <typing.Dict[i_coin_type.ICoinType, int]>
         """
 
-    @abc.abstractmethod
     def get_victory_points(self) -> int:
 
         """
@@ -67,7 +60,6 @@ class IPlayerCardInventory(abc.ABC):
                  <int>
         """
 
-    @abc.abstractmethod
     def get_card_list(self) -> typing.List[i_card.ICard]:
 
         """
@@ -76,7 +68,6 @@ class IPlayerCardInventory(abc.ABC):
                  <typing.List[i_card.ICard]>
         """
 
-    @abc.abstractmethod
     def get_reserved_card_list(self) -> typing.List[i_card.ICard]:
 
         """
