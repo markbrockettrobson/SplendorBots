@@ -22,14 +22,30 @@ class TestPlayerCoinInventory(unittest.TestCase):
 
     def test_player_coin_inventory_get_coins_remaining(self):
         # Arrange
-        expected = self._return_dictionary
+        add = {self._mock_coin_type_list[0]: 3,
+               self._mock_coin_type_list[2]: 2,
+               self._mock_coin_type_list[-1]: 1}
+        expected = add
+        self.test_player_coin_inventory.add_coins(add)
         # Act
-        real = self.test_player_coin_inventory.get_coins_remaining()
+        real = self.test_player_coin_inventory.get_coins()
+        # Assert
+        self.assertEqual(real, expected)
+
+    def test_player_coin_inventory_get_coins_remaining_empty(self):
+        # Arrange
+        expected = {}
+        # Act
+        real = self.test_player_coin_inventory.get_coins()
         # Assert
         self.assertEqual(real, expected)
 
     def test_player_coin_inventory_has_minimum_true(self):
         # Arrange
+        add = {self._mock_coin_type_list[0]: 3,
+               self._mock_coin_type_list[2]: 4,
+               self._mock_coin_type_list[-1]: 12}
+        self.test_player_coin_inventory.add_coins(add)
         minimum = {self._mock_coin_type_list[0]: 2,
                    self._mock_coin_type_list[2]: 4,
                    self._mock_coin_type_list[-1]: 5}
@@ -41,10 +57,14 @@ class TestPlayerCoinInventory(unittest.TestCase):
 
     def test_player_coin_inventory_has_minimum_false(self):
         # Arrange
+        add = {self._mock_coin_type_list[0]: 2,
+               self._mock_coin_type_list[2]: 7,
+               self._mock_coin_type_list[-1]: 9}
         minimum = {self._mock_coin_type_list[0]: 2,
                    self._mock_coin_type_list[2]: 8,
                    self._mock_coin_type_list[-1]: 5}
         # Act
+        self.test_player_coin_inventory.add_coins(add)
         real = self.test_player_coin_inventory.has_minimum(minimum)
         # Assert
         self.assertFalse(real)
@@ -60,31 +80,15 @@ class TestPlayerCoinInventory(unittest.TestCase):
 
     def test_player_coin_inventory_add_coins(self):
         # Arrange
-        remove = {self._mock_coin_type_list[0]: 3,
-                  self._mock_coin_type_list[2]: 3,
-                  self._mock_coin_type_list[-1]: 3}
         add = {self._mock_coin_type_list[0]: 3,
-               self._mock_coin_type_list[2]: 2,
-               self._mock_coin_type_list[-1]: 1}
-        expected = self._return_dictionary
-        expected[self._mock_coin_type_list[2]] -= 1
-        expected[self._mock_coin_type_list[-1]] -= 2
-        self.test_player_coin_inventory.remove_coins(remove)
+               self._mock_coin_type_list[2]: 3,
+               self._mock_coin_type_list[-1]: 3}
+        expected = add
         # Act
         self.test_player_coin_inventory.add_coins(add)
-        real = self.test_player_coin_inventory.get_coins_remaining()
+        real = self.test_player_coin_inventory.get_coins()
         # Assert
         self.assertEqual(real, expected)
-
-    def test_player_coin_inventory_add_coins_above_max(self):
-        # Arrange
-        add = {self._mock_coin_type_list[0]: 3,
-               self._mock_coin_type_list[2]: 2,
-               self._mock_coin_type_list[-1]: 1}
-        # Act
-        # Assert
-        with self.assertRaises(ValueError):
-            self.test_player_coin_inventory.add_coins(add)
 
     def test_player_coin_inventory_add_coins_type_error_new_coin_type(self):
         # Arrange
@@ -97,24 +101,30 @@ class TestPlayerCoinInventory(unittest.TestCase):
 
     def test_player_coin_inventory_remove_coins(self):
         # Arrange
+        add = {self._mock_coin_type_list[0]: 8,
+               self._mock_coin_type_list[2]: 4,
+               self._mock_coin_type_list[-1]: 7}
         remove = {self._mock_coin_type_list[0]: 7,
                   self._mock_coin_type_list[2]: 4,
                   self._mock_coin_type_list[-1]: 3}
-        expected = self._return_dictionary
-        expected[self._mock_coin_type_list[0]] -= 7
-        expected[self._mock_coin_type_list[2]] -= 4
-        expected[self._mock_coin_type_list[-1]] -= 3
+        expected = {self._mock_coin_type_list[0]: 1,
+                    self._mock_coin_type_list[-1]: 4}
         # Act
+        self.test_player_coin_inventory.add_coins(add)
         self.test_player_coin_inventory.remove_coins(remove)
-        real = self.test_player_coin_inventory.get_coins_remaining()
+        real = self.test_player_coin_inventory.get_coins()
         # Assert
         self.assertEqual(real, expected)
 
     def test_player_coin_inventory_remove_coins_bellow_zero(self):
         # Arrange
+        add = {self._mock_coin_type_list[0]: 5,
+               self._mock_coin_type_list[2]: 4,
+               self._mock_coin_type_list[-1]: 6}
         remove = {self._mock_coin_type_list[0]: 3,
                   self._mock_coin_type_list[2]: 4,
                   self._mock_coin_type_list[-1]: 7}
+        self.test_player_coin_inventory.add_coins(add)
         # Act
         # Assert
         with self.assertRaises(ValueError):
@@ -129,10 +139,24 @@ class TestPlayerCoinInventory(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.test_player_coin_inventory.remove_coins(remove)
 
-    def test_player_coin_inventory_get_coins_remaining_immutability(self):
+    def test_player_coin_inventory_get_coins_immutability(self):
         # Arrange
-        pre_mutation = self.test_player_coin_inventory.get_coins_remaining()
+        add = {self._mock_coin_type_list[0]: 5,
+               self._mock_coin_type_list[2]: 4,
+               self._mock_coin_type_list[-1]: 6}
+        self.test_player_coin_inventory.add_coins(add)
+        pre_mutation = self.test_player_coin_inventory.get_coins()
         # Act
         pre_mutation.pop(list(pre_mutation.keys())[0])
         # Assert
-        self.assertNotEqual(pre_mutation, self.test_player_coin_inventory.get_coins_remaining())
+        self.assertNotEqual(pre_mutation, self.test_player_coin_inventory.get_coins())
+
+    def test_player_coin_inventory_get_number_of_coins(self):
+        add = {self._mock_coin_type_list[0]: 3,
+               self._mock_coin_type_list[2]: 2,
+               self._mock_coin_type_list[-1]: 1}
+        self.test_player_coin_inventory.add_coins(add)
+        # Act
+        real = self.test_player_coin_inventory.get_number_of_coins()
+        # Assert
+        self.assertEqual(real, 6)
