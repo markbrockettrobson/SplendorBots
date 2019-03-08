@@ -12,11 +12,11 @@ class TestPlayerCardInventory(unittest.TestCase):
     def setUp(self):
         self._max_reserved_cards = 3
         self._mock_card_list = [mock.create_autospec(spec=i_card.ICard, spec_set=True) for _ in range(30)]
-        self._mock_discount = [mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True) for _ in range(2)]
+        self._mock_discount = mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True)
         self._mock_cost = {mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True): 1 for _ in range(3)}
         for i, _mock_card in enumerate(self._mock_card_list):
             _mock_card.get_victory_points.return_value = 1
-            _mock_card.get_discount.return_value = self._mock_discount[(i + 1) % 1]
+            _mock_card.get_discount.return_value = self._mock_discount
             _mock_card.get_cost.return_value = self._mock_cost
 
     def test_player_card_inventory_init_valid(self):
@@ -67,7 +67,7 @@ class TestPlayerCardInventory(unittest.TestCase):
         # Act
         test_player_card_inventory.add_card(self._mock_card_list[0])
         # Assert
-        self.assertEqual(test_player_card_inventory.get_total_discount(), self._mock_discount)
+        self.assertEqual(test_player_card_inventory.get_total_discount(), {self._mock_discount: 1})
         self.assertEqual(test_player_card_inventory.get_victory_points(), 1)
         self.assertEqual(test_player_card_inventory.get_card_list(), [self._mock_card_list[0]])
 
@@ -86,7 +86,7 @@ class TestPlayerCardInventory(unittest.TestCase):
         # Act
         test_player_card_inventory.add_card_to_reserved(self._mock_card_list[0])
         # Assert
-        self.assertEqual(test_player_card_inventory.add_card_to_reserved(), [self._mock_card_list[0]])
+        self.assertEqual(test_player_card_inventory.get_reserved_card_list(), [self._mock_card_list[0]])
         self.assertEqual(test_player_card_inventory.get_number_of_reserved_cards(), 1)
 
     def test_player_card_inventory_add_card_to_reserved_card_already_in_set(self):
@@ -116,8 +116,7 @@ class TestPlayerCardInventory(unittest.TestCase):
             test_player_card_inventory.add_card(self._mock_card_list[i])
             discount = test_player_card_inventory.get_total_discount()
             # Assert
-            for coin in self._mock_discount:
-                self.assertEqual(discount[coin], i + 1)
+            self.assertEqual(discount, {self._mock_discount: i + 1})
 
     def test_player_card_inventory_get_total_discount_immutability(self):
         # Arrange
@@ -155,7 +154,7 @@ class TestPlayerCardInventory(unittest.TestCase):
         for card in self._mock_card_list:
             test_player_card_inventory.add_card(card)
         # Assert
-        self.assertEqual(test_player_card_inventory.get_card_list(), self._mock_card_list[0])
+        self.assertEqual(test_player_card_inventory.get_card_list(), list(set(self._mock_card_list)))
 
     def test_player_card_inventory_get_card_list_immutability(self):
         # Arrange
@@ -176,7 +175,7 @@ class TestPlayerCardInventory(unittest.TestCase):
             test_player_card_inventory.add_card_to_reserved(self._mock_card_list[i])
         # Act
         # Assert
-        self.assertEqual(test_player_card_inventory.get_reserved_card_list(), self._mock_card_list[:3])
+        self.assertEqual(test_player_card_inventory.get_reserved_card_list(), list(set(self._mock_card_list[:3])))
 
     def test_player_card_inventory_get_reserved_card_list_immutability(self):
         # Arrange
@@ -194,6 +193,28 @@ class TestPlayerCardInventory(unittest.TestCase):
         # Arrange
         test_player_card_inventory = player_card_inventory.PlayerCardInventory(self._max_reserved_cards)
         for i in range(3):
+            # Act
             test_player_card_inventory.add_card_to_reserved(self._mock_card_list[i])
             # Assert
             self.assertEqual(test_player_card_inventory.get_number_of_reserved_cards(), i + 1)
+
+    def test_player_card_inventory_remove_from_reserved_card_list(self):
+        # Arrange
+        test_player_card_inventory = player_card_inventory.PlayerCardInventory(self._max_reserved_cards)
+        for i in range(3):
+            test_player_card_inventory.add_card_to_reserved(self._mock_card_list[i])
+        for card in test_player_card_inventory.get_reserved_card_list():
+            # Act
+            test_player_card_inventory.remove_from_reserved_card_list(card)
+        # Assert
+        self.assertEqual(test_player_card_inventory.get_number_of_reserved_cards(), 0)
+
+    def test_player_card_inventory_remove_from_reserved_card_list_card_not_in_reserve(self):
+        # Arrange
+        test_player_card_inventory = player_card_inventory.PlayerCardInventory(self._max_reserved_cards)
+        for i in range(3):
+            test_player_card_inventory.add_card_to_reserved(self._mock_card_list[i])
+        # Act
+        # Assert
+        with self.assertRaises(ValueError):
+            test_player_card_inventory.remove_from_reserved_card_list(self._mock_card_list[-1])

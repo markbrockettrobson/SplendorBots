@@ -85,3 +85,11 @@ class IPlayerCardInventory(abc.ABC):
                  <typing.List[i_card.ICard]>
         """
 
+    @abc.abstractmethod
+    def remove_from_reserved_card_list(self, card: i_card.ICard) -> None:
+        """
+
+        :param card: the card to be removed from the card list
+               <i_card.ICard>
+        :return: None
+        """
