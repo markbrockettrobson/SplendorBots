@@ -58,8 +58,8 @@ class TestPlayerCoinInventory(unittest.TestCase):
     def test_player_coin_inventory_has_minimum_false(self):
         # Arrange
         add = {self._mock_coin_type_list[0]: 2,
-                   self._mock_coin_type_list[2]: 7,
-                   self._mock_coin_type_list[-1]: 9}
+               self._mock_coin_type_list[2]: 7,
+               self._mock_coin_type_list[-1]: 9}
         minimum = {self._mock_coin_type_list[0]: 2,
                    self._mock_coin_type_list[2]: 8,
                    self._mock_coin_type_list[-1]: 5}

@@ -28,7 +28,7 @@ class IPlayerCoinInventory(abc.ABC):
 
         :return: the total number of coins in the inventory
         """
-        
+
     @abc.abstractmethod
     def has_minimum(self, minimum: typing.Dict[i_coin_type.ICoinType, int]) -> bool:
         """
