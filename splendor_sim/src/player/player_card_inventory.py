@@ -12,11 +12,11 @@ class PlayerCardInventory(i_player_card_inventory.IPlayerCardInventory):
         if max_reserved_cards < 0:
             raise ValueError("max_reserved_cards must be zero or more")
         self._max_reserved_cards = max_reserved_cards
-        self._number_of_reserved_cards = 0
-        self._reserved_cards = set()
-        self._cards = set()
-        self._total_discount = {}
-        self._victory_points = 0
+        self._number_of_reserved_cards = 0  # type: int
+        self._reserved_cards = set()  # type: typing.Set[i_card.ICard]
+        self._cards = set()  # type: typing.Set[i_card.ICard]
+        self._total_discount = {}  # type: typing.Dict[i_coin_type.ICoinType, int]
+        self._victory_points = 0  # type: int
 
     def get_max_number_of_reserved_cards(self) -> int:
         return self._max_reserved_cards
