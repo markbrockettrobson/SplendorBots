@@ -1,5 +1,4 @@
 import copy
-import typing
 import unittest
 import unittest.mock as mock
 import splendor_sim.interfaces.card.i_card as i_card
@@ -14,7 +13,7 @@ class TestPlayerCardInventory(unittest.TestCase):
         self._mock_card_list = [mock.create_autospec(spec=i_card.ICard, spec_set=True) for _ in range(30)]
         self._mock_discount = mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True)
         self._mock_cost = {mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True): 1 for _ in range(3)}
-        for i, _mock_card in enumerate(self._mock_card_list):
+        for _mock_card in self._mock_card_list:
             _mock_card.get_victory_points.return_value = 1
             _mock_card.get_discount.return_value = self._mock_discount
             _mock_card.get_cost.return_value = self._mock_cost
