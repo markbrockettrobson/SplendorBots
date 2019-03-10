@@ -21,9 +21,6 @@ class IPlayer(abc.ABC):
         :param sponsor_inventory: the sponsor inventory of a player
                <i_player_sponsor_inventory.IPlayerSponsorInventory>
         """
-        self._coin_inventory = coin_inventory
-        self._card_inventory = card_inventory
-        self._sponsor_inventory = sponsor_inventory
 
     @abc.abstractmethod
     def get_coin_inventory(self) -> i_player_coin_inventory.IPlayerCoinInventory:
