@@ -3,7 +3,7 @@ import typing
 import splendor_sim.interfaces.player.i_player as i_player
 
 
-class IPlayer(abc.ABC):
+class IPlayerManager(abc.ABC):
 
     @abc.abstractmethod
     def __init__(self, player_list: typing.Set[i_player.IPlayer]):
