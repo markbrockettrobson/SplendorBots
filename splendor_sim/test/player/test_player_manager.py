@@ -1,3 +1,4 @@
+import copy
 import unittest
 import unittest.mock as mock
 
@@ -18,37 +19,47 @@ class TestPlayerManager(unittest.TestCase):
     def test_player_manager_init_valid(self):
         # Arrange
         # Act
-        test_player_manager = player_manager.PlayerManger(self._mock_player_set)
+        test_player_manager = player_manager.PlayerManager(self._mock_player_set)
         # Assert
         self.assertEqual(test_player_manager.get_player_set(), self._mock_player_set)
         pass
 
-    def test_player_manager_init_invalid_repeat_player_immutability(self):
+    def test_player_manager_init_player_set_immutability(self):
         # Arrange
-        test_player_manager = player_manager.PlayerManger(self._mock_player_set)
+        test_player_manager = player_manager.PlayerManager(self._mock_player_set)
         # Act
+        pre_mutation = copy.copy(self._mock_player_set)
         self._mock_player_set.pop()
         # Assert
-        self.assertEqual(test_player_manager.get_player_set(), self._mock_player_set)
+        self.assertEqual(test_player_manager.get_player_set(), pre_mutation)
 
     def test_player_manager_get_player_set(self):
         # Arrange
-        test_player_manager = player_manager.PlayerManger(self._mock_player_set)
+        test_player_manager = player_manager.PlayerManager(self._mock_player_set)
         # Act
-        self._mock_player_set.pop()
         # Assert
         self.assertEqual(test_player_manager.get_player_set(), self._mock_player_set)
 
+    def test_player_manager_get_player_set_immutability(self):
+        # Arrange
+        test_player_manager = player_manager.PlayerManager(self._mock_player_set)
+        # Act
+        return_value = test_player_manager.get_player_set()
+        pre_mutation = copy.copy(return_value)
+        return_value.pop()
+        # Assert
+        self.assertEqual(test_player_manager.get_player_set(), pre_mutation)
+
     def test_player_manager_get_current_player(self):
         # Arrange
-        test_player_manager = player_manager.PlayerManger(self._mock_player_set)
+        test_player_manager = player_manager.PlayerManager(self._mock_player_set)
         # Act
         # Assert
         self.assertIn(test_player_manager.get_current_player(), self._mock_player_set)
 
     def test_player_manager_get_current_player_multiple_calls(self):
         # Arrange
-        test_player_manager = player_manager.PlayerManger(self._mock_player_set)
+        test_player_manager = player_manager.PlayerManager(self._mock_player_set)
         # Act
         last_call = test_player_manager.get_current_player()
         # Assert
@@ -56,7 +67,7 @@ class TestPlayerManager(unittest.TestCase):
 
     def test_player_manager_next_players_turn(self):
         # Arrange
-        test_player_manager = player_manager.PlayerManger(self._mock_player_set)
+        test_player_manager = player_manager.PlayerManager(self._mock_player_set)
         # Act
         last_call = test_player_manager.get_current_player()
         # Assert
@@ -64,21 +75,21 @@ class TestPlayerManager(unittest.TestCase):
 
     def test_player_manager_next_players_turn_rap_around(self):
         # Arrange
-        test_player_manager = player_manager.PlayerManger(self._mock_player_set)
+        test_player_manager = player_manager.PlayerManager(self._mock_player_set)
         # Act
         player_list = []
-        for i in range(self._number_of_players * 2):
-            player_list.append(test_player_manager.get_current_player())
+        for _ in range(self._number_of_players * 2):
+            player_list.append(test_player_manager.next_players_turn())
         # Assert
         for player in player_list:
             self.assertEqual(test_player_manager.next_players_turn(), player)
 
     def test_player_manager_get_turn_number(self):
         # Arrange
-        test_player_manager = player_manager.PlayerManger(self._mock_player_set)
+        test_player_manager = player_manager.PlayerManager(self._mock_player_set)
         # Act
-        for i in range(20):
-            for j in range(self._number_of_players * i):
-                test_player_manager.get_current_player()
+        for i in range(1, 20):
+            for _ in range(self._number_of_players):
+                test_player_manager.next_players_turn()
             # Assert
-            self.assertEqual(test_player_manager.get_turn_number(), i)
+            self.assertEqual(test_player_manager.get_turn_number(), i + 1)
