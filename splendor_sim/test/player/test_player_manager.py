@@ -22,7 +22,6 @@ class TestPlayerManager(unittest.TestCase):
         test_player_manager = player_manager.PlayerManager(self._mock_player_set)
         # Assert
         self.assertEqual(test_player_manager.get_player_set(), self._mock_player_set)
-        pass
 
     def test_player_manager_init_player_set_immutability(self):
         # Arrange
