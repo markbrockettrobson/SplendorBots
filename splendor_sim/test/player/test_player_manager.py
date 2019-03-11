@@ -39,7 +39,7 @@ class IPlayer(unittest.TestCase):
         # Assert
         pass
 
-    def test_player_manager_get_current_player(self):
+    def test_player_manager_get_current_player_multiple_calls(self):
         # Arrange
         # Act
         # Assert
