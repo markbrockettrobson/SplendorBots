@@ -6,13 +6,13 @@ import splendor_sim.interfaces.card.i_card as i_card
 
 class IDeck(abc.ABC):
     @abc.abstractmethod
-    def __init__(self, tier: int, card_list: typing.List[i_card.ICard]):
+    def __init__(self, tier: int, card_set: typing.Set[i_card.ICard]):
         """
 
         :param tier: the tier of the deck
                <int>
-        :param card_list: the list of cards in the deck
-               <typing.List[i_card.ICard]>
+        :param card_set: the list of cards in the deck
+               <typing.Set[i_card.ICard]>
         """
 
     @abc.abstractmethod
@@ -52,5 +52,5 @@ class IDeck(abc.ABC):
         """
 
         :return: a list of all cards left in the deck
-                 <typing.List[i_card.ICard]>
+                 <typing.set[i_card.ICard]>
         """
