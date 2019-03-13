@@ -10,10 +10,10 @@ class CoinReserve(i_coin_reserve.ICoinReserve):
 
     def __init__(self, coin_type_manager: i_coin_type_manager.ICoinTypeManager):
         self._coin_type_manager = coin_type_manager
-        self._coin_list = self._coin_type_manager.get_coin_list()
-        self._max_coin_size = {coin: coin.get_total_number() for coin in self._coin_list} \
+        self._coin_set = self._coin_type_manager.get_coin_set()
+        self._max_coin_size = {coin: coin.get_total_number() for coin in self._coin_set} \
             # type: typing.Dict[i_coin_type.ICoinType, int]
-        self._current_coins = {coin: coin.get_total_number() for coin in self._coin_list} \
+        self._current_coins = {coin: coin.get_total_number() for coin in self._coin_set} \
             # type: typing.Dict[i_coin_type.ICoinType, int]
 
     def get_coins_remaining(self) -> typing.Dict[i_coin_type.ICoinType, int]:
@@ -45,5 +45,5 @@ class CoinReserve(i_coin_reserve.ICoinReserve):
 
     def _validate_input_dictionary(self, dictionary: typing.Dict[i_coin_type.ICoinType, int]) -> None:
         for key in dictionary:
-            if key not in self._coin_list:
+            if key not in self._coin_set:
                 raise ValueError(str(key) + "is not a coin type in this Reserve")
