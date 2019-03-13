@@ -6,31 +6,31 @@ import splendor_sim.interfaces.card.i_deck as i_deck
 
 class ICardReserve(abc.ABC):
     @abc.abstractmethod
-    def __init__(self, cards_on_sale: int, decks: typing.List[i_deck.IDeck]):
+    def __init__(self, cards_on_sale: int, decks: typing.Set[i_deck.IDeck]):
         """
 
         :param cards_on_sale:  the number of card of each tier to be sold
                <int>
-        :param decks: the list of decks to sell cards from
-               <typing.List[i_deck.IDeck]>
+        :param decks: the set of decks to sell cards from
+               <typing.Set[i_deck.IDeck]>
         """
 
     @abc.abstractmethod
-    def get_cards_for_sale(self) -> typing.List[i_card.ICard]:
+    def get_cards_for_sale(self) -> typing.Set[i_card.ICard]:
         """
 
-        :return: the list of cards for sale in all tiers
-                 <typing.List[i_card.ICard]>
+        :return: the set of cards for sale in all tiers
+                 <typing.Set[i_card.ICard]>
         """
 
     @abc.abstractmethod
-    def get_cards_for_sale_by_tier(self, tier: int) -> typing.List[i_card.ICard]:
+    def get_cards_for_sale_by_tier(self, tier: int) -> typing.Set[i_card.ICard]:
         """
 
         :param tier: the tier of cards to consider
                <int>
-        :return: the list of cards for sale in tiers
-                 <typing.List[i_card.ICard]>
+        :return: the set of cards for sale in tiers
+                 <typing.Set[i_card.ICard]>
         """
 
     @abc.abstractmethod
