@@ -13,32 +13,32 @@ class TestSponsorManager(unittest.TestCase):
         self._number_of_sponsors = 5
         self._number_of_sponsor_options = 10
 
-        self._sponsor_list = [
+        self._sponsor_set = {
             mock.create_autospec(spec=i_sponsor.ISponsor, spec_set=True) for _ in range(self._number_of_sponsor_options)
-        ]
+        }
 
     def test_sponsor_manager_init_valid(self):
         # Arrange
         # Act
-        test_sponsor_manager = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_list)
+        test_sponsor_manager = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_set)
         # Assert
-        self.assertEqual(len(test_sponsor_manager.get_sponsor_list()), self._number_of_sponsors)
+        self.assertEqual(len(test_sponsor_manager.get_sponsor_set()), self._number_of_sponsors)
 
     def test_sponsor_manager_init_seed(self):
         # Arrange
-        test_sponsor_manager1 = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_list)
-        test_sponsor_manager2 = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_list)
+        test_sponsor_manager1 = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_set)
+        test_sponsor_manager2 = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_set)
         # Act
         # Assert
-        self.assertEqual(test_sponsor_manager1.get_sponsor_list(), test_sponsor_manager2.get_sponsor_list())
+        self.assertEqual(test_sponsor_manager1.get_sponsor_set(), test_sponsor_manager2.get_sponsor_set())
 
     def test_sponsor_manager_init_valid_number_of_sponsors_zero(self):
         # Arrange
         self._number_of_sponsors = 0
         # Act
-        test_sponsor_manager = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_list)
+        test_sponsor_manager = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_set)
         # Assert
-        self.assertEqual(len(test_sponsor_manager.get_sponsor_list()), self._number_of_sponsors)
+        self.assertEqual(len(test_sponsor_manager.get_sponsor_set()), self._number_of_sponsors)
 
     def test_sponsor_manager_init_invalid_number_of_sponsors_negative(self):
         # Arrange
@@ -48,7 +48,7 @@ class TestSponsorManager(unittest.TestCase):
         with self.assertRaises(ValueError):
             _ = sponsor_manager.SponsorManager(self._seed,
                                                self._number_of_sponsors,
-                                               self._sponsor_list)
+                                               self._sponsor_set)
 
     def test_sponsor_manager_init_invalid_number_of_sponsors_less_sponsors(self):
         # Arrange
@@ -58,32 +58,32 @@ class TestSponsorManager(unittest.TestCase):
         with self.assertRaises(ValueError):
             _ = sponsor_manager.SponsorManager(self._seed,
                                                self._number_of_sponsors,
-                                               self._sponsor_list)
+                                               self._sponsor_set)
 
     def test_sponsor_manager_init_sponsor_list_post_init_immutability(self):
         # Arrange
-        test_sponsor_manager = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_list)
+        test_sponsor_manager = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_set)
         # Act
-        for _ in range(len(self._sponsor_list)):
-            self._sponsor_list.pop()
+        for _ in range(len(self._sponsor_set)):
+            self._sponsor_set.pop()
         # Assert
-        self.assertEqual(len(test_sponsor_manager.get_sponsor_list()), self._number_of_sponsors)
+        self.assertEqual(len(test_sponsor_manager.get_sponsor_set()), self._number_of_sponsors)
 
     def test_sponsor_manager_get_sponsor_list(self):
         # Arrange
         # Act
-        test_sponsor_manager = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_list)
+        test_sponsor_manager = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_set)
         # Assert
-        for card in test_sponsor_manager.get_sponsor_list():
-            self.assertIn(card, self._sponsor_list)
-        self.assertEqual(len(test_sponsor_manager.get_sponsor_list()), self._number_of_sponsors)
+        for card in test_sponsor_manager.get_sponsor_set():
+            self.assertIn(card, self._sponsor_set)
+        self.assertEqual(len(test_sponsor_manager.get_sponsor_set()), self._number_of_sponsors)
 
     def test_sponsor_manager_get_sponsor_list_immutability(self):
         # Arrange
-        test_sponsor_manager = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_list)
-        sponsor_list = test_sponsor_manager.get_sponsor_list()
+        test_sponsor_manager = sponsor_manager.SponsorManager(self._seed, self._number_of_sponsors, self._sponsor_set)
+        sponsor_list = test_sponsor_manager.get_sponsor_set()
         pre_mutation = copy.copy(sponsor_list)
         # Act
         sponsor_list.pop()
         # Assert
-        self.assertEqual(test_sponsor_manager.get_sponsor_list(), pre_mutation)
+        self.assertEqual(test_sponsor_manager.get_sponsor_set(), pre_mutation)
