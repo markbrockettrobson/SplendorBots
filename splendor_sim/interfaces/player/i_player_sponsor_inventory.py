@@ -11,11 +11,11 @@ class IPlayerSponsorInventory(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def get_sponsor_list(self) -> typing.List[i_sponsor.ISponsor]:
+    def get_sponsor_set(self) -> typing.Set[i_sponsor.ISponsor]:
         """
 
-        :return: a list of all sponsors in the inventory
-                 <typing.List[i_sponsor.ISponsor]>
+        :return: a set of all sponsors in the inventory
+                 <typing.Set[i_sponsor.ISponsor]>
         """
 
     @abc.abstractmethod
