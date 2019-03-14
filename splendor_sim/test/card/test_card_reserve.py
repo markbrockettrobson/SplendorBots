@@ -23,10 +23,12 @@ class TestCardReserve(unittest.TestCase):
             mock_has_next.append(True)
         for _ in range(self._cards_per_deck):
             mock_has_next.append(False)
+
         for i, deck in enumerate(self._mock_decks):
             deck.number_remaining_cards.return_value = self._cards_per_deck - self._cards_on_sale
-            new_mock_cards = [mock.create_autospec(spec=i_card.ICard, spec_set=True) for _ in
-                              range(self._cards_per_deck)]
+            new_mock_cards = [
+                mock.create_autospec(spec=i_card.ICard, spec_set=True) for _ in range(self._cards_per_deck)
+            ]
 
             self._mock_cards.extend(new_mock_cards)
             self._mock_cards_by_tier.append(new_mock_cards)

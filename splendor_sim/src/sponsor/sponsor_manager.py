@@ -19,7 +19,7 @@ class SponsorManager(i_sponsor_manager.ISponsorManager):
             raise ValueError("has less sponsors then number_of_sponsors")
 
         self._number_of_sponsors = number_of_sponsors
-        self._sponsor_set = random.sample(sponsor_set, self._number_of_sponsors)
+        self._sponsor_set = set(random.sample(sponsor_set, self._number_of_sponsors))
 
-    def get_sponsor_set(self) -> typing.List[i_sponsor.ISponsor]:
+    def get_sponsor_set(self) -> typing.Set[i_sponsor.ISponsor]:
         return copy.copy(self._sponsor_set)

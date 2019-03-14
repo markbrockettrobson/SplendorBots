@@ -25,19 +25,19 @@ class CardReserve(i_card_reserve.ICardReserve):
         if not decks:
             raise ValueError("must have one or more deck")
 
-        tiers = set()
+        tiers = set()  # type: typing.Set[int]
         for deck in decks:
             if deck.get_tier() in tiers:
                 raise ValueError("more than one deck has the same tier")
             tiers.add(deck.get_tier())
 
     def _create_decks_by_tier(self, decks: typing.Set[i_deck.IDeck]) -> None:
-        self._decks_by_tier = {}
+        self._decks_by_tier = {}   # type: typing.Dict[int,i_deck.IDeck]
         for deck in decks:
             self._decks_by_tier[deck.get_tier()] = deck
 
     def _create__cards_on_sale(self) -> None:
-        self._cards_on_sale_by_tier = {}
+        self._cards_on_sale_by_tier = {}   # type: typing.Dict[int,typing.Set[i_card.ICard]]
         for tier in self._decks_by_tier:
             self._cards_on_sale_by_tier[tier] = set()
             for _ in range(self._cards_on_sale):
