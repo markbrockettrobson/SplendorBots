@@ -68,28 +68,28 @@ class IPlayerCardInventory(abc.ABC):
         """
 
     @abc.abstractmethod
-    def get_card_list(self) -> typing.List[i_card.ICard]:
+    def get_card_set(self) -> typing.Set[i_card.ICard]:
 
         """
 
-        :return: a list of all cards the player owns
-                 <typing.List[i_card.ICard]>
-        """
-
-    @abc.abstractmethod
-    def get_reserved_card_list(self) -> typing.List[i_card.ICard]:
-
-        """
-
-        :return: list of all cards in reserve
-                 <typing.List[i_card.ICard]>
+        :return: a set of all cards the player owns
+                 <typing.Set[i_card.ICard]>
         """
 
     @abc.abstractmethod
-    def remove_from_reserved_card_list(self, card: i_card.ICard) -> None:
+    def get_reserved_card_set(self) -> typing.Set[i_card.ICard]:
+
         """
 
-        :param card: the card to be removed from the card list
+        :return: set of all cards in reserve
+                 <typing.Set[i_card.ICard]>
+        """
+
+    @abc.abstractmethod
+    def remove_from_reserved_card_set(self, card: i_card.ICard) -> None:
+        """
+
+        :param card: the card to be removed from the card set
                <i_card.ICard>
         :return: None
         """
