@@ -45,18 +45,18 @@ class PlayerCardInventory(i_player_card_inventory.IPlayerCardInventory):
     def get_victory_points(self) -> int:
         return self._victory_points
 
-    def get_card_list(self) -> typing.List[i_card.ICard]:
-        return list(self._cards)
+    def get_card_set(self) -> typing.Set[i_card.ICard]:
+        return copy.copy(self._cards)
 
-    def get_reserved_card_list(self) -> typing.List[i_card.ICard]:
-        return list(self._reserved_cards)
+    def get_reserved_card_set(self) -> typing.Set[i_card.ICard]:
+        return copy.copy(self._reserved_cards)
 
     def _add_to_total_discount(self, new_discount: i_coin_type.ICoinType) -> None:
         if new_discount not in self._total_discount:
             self._total_discount[new_discount] = 0
         self._total_discount[new_discount] += 1
 
-    def remove_from_reserved_card_list(self, card: i_card.ICard) -> None:
+    def remove_from_reserved_card_set(self, card: i_card.ICard) -> None:
         if card not in self._reserved_cards:
             raise ValueError("card is not in reserved cards")
         self._reserved_cards.remove(card)

@@ -10,7 +10,7 @@ class ISponsorManager(abc.ABC):
             self,
             seed: int,
             number_of_sponsors: int,
-            sponsor_list: typing.List[i_sponsor.ISponsor]
+            sponsor_set: typing.Set[i_sponsor.ISponsor]
     ):
         """
 
@@ -18,14 +18,14 @@ class ISponsorManager(abc.ABC):
                <int>
         :param number_of_sponsors: the number of sponsors to select
                <int>
-        :param sponsor_list: the list of sponsors that can be selected
-               <typing.List[i_sponsor.ISponsor]>
+        :param sponsor_set: the set of sponsors that can be selected
+               <typing.Set[i_sponsor.ISponsor]>
         """
 
     @abc.abstractmethod
-    def get_sponsor_list(self) -> typing.List[i_sponsor.ISponsor]:
+    def get_sponsor_set(self) -> typing.Set[i_sponsor.ISponsor]:
         """
 
-        :return: the selected sponsors in a list
-                 <typing.List[i_sponsor.ISponsor]>
+        :return: the selected sponsors in a set
+                 <typing.Set[i_sponsor.ISponsor]>
         """

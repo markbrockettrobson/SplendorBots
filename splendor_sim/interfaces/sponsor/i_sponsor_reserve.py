@@ -8,20 +8,20 @@ class ISponsorReserve(abc.ABC):
     @abc.abstractmethod
     def __init__(
             self,
-            sponsor_list: typing.List[i_sponsor.ISponsor]
+            sponsor_set: typing.Set[i_sponsor.ISponsor]
     ):
         """
 
-        :param sponsor_list: the list of sponsors that can be acquired
-               <typing.List[i_sponsor.ISponsor]>
+        :param sponsor_set: the set of sponsors that can be acquired
+               <typing.Set[i_sponsor.ISponsor]>
         """
 
     @abc.abstractmethod
-    def get_remaining_sponsor_list(self) -> typing.List[i_sponsor.ISponsor]:
+    def get_remaining_sponsor_set(self) -> typing.Set[i_sponsor.ISponsor]:
         """
 
-        :return: a list of sponsors remaining in the reserve
-                 <typing.List[i_sponsor.ISponsor]>
+        :return: a set of sponsors remaining in the reserve
+                 <typing.Set[i_sponsor.ISponsor]>
         """
 
     @abc.abstractmethod

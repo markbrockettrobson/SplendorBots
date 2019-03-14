@@ -10,7 +10,7 @@ class PlayerCoinInventory(i_player_coin_inventory.IPlayerCoinInventory):
 
     def __init__(self, coin_type_manager: i_coin_type_manager.ICoinTypeManager):
         self._coin_type_manager = coin_type_manager
-        self._coin_list = self._coin_type_manager.get_coin_list()
+        self._coin_set = self._coin_type_manager.get_coin_set()
         self._current_coins = {}  # type: typing.Dict[i_coin_type.ICoinType, int]
         self._number_of_current_coins = 0
 
@@ -47,5 +47,5 @@ class PlayerCoinInventory(i_player_coin_inventory.IPlayerCoinInventory):
 
     def _validate_input_dictionary(self, dictionary: typing.Dict[i_coin_type.ICoinType, int]) -> None:
         for key in dictionary:
-            if key not in self._coin_list:
+            if key not in self._coin_set:
                 raise ValueError(str(key) + "is not a coin type in this Reserve")

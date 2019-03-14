@@ -10,7 +10,7 @@ class TestCoinReserve(unittest.TestCase):
     def setUp(self):
         self._mock_coin_type_manager = mock.create_autospec(spec=i_coin_type_manager.ICoinTypeManager, spec_set=True)
         self._mock_coin_type_list = [mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True) for _ in range(6)]
-        self._mock_coin_type_manager.get_coin_list.return_value = self._mock_coin_type_list
+        self._mock_coin_type_manager.get_coin_set.return_value = set(self._mock_coin_type_list)
         for _mock_coin_type in self._mock_coin_type_list:
             _mock_coin_type.get_total_number.return_value = 7
         self._mock_coin_type_list[-1].get_total_number.return_value = 5

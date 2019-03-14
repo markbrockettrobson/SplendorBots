@@ -1,3 +1,4 @@
+import copy
 import typing
 
 import splendor_sim.interfaces.sponsor.i_sponsor as i_sponsor
@@ -10,8 +11,8 @@ class PlayerSponsorInventory(i_player_sponsor_inventory.IPlayerSponsorInventory)
         self._sponsors = set()
         self._total_victory_points = 0
 
-    def get_sponsor_list(self) -> typing.List[i_sponsor.ISponsor]:
-        return list(self._sponsors)
+    def get_sponsor_set(self) -> typing.Set[i_sponsor.ISponsor]:
+        return copy.copy(self._sponsors)
 
     def add_sponsor(self, sponsor: i_sponsor.ISponsor):
         if sponsor in self._sponsors:
