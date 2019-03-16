@@ -47,7 +47,7 @@ class TestCardReserve(unittest.TestCase):
     def test_card_reserve_init_valid_more_for_sale_then_in_deck(self):
         # Arrange
         self._cards_on_sale = 7
-        for i, deck in enumerate(self._mock_decks):
+        for deck in enumerate(self._mock_decks):
             deck.number_remaining_cards.return_value = 0
 
         # Act
