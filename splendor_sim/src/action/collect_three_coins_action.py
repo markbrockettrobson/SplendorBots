@@ -39,7 +39,7 @@ class CollectThreeCoinsAction(i_action.IAction):
         if len(coins.keys()) not in range(1, 4):
             raise ValueError("can only take 1 to 3 types of coins but was " + str(len(coins.keys())))
         for coin_type, number_of_coins in coins.items():
-            if number_of_coins is not 1:
+            if number_of_coins != 1:
                 raise ValueError("can only take one of each coin")
             if coin_type not in valid_coin_type_set:
                 raise ValueError("invalid coin type")
