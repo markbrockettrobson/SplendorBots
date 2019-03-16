@@ -67,7 +67,7 @@ class TestSponsorReserve(unittest.TestCase):
             # Assert
             self.assertEqual(len(test_sponsor_reserve.get_remaining_sponsor_set()), self._number_of_sponsors - i - 1)
 
-    def remove_sponsor_not_in_reserve(self):
+    def test_sponsor_reserve_remove_sponsor_not_in_reserve(self):
         # Arrange
         test_sponsor_reserve = sponsor_reserve.SponsorReserve(self._sponsor_set)
         new_sponsor = mock.create_autospec(spec=i_sponsor.ISponsor, spec_set=True)
