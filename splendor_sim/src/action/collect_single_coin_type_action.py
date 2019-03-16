@@ -1,3 +1,4 @@
+import copy
 import typing
 
 import splendor_sim.interfaces.game_state.i_game_state as i_game_state
@@ -15,8 +16,8 @@ class CollectSingleCoinTypeAction(i_action.IAction):
             coins: typing.Dict[i_coin_type.ICoinType, int],
     ):
         self._validate_input(valid_coin_type_set, coins)
-        coin_type, number_of_coins = coins.popitem()
-        self._coin_dictionary = coins
+        self._coin_dictionary = copy.copy(coins)
+        coin_type, number_of_coins = copy.copy(coins).popitem()
         self._current_player = current_player
         self._coin_type = coin_type
         self._number_of_coins = number_of_coins
@@ -27,7 +28,11 @@ class CollectSingleCoinTypeAction(i_action.IAction):
     def execute(self, game_state: i_game_state.IGameState) -> None:
         if not self.validate(game_state):
             raise ValueError("invalid action")
-        game_state.get_coin_reserve().remove_coins(self._coin_dictionary)
+        test_dictionary = {}
+        print()
+        for coin, number in self._coin_dictionary.items():
+            test_dictionary[coin] = number + 2
+        game_state.get_coin_reserve().remove_coins(test_dictionary)
         self._current_player.get_coin_inventory().add_coins(self._coin_dictionary)
 
     @staticmethod
