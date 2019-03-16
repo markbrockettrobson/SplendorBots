@@ -12,6 +12,26 @@ class TestCoinTypeManager(unittest.TestCase):
         self._mock_coin_equivalents = {(self._mock_coin_type_list[i], self._mock_coin_type_list[5])
                                        for i in range(0, 5)}
 
+    def test_coin_type_manager_init_invalid_coin_equivalent_new_equivalent(self):
+        # Arrange
+        new_coin = mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True)
+        self._mock_coin_equivalents.add((new_coin, self._mock_coin_type_list[0]))
+        # Act
+        # Assert
+        with self.assertRaises(ValueError):
+            test_coin_type_manager = coin_type_manager.CoinTypeManager(self._mock_coin_type_set,
+                                                                       self._mock_coin_equivalents)
+
+    def test_coin_type_manager_init_invalid_coin_equivalent_new_coin(self):
+        # Arrange
+        new_coin = mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True)
+        self._mock_coin_equivalents.add((self._mock_coin_type_list[0], new_coin))
+        # Act
+        # Assert
+        with self.assertRaises(ValueError):
+            test_coin_type_manager = coin_type_manager.CoinTypeManager(self._mock_coin_type_set,
+                                                                       self._mock_coin_equivalents)
+
     def test_coin_type_manager_test_get_coin_set(self):
         # Arrange
         test_coin_type_manager = coin_type_manager.CoinTypeManager(self._mock_coin_type_set, set())
