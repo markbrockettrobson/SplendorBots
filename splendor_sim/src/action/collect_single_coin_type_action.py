@@ -14,9 +14,9 @@ class CollectSingleCoinTypeAction(i_action.IAction):
             current_player: i_player.IPlayer,
             coins: typing.Dict[i_coin_type.ICoinType, int],
     ):
+        self._validate_input(valid_coin_type_set, coins)
         coin_type, number_of_coins = coins.popitem()
         self._coin_dictionary = coins
-        self._validate_input(valid_coin_type_set, coins)
         self._current_player = current_player
         self._coin_type = coin_type
         self._number_of_coins = number_of_coins
@@ -37,7 +37,8 @@ class CollectSingleCoinTypeAction(i_action.IAction):
     ):
         if not len(coins.keys()) == 1:
             raise ValueError("can only take one type of coin")
-        coin_type, number_of_coins = coins.popitem()
+        coin_type = list(coins.keys())[0]
+        number_of_coins = coins[coin_type]
         if number_of_coins not in (1, 2):
             raise ValueError("can only take one or two coins")
         if coin_type not in valid_coin_type_set:
