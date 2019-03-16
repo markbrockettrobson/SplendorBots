@@ -75,7 +75,6 @@ class TestCardReserve(unittest.TestCase):
         # Arrange
         for i, deck in enumerate(self._mock_decks):
             deck.get_tier.return_value = i % 2
-        self._mock_deck_set = set()
         # Act
         with self.assertRaises(ValueError):
             # Assert
