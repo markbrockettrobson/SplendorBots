@@ -44,6 +44,17 @@ class TestCardReserve(unittest.TestCase):
         # Assert
         self.assertEqual(test_card_reserve.get_number_of_remaining_cards(), self._decks * self._cards_per_deck)
 
+    def test_card_reserve_init_valid_more_for_sale_then_in_deck(self):
+        # Arrange
+        self._cards_on_sale = 7
+        for _, deck in enumerate(self._mock_decks):
+            deck.number_remaining_cards.return_value = 0
+
+        # Act
+        test_card_reserve = card_reserve.CardReserve(self._cards_on_sale, self._mock_deck_set)
+        # Assert
+        self.assertEqual(test_card_reserve.get_number_of_remaining_cards(), self._cards_per_deck * self._decks)
+
     def test_card_reserve_init_invalid_cards_on_sale(self):
         # Arrange
         self._cards_on_sale = 0
@@ -52,8 +63,18 @@ class TestCardReserve(unittest.TestCase):
             # Assert
             _ = card_reserve.CardReserve(self._cards_on_sale, self._mock_deck_set)
 
-    def test_card_reserve_init_invalid_decks(self):
+    def test_card_reserve_init_invalid_decks_empty(self):
         # Arrange
+        self._mock_deck_set = set()
+        # Act
+        with self.assertRaises(ValueError):
+            # Assert
+            _ = card_reserve.CardReserve(self._cards_on_sale, self._mock_deck_set)
+
+    def test_card_reserve_init_invalid_decks_same_tier(self):
+        # Arrange
+        for i, deck in enumerate(self._mock_decks):
+            deck.get_tier.return_value = i % 2
         self._mock_deck_set = set()
         # Act
         with self.assertRaises(ValueError):
@@ -249,7 +270,7 @@ class TestCardReserve(unittest.TestCase):
         # Act
         with self.assertRaises(ValueError):
             # Assert
-            test_card_reserve.remove_top_of_deck(100)
+            test_card_reserve.remove_top_of_deck(1)
 
     def test_card_reserve_get_remaining_cards(self):
         # Arrange
