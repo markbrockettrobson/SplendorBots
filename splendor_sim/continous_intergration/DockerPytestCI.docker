@@ -1,0 +1,16 @@
+FROM python:3
+
+RUN mkdir /usr/splendor
+WORKDIR /usr/splendor
+
+COPY requirements.txt ./
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY pylintrc ./
+COPY splendor_sim ./splendor_sim
+
+RUN python -m pytest --cov splendor_sim
+RUN python -m pytest --mypy -m mypy
+RUN python -m pytest --pylint -m pylint
+RUN python -m codecov --token=a810b1b1-f488-4eae-bdf0-9e2f8146cf84
