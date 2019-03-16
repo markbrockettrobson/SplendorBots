@@ -20,7 +20,7 @@ class TestCoinTypeManager(unittest.TestCase):
         # Assert
         with self.assertRaises(ValueError):
             _ = coin_type_manager.CoinTypeManager(self._mock_coin_type_set,
-                                                                       self._mock_coin_equivalents)
+                                                  self._mock_coin_equivalents)
 
     def test_coin_type_manager_init_invalid_coin_equivalent_new_coin(self):
         # Arrange
@@ -30,7 +30,7 @@ class TestCoinTypeManager(unittest.TestCase):
         # Assert
         with self.assertRaises(ValueError):
             _ = coin_type_manager.CoinTypeManager(self._mock_coin_type_set,
-                                                                       self._mock_coin_equivalents)
+                                                  self._mock_coin_equivalents)
 
     def test_coin_type_manager_test_get_coin_set(self):
         # Arrange
