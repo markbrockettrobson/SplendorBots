@@ -91,6 +91,21 @@ class TestPlayerCoinInventory(unittest.TestCase):
         # Assert
         self.assertEqual(real, expected)
 
+    def test_player_coin_inventory_add_coins_multiple_times(self):
+        # Arrange
+        add = {self._mock_coin_type_list[0]: 3,
+               self._mock_coin_type_list[2]: 3,
+               self._mock_coin_type_list[-1]: 3}
+        expected = {self._mock_coin_type_list[0]: 6,
+                    self._mock_coin_type_list[2]: 6,
+                    self._mock_coin_type_list[-1]: 6}
+        # Act
+        self.test_player_coin_inventory.add_coins(add)
+        self.test_player_coin_inventory.add_coins(add)
+        real = self.test_player_coin_inventory.get_coins()
+        # Assert
+        self.assertEqual(real, expected)
+
     def test_player_coin_inventory_add_coins_type_error_new_coin_type(self):
         # Arrange
         new_mock_coin = mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True)

@@ -32,6 +32,13 @@ class TestCardManager(unittest.TestCase):
         # Assert
         self.assertEqual(pre_mutation, test_card_manager.get_card_set())
 
+    def test_card_manager_get_tier(self):
+        # Arrange
+        test_card_manager = card_manager.CardManager(self._mock_card_set)
+        # Act
+        # Assert
+        self.assertEqual(test_card_manager.get_tiers(), {1, 2, 3})
+
     def test_card_manager_get_card_list(self):
         # Arrange
         test_card_manager = card_manager.CardManager(self._mock_card_set)

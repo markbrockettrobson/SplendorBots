@@ -5,5 +5,5 @@ steps:
          'gcr.io/my-project/my-image',
          '.',
          '-f',
-         'DockerPytest.docker']
+         'splendor_sim/continous_intergration/DockerPytestCI.docker']
   timeout: 600s

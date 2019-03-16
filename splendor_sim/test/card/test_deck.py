@@ -51,6 +51,13 @@ class TestDeck(unittest.TestCase):
             self.assertIn(test_deck.next(), pre_mutation)
         self.assertTrue(number_seen, len(pre_mutation))
 
+    def test_deck_get_tier(self):
+        # Arrange
+        test_deck = deck.Deck(self._tier, self._mock_card_set)
+        # Act
+        # Assert
+        self.assertEqual(test_deck.get_tier(), self._tier)
+
     def test_deck_has_next(self):
         # Arrange
         test_deck = deck.Deck(self._tier, self._mock_card_set)

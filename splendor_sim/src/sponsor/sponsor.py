@@ -28,8 +28,6 @@ class Sponsor(i_sponsor.ISponsor):
         for coin, amount in cost.items():
             if amount < 0:
                 raise ValueError("coin type amount must be zero or greater")
-            if coin in seen_cards:
-                raise ValueError("coin type must only occur once  must be one or greater")
             seen_cards.add(coin)
         if not seen_cards:
             raise ValueError("must have one or more coin types")
