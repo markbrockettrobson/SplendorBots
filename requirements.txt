@@ -2,3 +2,4 @@ pytest
 pylint
 pytest-pylint
 pytest-mypy
+pytest-cov
