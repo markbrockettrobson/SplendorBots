@@ -10,6 +10,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY pylintrc ./
 COPY splendor_sim ./splendor_sim
 
-RUN python -m pytest
-RUN python -m pytest --mypy -m mypy
-RUN python -m pytest --pylint -m pylint
+RUN python -m pytest --mypy --pylint
