@@ -54,6 +54,13 @@ class TestDeck(unittest.TestCase):
     def test_deck_has_next(self):
         # Arrange
         test_deck = deck.Deck(self._tier, self._mock_card_set)
+        # Act
+        # Assert
+        self.assertEqual(test_deck.get_tier(), self._tier)
+
+    def test_deck_has_next(self):
+        # Arrange
+        test_deck = deck.Deck(self._tier, self._mock_card_set)
         expect = [True, True, True, True, True, True, True, True, True, True, False]
         real = []
         # Act
