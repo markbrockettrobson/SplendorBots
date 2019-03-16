@@ -31,14 +31,14 @@ class TestCollectSingleCoinTypeAction(unittest.TestCase):
     def test_collect_single_coin_type_action_init_valid(self):
         # Arrange
         # Act
-        test_collect_single_coin_type_action = collect_single_coin_type_action.CollectSingleCoinTypeAction(
+        test_action = collect_single_coin_type_action.CollectSingleCoinTypeAction(
             self._mock_valid_coin_type_set,
             self._mock_player,
             self._mock_coins
         )
         # Assert
         self.assertEqual(
-            test_collect_single_coin_type_action.validate(self._mock_game_state),
+            test_action.validate(self._mock_game_state),
             True
         )
 
@@ -93,14 +93,14 @@ class TestCollectSingleCoinTypeAction(unittest.TestCase):
     def test_collect_single_coin_type_action_validate_true(self):
         # Arrange
         # Act
-        test_collect_single_coin_type_action = collect_single_coin_type_action.CollectSingleCoinTypeAction(
+        test_action = collect_single_coin_type_action.CollectSingleCoinTypeAction(
             self._mock_valid_coin_type_set,
             self._mock_player,
             self._mock_coins
         )
         # Assert
         self.assertEqual(
-            test_collect_single_coin_type_action.validate(self._mock_game_state),
+            test_action.validate(self._mock_game_state),
             True
         )
 
@@ -108,14 +108,14 @@ class TestCollectSingleCoinTypeAction(unittest.TestCase):
         # Arrange
         self._mock_coin_reserve.has_minimum.return_value = False
         # Act
-        test_collect_single_coin_type_action = collect_single_coin_type_action.CollectSingleCoinTypeAction(
+        test_action = collect_single_coin_type_action.CollectSingleCoinTypeAction(
             self._mock_valid_coin_type_set,
             self._mock_player,
             self._mock_coins
         )
         # Assert
         self.assertEqual(
-            test_collect_single_coin_type_action.validate(self._mock_game_state),
+            test_action.validate(self._mock_game_state),
             False
         )
 
@@ -123,35 +123,35 @@ class TestCollectSingleCoinTypeAction(unittest.TestCase):
         # Arrange
         self._mock_coin_reserve.has_minimum.return_value = False
         # Act
-        test_collect_single_coin_type_action = collect_single_coin_type_action.CollectSingleCoinTypeAction(
+        test_action = collect_single_coin_type_action.CollectSingleCoinTypeAction(
             self._mock_valid_coin_type_set,
             self._mock_player,
             self._mock_coins
         )
         # Assert
         with self.assertRaises(ValueError):
-            test_collect_single_coin_type_action.execute(self._mock_game_state)
+            test_action.execute(self._mock_game_state)
 
     def test_collect_single_coin_type_action_execute_coins_leave_reserve(self):
         # Arrange
-        test_collect_single_coin_type_action = collect_single_coin_type_action.CollectSingleCoinTypeAction(
+        test_action = collect_single_coin_type_action.CollectSingleCoinTypeAction(
             self._mock_valid_coin_type_set,
             self._mock_player,
             self._mock_coins
         )
         # Act
-        test_collect_single_coin_type_action.execute(self._mock_game_state)
+        test_action.execute(self._mock_game_state)
         # Assert
         self._mock_coin_reserve.remove_coins.assert_called_once_with(self._mock_coins)
 
     def test_collect_single_coin_type_action_execute_player_gains_coins(self):
         # Arrange
-        test_collect_single_coin_type_action = collect_single_coin_type_action.CollectSingleCoinTypeAction(
+        test_action = collect_single_coin_type_action.CollectSingleCoinTypeAction(
             self._mock_valid_coin_type_set,
             self._mock_player,
             self._mock_coins
         )
         # Act
-        test_collect_single_coin_type_action.execute(self._mock_game_state)
+        test_action.execute(self._mock_game_state)
         # Assert
         self._mock_coin_inventory.add_coins.assert_called_once_with(self._mock_coins)
