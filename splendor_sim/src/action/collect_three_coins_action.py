@@ -17,10 +17,7 @@ class CollectThreeCoinsAction(i_action.IAction):
     ):
         self._validate_input(valid_coin_type_set, coins)
         self._coin_dictionary = copy.copy(coins)
-        coin_type, number_of_coins = copy.copy(coins).popitem()
         self._current_player = current_player
-        self._coin_type = coin_type
-        self._number_of_coins = number_of_coins
 
     def validate(self, game_state: i_game_state.IGameState) -> bool:
         return game_state.get_coin_reserve().has_minimum(self._coin_dictionary)
