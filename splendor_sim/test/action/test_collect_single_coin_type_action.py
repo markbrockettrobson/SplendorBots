@@ -1,4 +1,3 @@
-import copy
 import unittest
 import unittest.mock as mock
 
@@ -45,17 +44,17 @@ class TestCollectSingleCoinTypeAction(unittest.TestCase):
 
     def test_collect_single_coin_type_action_post_init_coin_type_set_immutability(self):
         # Arrange
+        expected_coins = {self._mock_coin_type_list[0]: 4}
         test_action = collect_single_coin_type_action.CollectSingleCoinTypeAction(
             self._mock_valid_coin_type_set,
             self._mock_player,
             self._mock_coins
         )
-        pre_mutation = copy.copy(self._mock_coins)
         # Act
         self._mock_coins.pop(list(self._mock_coins.keys())[0])
         test_action.validate(self._mock_game_state)
         # Assert
-        self._mock_coin_reserve.has_minimum.assert_called_with(pre_mutation)
+        self._mock_coin_reserve.has_minimum.assert_called_with(expected_coins)
 
     def test_collect_single_coin_type_action_post_init_mock_coins_immutability(self):
         # Arrange
@@ -173,7 +172,7 @@ class TestCollectSingleCoinTypeAction(unittest.TestCase):
         # Act
         test_action.execute(self._mock_game_state)
         # Assert
-        self._mock_coin_reserve.remove_coins.assert_called_once_with({self._mock_coin_type_list[0]: 4})
+        self._mock_coin_reserve.remove_coins.assert_called_once_with(self._mock_coins)
 
     def test_collect_single_coin_type_action_execute_player_gains_coins(self):
         # Arrange
