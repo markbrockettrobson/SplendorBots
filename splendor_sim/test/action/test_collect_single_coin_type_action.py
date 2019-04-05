@@ -185,3 +185,16 @@ class TestCollectSingleCoinTypeAction(unittest.TestCase):
         test_action.execute(self._mock_game_state)
         # Assert
         self._mock_coin_inventory.add_coins.assert_called_once_with(self._mock_coins)
+
+    def test_collect_single_coin_type_action_execute_validate_false(self):
+        # Arrange
+        self._mock_coin_reserve.has_minimum.return_value = False
+        # Act
+        test_action = collect_single_coin_type_action.CollectSingleCoinTypeAction(
+            self._mock_valid_coin_type_set,
+            self._mock_player,
+            self._mock_coins
+        )
+        # Assert
+        with self.assertRaises(ValueError):
+            test_action.execute(self._mock_game_state)
