@@ -4,6 +4,10 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 RUN git clone https://github.com/markbrockettrobson/SplendorBots.git
+
+# for new requirements
+RUN pip install --no-cache-dir -r requirements.txt
+
 WORKDIR /SplendorBots
 
 COPY splendor_sim ./splendor_sim
