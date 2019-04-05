@@ -1,6 +1,7 @@
-pytest
-pylint
 codecov
-pytest-pylint
-pytest-mypy
+networkx
+pylint
+pytest
 pytest-cov
+pytest-mypy
+pytest-pylint
