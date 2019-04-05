@@ -96,9 +96,8 @@ class PaymentManager(i_payment_manager.IPaymentManager):
     def _total_outbound_flow(self, graph: networkx.DiGraph) -> int:
         total = 0
         for coin in self._coin_type_manager.get_coin_set():
-            if coin.__str__() + "_cost" in graph:
-                if "sink" in graph[coin.__str__() + "_cost"]:
-                    total += graph[coin.__str__() + "_cost"]["sink"]["flow"]
+            if "sink" in graph[coin.__str__() + "_cost"]:
+                total += graph[coin.__str__() + "_cost"]["sink"]["flow"]
         return total
 
     # code from https://medium.com/100-days-of-algorithms/day-49-ford-fulkerson-e70045dafd8b
