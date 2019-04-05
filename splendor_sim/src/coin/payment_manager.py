@@ -29,7 +29,6 @@ class PaymentManager(i_payment_manager.IPaymentManager):
         graph = self._create_cost_graph(cost, payment)
         self.ford_fulkerson(graph, "source", "sink")
         max_flow = self._total_outbound_flow(graph)
-
         return total_cost == max_flow and total_payment == max_flow
 
     def _validate_coin_dictionary(self, coin_dictionary: typing.Dict[i_coin_type.ICoinType, int]):
@@ -112,11 +111,11 @@ class PaymentManager(i_payment_manager.IPaymentManager):
             path, reserve = PaymentManager.depth_first_search(graph, source, sink)
             flow += reserve
 
-            for v, u in zip(path, path[1:]):
-                if graph.has_edge(v, u):
-                    graph[v][u]['flow'] += reserve
+            for vertex, destination_vertex in zip(path, path[1:]):
+                if graph.has_edge(vertex, destination_vertex):
+                    graph[vertex][destination_vertex]['flow'] += reserve
                 else:
-                    graph[u][v]['flow'] -= reserve
+                    graph[destination_vertex][vertex]['flow'] -= reserve
 
     @staticmethod
     def depth_first_search(graph, source, sink):
@@ -125,32 +124,32 @@ class PaymentManager(i_payment_manager.IPaymentManager):
         stack = [(source, 0, dict(undirected[source]))]
 
         while stack:
-            v, _, neighbours = stack[-1]
-            if v == sink:
+            vertex, _, neighbours = stack[-1]
+            if vertex == sink:
                 break
 
             while neighbours:
-                u, e = neighbours.popitem()
-                if u not in explored:
+                destination_vertex, edge = neighbours.popitem()
+                if destination_vertex not in explored:
                     break
             else:
                 stack.pop()
                 continue
 
-            in_direction = graph.has_edge(v, u)
-            capacity = e['capacity']
-            flow = e['flow']
-            neighbours = dict(undirected[u])
+            in_direction = graph.has_edge(vertex, destination_vertex)
+            capacity = edge['capacity']
+            flow = edge['flow']
+            neighbours = dict(undirected[destination_vertex])
 
             if in_direction and flow < capacity:
-                stack.append((u, capacity - flow, neighbours))
-                explored.add(u)
+                stack.append((destination_vertex, capacity - flow, neighbours))
+                explored.add(destination_vertex)
 
             elif not in_direction and flow:
-                stack.append((u, flow, neighbours))
-                explored.add(u)
+                stack.append((destination_vertex, flow, neighbours))
+                explored.add(destination_vertex)
 
         reserve = min((f for _, f, _ in stack[1:]), default=0)
-        path = [v for v, _, _ in stack]
+        path = [vertex for vertex, _, _ in stack]
 
         return path, reserve

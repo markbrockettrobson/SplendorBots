@@ -325,7 +325,6 @@ class TestPaymentManager(unittest.TestCase):
         # Assert
         with self.assertRaises(ValueError):
             _ = self._test_payment_manager.validate_payment(self._mock_cost, self._mock_payment)
-        pass
 
     def test_payment_manager_validate_invalid_coin_unknown_coin(self):
         # Arrange
@@ -336,4 +335,3 @@ class TestPaymentManager(unittest.TestCase):
         # Assert
         with self.assertRaises(ValueError):
             _ = self._test_payment_manager.validate_payment(self._mock_cost, self._mock_payment)
-        pass
