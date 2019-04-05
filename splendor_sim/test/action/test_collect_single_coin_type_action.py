@@ -72,6 +72,21 @@ class TestCollectSingleCoinTypeAction(unittest.TestCase):
             True
         )
 
+    def test_collect_single_coin_type_action_post_init_mock_coins_invalid(self):
+        # Arrange
+        self._mock_coins = {
+            self._mock_coin_type_list[0]: 2,
+            self._mock_coin_type_list[1]: 1
+        }
+        # Act
+        # Assert
+        with self.assertRaises(ValueError):
+            _ = collect_single_coin_type_action.CollectSingleCoinTypeAction(
+                self._mock_valid_coin_type_set,
+                self._mock_player,
+                self._mock_coins
+            )
+
     def test_collect_single_coin_type_action_init_invalid_coin_type(self):
         # Arrange
         self._mock_coins = {self._mock_coin_type_list[-1]: 1}

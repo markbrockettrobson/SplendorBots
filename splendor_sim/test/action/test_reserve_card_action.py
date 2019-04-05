@@ -129,6 +129,22 @@ class TestReserveCardAction(unittest.TestCase):
                 self._mock_card
             )
 
+    def test_reserve_card_action_init_mock_coins_invalid(self):
+        # Arrange
+        self._mock_coins = {
+            self._mock_coin_type: 1,
+            mock.create_autospec(spec=i_card.ICard, spec_set=True): 1
+        }
+        # Act
+        # Assert
+        with self.assertRaises(ValueError):
+            _ = reserve_card_action.ReserveCardAction(
+                self._mock_valid_coin_type_set,
+                self._mock_player,
+                self._mock_coins,
+                self._mock_card
+            )
+
     def test_reserve_card_action_validate_true(self):
         # Arrange
         # Act
