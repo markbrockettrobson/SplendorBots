@@ -19,16 +19,21 @@ class PaymentManager(i_payment_manager.IPaymentManager):
             self,
             cost: typing.Dict[i_coin_type.ICoinType, int],
             payment: typing.Dict[i_coin_type.ICoinType, int],
+            discount: typing.Dict[i_coin_type.ICoinType, int]
     ) -> bool:
         self._validate_coin_dictionary(cost)
         self._validate_coin_dictionary(payment)
+        self._validate_coin_dictionary(discount)
 
-        total_cost = self._get_total(cost)
+        discounted_cost = self._make_discounted_cost(cost, discount)
+
+        total_cost = self._get_total(discounted_cost)
         total_payment = self._get_total(payment)
 
-        graph = self._create_cost_graph(cost, payment)
+        graph = self._create_cost_graph(discounted_cost, payment)
         self.ford_fulkerson(graph, "source", "sink")
         max_flow = self._total_outbound_flow(graph)
+
         return total_cost == max_flow and total_payment == max_flow
 
     def _validate_coin_dictionary(self, coin_dictionary: typing.Dict[i_coin_type.ICoinType, int]):
@@ -40,14 +45,33 @@ class PaymentManager(i_payment_manager.IPaymentManager):
                 raise ValueError("Negative costs or payment")
 
     @staticmethod
-    def _get_total(cost: typing.Dict[i_coin_type.ICoinType, int]):
+    def _make_discounted_cost(
+            cost: typing.Dict[i_coin_type.ICoinType, int],
+            discount: typing.Dict[i_coin_type.ICoinType, int]
+    ):
+        discounted_cost = {}
+        for key, value in cost.items():
+            if key in discount:
+                discounted_cost[key] = max(value - discount[key], 0)
+            else:
+                discounted_cost[key] = value
+        return discounted_cost
+
+    @staticmethod
+    def _get_total(
+            cost: typing.Dict[i_coin_type.ICoinType, int]
+    ) -> int:
         total = 0
         for coin in cost.keys():
             total += cost[coin]
         return total
 
     @staticmethod
-    def _create_edge(from_node: str, to_node: str, weight):
+    def _create_edge(
+            from_node: str,
+            to_node: str,
+            weight: int
+    ) -> typing.Tuple[str, str, typing.Dict[str, int]]:
         return from_node, to_node, {'capacity': weight, 'flow': 0}
 
     @staticmethod
@@ -102,7 +126,12 @@ class PaymentManager(i_payment_manager.IPaymentManager):
 
     # code from https://medium.com/100-days-of-algorithms/day-49-ford-fulkerson-e70045dafd8b
     @staticmethod
-    def ford_fulkerson(graph, source, sink):
+    def ford_fulkerson(
+            graph: networkx.DiGraph,
+            source: str,
+            sink: str
+    ) -> None:
+
         flow, path = 0, True
 
         while path:
@@ -117,7 +146,12 @@ class PaymentManager(i_payment_manager.IPaymentManager):
                     graph[destination_vertex][vertex]['flow'] -= reserve
 
     @staticmethod
-    def depth_first_search(graph, source, sink):
+    def depth_first_search(
+            graph: networkx.DiGraph,
+            source: str,
+            sink: str
+    ) -> typing.Tuple[typing.List[str], int]:
+
         undirected = graph.to_undirected()
         explored = {source}
         stack = [(source, 0, dict(undirected[source]))]
