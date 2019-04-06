@@ -57,7 +57,7 @@ class TestPurchaseReservedCardAction(unittest.TestCase):
         self._mock_payment_manager.validate_payment.return_value = True
         self._mock_game_state.get_payment_manager.return_value = self._mock_payment_manager
 
-    def test_reserve_card_action_init_valid(self):
+    def test_purchase_reserve_card_action_init_valid(self):
         # Arrange
         # Act
         test_action = purchase_reserved_card_action.PurchaseReservedCardAction(
