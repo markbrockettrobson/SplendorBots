@@ -67,11 +67,7 @@ class PaymentManager(i_payment_manager.IPaymentManager):
         return total
 
     @staticmethod
-    def _create_edge(
-            from_node: str,
-            to_node: str,
-            weight: int
-    ) -> typing.Tuple[str, str, typing.Dict[str, int]]:
+    def _create_edge(from_node: str, to_node: str, weight):
         return from_node, to_node, {'capacity': weight, 'flow': 0}
 
     @staticmethod
@@ -126,12 +122,7 @@ class PaymentManager(i_payment_manager.IPaymentManager):
 
     # code from https://medium.com/100-days-of-algorithms/day-49-ford-fulkerson-e70045dafd8b
     @staticmethod
-    def ford_fulkerson(
-            graph: networkx.DiGraph,
-            source: str,
-            sink: str
-    ) -> None:
-
+    def ford_fulkerson(graph, source, sink):
         flow, path = 0, True
 
         while path:
@@ -146,12 +137,7 @@ class PaymentManager(i_payment_manager.IPaymentManager):
                     graph[destination_vertex][vertex]['flow'] -= reserve
 
     @staticmethod
-    def depth_first_search(
-            graph: networkx.DiGraph,
-            source: str,
-            sink: str
-    ) -> typing.Tuple[typing.List[str], int]:
-
+    def depth_first_search(graph, source, sink):
         undirected = graph.to_undirected()
         explored = {source}
         stack = [(source, 0, dict(undirected[source]))]
