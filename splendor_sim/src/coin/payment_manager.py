@@ -19,16 +19,21 @@ class PaymentManager(i_payment_manager.IPaymentManager):
             self,
             cost: typing.Dict[i_coin_type.ICoinType, int],
             payment: typing.Dict[i_coin_type.ICoinType, int],
+            discount: typing.Dict[i_coin_type.ICoinType, int]
     ) -> bool:
         self._validate_coin_dictionary(cost)
         self._validate_coin_dictionary(payment)
+        self._validate_coin_dictionary(discount)
 
-        total_cost = self._get_total(cost)
+        discounted_cost = self._make_discounted_cost(cost, discount)
+
+        total_cost = self._get_total(discounted_cost)
         total_payment = self._get_total(payment)
 
-        graph = self._create_cost_graph(cost, payment)
+        graph = self._create_cost_graph(discounted_cost, payment)
         self.ford_fulkerson(graph, "source", "sink")
         max_flow = self._total_outbound_flow(graph)
+
         return total_cost == max_flow and total_payment == max_flow
 
     def _validate_coin_dictionary(self, coin_dictionary: typing.Dict[i_coin_type.ICoinType, int]):
@@ -40,7 +45,22 @@ class PaymentManager(i_payment_manager.IPaymentManager):
                 raise ValueError("Negative costs or payment")
 
     @staticmethod
-    def _get_total(cost: typing.Dict[i_coin_type.ICoinType, int]):
+    def _make_discounted_cost(
+            cost: typing.Dict[i_coin_type.ICoinType, int],
+            discount: typing.Dict[i_coin_type.ICoinType, int]
+    ):
+        discounted_cost = {}
+        for key, value in cost.items():
+            if key in discount:
+                discounted_cost[key] = max(value - discount[key], 0)
+            else:
+                discounted_cost[key] = value
+        return discounted_cost
+
+    @staticmethod
+    def _get_total(
+            cost: typing.Dict[i_coin_type.ICoinType, int]
+    ) -> int:
         total = 0
         for coin in cost.keys():
             total += cost[coin]

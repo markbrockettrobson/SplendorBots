@@ -21,12 +21,15 @@ class IPaymentManager(abc.ABC):
             self,
             cost: typing.Dict[i_coin_type.ICoinType, int],
             payment: typing.Dict[i_coin_type.ICoinType, int],
+            discount: typing.Dict[i_coin_type.ICoinType, int]
     ) -> bool:
         """
 
         :param cost:
                <typing.Dict[i_coin_type.ICoinType, int]>
         :param payment:
+               <typing.Dict[i_coin_type.ICoinType, int]>
+        :param discount:
                <typing.Dict[i_coin_type.ICoinType, int]>
         :return: True if the payment can be used to pay the cost
                  <bool>
