@@ -4,7 +4,7 @@ import splendor_sim.interfaces.player.i_player_manager as i_player_manager
 import splendor_sim.interfaces.coin.i_coin_reserve as i_coin_reserve
 import splendor_sim.interfaces.card.i_card_reserve as i_card_reserve
 import splendor_sim.interfaces.sponsor.i_sponsor_reserve as i_sponsor_reserve
-
+import splendor_sim.interfaces.coin.i_payment_manager as i_payment_manager
 
 class IGameState(abc.ABC):
 
@@ -14,7 +14,8 @@ class IGameState(abc.ABC):
             player_manager: i_player_manager.IPlayerManager,
             coin_reserve: i_coin_reserve.ICoinReserve,
             card_reserve: i_card_reserve.ICardReserve,
-            sponsor_reserve: i_sponsor_reserve.ISponsorReserve
+            sponsor_reserve: i_sponsor_reserve.ISponsorReserve,
+            payment_manager: i_payment_manager.IPaymentManager
     ):
         """
 
@@ -26,6 +27,8 @@ class IGameState(abc.ABC):
                <i_card_reserve.ICardReserve>
         :param sponsor_reserve: used to hold the state of the sponsors
                <i_sponsor_reserve.ISponsorReserve>
+        :param payment_manager: used to test if payments are valid
+               <i_payment_manager.IPaymentManager>
         """
 
     @abc.abstractmethod
@@ -58,4 +61,12 @@ class IGameState(abc.ABC):
 
         :return: the sponsor_reserve that is used to hold the state of the sponsors
                  <i_sponsor_reserve.ISponsorReserve>
+        """
+
+    @abc.abstractmethod
+    def get_payment_manager(self) -> i_payment_manager.IPaymentManager:
+        """
+
+        :return: the payment_manager that is used to test if payments are valid
+                 <i_payment_manager.IPaymentManager>
         """
