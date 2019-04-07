@@ -55,7 +55,7 @@ class TestDiscardCoinsAction(unittest.TestCase):
         # Assert
         self.assertTrue(test_action.validate(self._mock_game_state))
 
-    def test_discard_coins_action_post_init_mock_coins_immutability(self):
+    def test_discard_coins_action_post_init_coins_immutability(self):
         # Arrange
         test_action = discard_coins_action.DiscardCoinsAction(
             self._mock_valid_coin_type_set,
@@ -68,12 +68,24 @@ class TestDiscardCoinsAction(unittest.TestCase):
         # Assert
         self.assertTrue(test_action.validate(self._mock_game_state))
 
-    def test_discard_coins_action_post_init_mock_coins_invalid(self):
+    def test_discard_coins_action_coins_invalid(self):
         # Arrange
         self._mock_coins = {
             mock.create_autospec(spec=i_coin_type, spec_set=True): 2,
             self._mock_coin_type_list[1]: 1
         }
+        # Act
+        # Assert
+        with self.assertRaises(ValueError):
+            _ = discard_coins_action.DiscardCoinsAction(
+                self._mock_valid_coin_type_set,
+                self._mock_player,
+                self._mock_coins
+            )
+
+    def test_discard_coins_action_coins_invalid_empty(self):
+        # Arrange
+        self._mock_coins = {}
         # Act
         # Assert
         with self.assertRaises(ValueError):
