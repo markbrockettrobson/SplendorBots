@@ -9,8 +9,14 @@ class TestCoinTypeManager(unittest.TestCase):
     def setUp(self):
         self._mock_coin_type_set = {mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True) for _ in range(6)}
         self._mock_coin_type_list = list(self._mock_coin_type_set)
-        self._mock_coin_equivalents = {(self._mock_coin_type_list[i], self._mock_coin_type_list[5])
-                                       for i in range(0, 5)}
+        self._mock_card_names = [name for name in "ABCDEF"]
+
+        for i, coin in enumerate(self._mock_coin_type_list):
+            coin.get_name.return_value = self._mock_card_names[i]
+
+        self._mock_coin_equivalents = {
+            (self._mock_coin_type_list[i], self._mock_coin_type_list[5]) for i in range(0, 5)
+        }
 
     def test_coin_type_manager_init_invalid_coin_equivalent_new_equivalent(self):
         # Arrange
@@ -26,6 +32,15 @@ class TestCoinTypeManager(unittest.TestCase):
         # Arrange
         new_coin = mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True)
         self._mock_coin_equivalents.add((self._mock_coin_type_list[0], new_coin))
+        # Act
+        # Assert
+        with self.assertRaises(ValueError):
+            _ = coin_type_manager.CoinTypeManager(self._mock_coin_type_set,
+                                                  self._mock_coin_equivalents)
+
+    def test_coin_type_manager_init_invalid_coin_names_repeated(self):
+        # Arrange
+        self._mock_coin_type_list[1].get_name.return_value = "A"
         # Act
         # Assert
         with self.assertRaises(ValueError):
@@ -145,3 +160,35 @@ class TestCoinTypeManager(unittest.TestCase):
         result = test_coin_type_manager.get_coin_usage(self._mock_coin_type_list[0])
         self.assertIn(self._mock_coin_type_list[0], result)
         self.assertIn(self._mock_coin_type_list[5], result)
+
+    def test_coin_type_manager_is_coin_in_manager_by_name_true(self):
+        # Arrange
+        test_coin_type_manager = coin_type_manager.CoinTypeManager(self._mock_coin_type_set, set())
+        # Act
+        # Assert
+        self.assertTrue(test_coin_type_manager.is_coin_in_manager_by_name("B"))
+
+    def test_coin_type_manager_is_coin_in_manager_by_name_false(self):
+        # Arrange
+        test_coin_type_manager = coin_type_manager.CoinTypeManager(self._mock_coin_type_set, set())
+        # Act
+        # Assert
+        self.assertFalse(test_coin_type_manager.is_coin_in_manager_by_name("Z"))
+
+    def test_coin_type_manager_get_coin_by_name_in_manager(self):
+        # Arrange
+        test_coin_type_manager = coin_type_manager.CoinTypeManager(self._mock_coin_type_set, set())
+        # Act
+        # Assert
+        self.assertEqual(
+            test_coin_type_manager.get_coin_by_name("B"),
+            self._mock_coin_type_list[1]
+        )
+
+    def test_coin_type_manager_get_coin_by_name_not_in_manager(self):
+        # Arrange
+        test_coin_type_manager = coin_type_manager.CoinTypeManager(self._mock_coin_type_set, set())
+        # Act
+        # Assert
+        with self.assertRaises(ValueError):
+            _ = test_coin_type_manager.get_coin_by_name("Z")

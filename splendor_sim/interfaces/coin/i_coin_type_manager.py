@@ -53,3 +53,29 @@ class ICoinTypeManager(abc.ABC):
         :return: a list of all coin type that it can be used for
                  <typing.Set[i_coin_type.ICoinType]>
         """
+
+    @abc.abstractmethod
+    def get_coin_by_name(
+            self,
+            name: str
+    ) -> i_coin_type.ICoinType:
+        """
+
+        :param name: the name of the coin you want to get
+               <str>
+        :return: the coin type requested if in manager
+                 <i_coin_type.ICoinType>
+        """
+
+    @abc.abstractmethod
+    def is_coin_in_manager_by_name(
+            self,
+            name: str
+    ) -> bool:
+        """
+
+        :param name: the name of the coin you want to get
+               <str>
+        :return: true if the manager has a coin with that name
+                 <bool>
+        """

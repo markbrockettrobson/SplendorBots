@@ -9,4 +9,12 @@ class IJsonValidator(abc.ABC):
             json: typing.Dict,
             schema: typing.Dict
     ) -> bool:
-        pass
+        """
+
+        :param json: the json dict
+                 <typing.Dict>
+        :param schema: the schema
+                 <typing.Dict>
+        :return: bool true if the dict conforms to the schema
+                 <bool>
+        """

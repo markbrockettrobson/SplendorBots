@@ -27,6 +27,8 @@ class CoinTypeManager(i_coin_type_manager.ICoinTypeManager):
             self._usage_map[coin].add(use)
             self._equivalent_map[use].add(coin)
 
+        self._create_name_map()
+
     def get_coin_set(self) -> typing.Set[i_coin_type.ICoinType]:
         return copy.copy(self._coin_type_set)
 
@@ -45,3 +47,24 @@ class CoinTypeManager(i_coin_type_manager.ICoinTypeManager):
         if coin_type not in self._coin_type_set:
             raise ValueError("coin type must be in coin type set")
         return copy.copy(self._usage_map[coin_type])
+
+    def _create_name_map(self):
+        self._name_map = {}  # type: typing.Dict[str, i_coin_type.ICoinType]
+        for coin in self._coin_type_set:
+            if coin.get_name() in self._name_map:
+                raise ValueError("Two coins can not have the same name.")
+            self._name_map[coin.get_name()] = coin
+
+    def get_coin_by_name(
+            self,
+            name: str
+    ) -> i_coin_type.ICoinType:
+        if not self.is_coin_in_manager_by_name(name):
+            raise ValueError("No coin of that name in manager.")
+        return self._name_map[name]
+
+    def is_coin_in_manager_by_name(
+            self,
+            name: str
+    ) -> bool:
+        return name in self._name_map
