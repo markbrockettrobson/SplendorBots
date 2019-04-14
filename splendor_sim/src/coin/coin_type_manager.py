@@ -68,3 +68,8 @@ class CoinTypeManager(i_coin_type_manager.ICoinTypeManager):
             name: str
     ) -> bool:
         return name in self._name_map
+
+    def get_name_set(
+            self
+    ) -> typing.Set[str]:
+        return set(self._name_map.keys())

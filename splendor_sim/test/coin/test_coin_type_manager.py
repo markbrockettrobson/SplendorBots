@@ -192,3 +192,26 @@ class TestCoinTypeManager(unittest.TestCase):
         # Assert
         with self.assertRaises(ValueError):
             _ = test_coin_type_manager.get_coin_by_name("Z")
+
+    def test_coin_type_manager_get_name_set(self):
+        # Arrange
+        test_coin_type_manager = coin_type_manager.CoinTypeManager(self._mock_coin_type_set, set())
+        # Act
+        # Assert
+        self.assertEqual(
+            test_coin_type_manager.get_name_set(),
+            {"A", "B", "C", "D", "E", "F"}
+        )
+
+    def test_coin_type_manager_get_name_set_immutability(self):
+        # Arrange
+        test_coin_type_manager = coin_type_manager.CoinTypeManager(self._mock_coin_type_set,
+                                                                   self._mock_coin_equivalents)
+        pre_mutation = test_coin_type_manager.get_name_set()
+        # Act
+        pre_mutation.pop()
+        # Assert
+        self.assertEqual(
+            test_coin_type_manager.get_name_set(),
+            {"A", "B", "C", "D", "E", "F"}
+        )

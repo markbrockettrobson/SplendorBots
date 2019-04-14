@@ -79,3 +79,13 @@ class ICoinTypeManager(abc.ABC):
         :return: true if the manager has a coin with that name
                  <bool>
         """
+
+    @abc.abstractmethod
+    def get_name_set(
+            self
+    ) -> typing.Set[str]:
+        """
+
+        :return: returns a set of all coin names
+                 <typing.Set[str]>
+        """
