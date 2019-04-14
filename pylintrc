@@ -61,6 +61,7 @@ disable=
     unused-argument,
     super-init-not-called,
     too-many-public-methods,
+    useless-super-delegation
 
 
 [REPORTS]
