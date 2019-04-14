@@ -8,12 +8,12 @@ class IJsonBuildableObject(abc.ABC):
     @abc.abstractmethod
     def build_from_json(
             cls,
-            json: typing.Dict[str, str]
+            json: typing.Dict
     ):
         """
 
         :param json: json dict to build the project from
-               <typing.Dict[str, str]>
+               <typing.Dict>
         :return: The object built from the json
         """
 
