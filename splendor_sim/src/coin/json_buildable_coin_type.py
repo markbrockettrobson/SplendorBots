@@ -2,17 +2,19 @@ import copy
 import typing
 
 import splendor_sim.interfaces.factories.i_json_buildable_object as i_json_buildable_object
-import splendor_sim.src.coin.coin_type as coin_type
 import splendor_sim.src.factories.json_validator as json_validator
+import splendor_sim.src.coin.coin_type as coin_type
 
 
 class JsonBuildableCoinType(coin_type.CoinType, i_json_buildable_object.IJsonBuildableObject):
 
     _JSON_SCHEMA = {
         'name': {
+            'required': True,
             'type': 'string'
         },
         'total_number': {
+            'required': True,
             'type': 'integer'
         }
     }

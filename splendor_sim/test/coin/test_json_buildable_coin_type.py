@@ -62,9 +62,11 @@ class TestJsonBuildableCoinType(unittest.TestCase):
         self.assertEqual(
             {
                 'name': {
+                    'required': True,
                     'type': 'string'
                 },
                 'total_number': {
+                    'required': True,
                     'type': 'integer'
                 }
             },
@@ -80,9 +82,11 @@ class TestJsonBuildableCoinType(unittest.TestCase):
         self.assertEqual(
             {
                 'name': {
+                    'required': True,
                     'type': 'string'
                 },
                 'total_number': {
+                    'required': True,
                     'type': 'integer'
                 }
             },
