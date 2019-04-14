@@ -16,6 +16,9 @@ class CoinReserve(i_coin_reserve.ICoinReserve):
         self._current_coins = {coin: coin.get_total_number() for coin in self._coin_set} \
             # type: typing.Dict[i_coin_type.ICoinType, int]
 
+    def get_manager(self) -> i_coin_type_manager.ICoinTypeManager:
+        return self._coin_type_manager
+
     def get_coins_remaining(self) -> typing.Dict[i_coin_type.ICoinType, int]:
         return copy.copy(self._current_coins)
 

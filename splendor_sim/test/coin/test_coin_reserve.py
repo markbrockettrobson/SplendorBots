@@ -20,6 +20,14 @@ class TestCoinReserve(unittest.TestCase):
 
         self.test_coin_reserve = coin_reserve.CoinReserve(self._mock_coin_type_manager)
 
+    def test_coin_reserve_get_manager(self):
+        # Arrange
+        expected = self._mock_coin_type_manager
+        # Act
+        real = self.test_coin_reserve.get_manager()
+        # Assert
+        self.assertEqual(real, expected)
+
     def test_coin_reserve_get_coins_maximum(self):
         # Arrange
         expected = self._return_dictionary
