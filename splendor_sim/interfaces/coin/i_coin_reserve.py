@@ -15,6 +15,13 @@ class ICoinReserve(abc.ABC):
         """
 
     @abc.abstractmethod
+    def get_manager(self) -> i_coin_type_manager.ICoinTypeManager:
+        """
+
+        :return: a in_type_manager that holds all the coin types
+        """
+
+    @abc.abstractmethod
     def get_coins_remaining(self) -> typing.Dict[i_coin_type.ICoinType, int]:
         """
 
