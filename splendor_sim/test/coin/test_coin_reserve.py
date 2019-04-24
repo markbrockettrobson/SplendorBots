@@ -20,6 +20,50 @@ class TestCoinReserve(unittest.TestCase):
 
         self.test_coin_reserve = coin_reserve.CoinReserve(self._mock_coin_type_manager)
 
+    def test_coin_reserve_init_coin_stocks(self):
+        # Arrange
+        self._return_dictionary[self._mock_coin_type_list[0]] = 2
+        self._return_dictionary[self._mock_coin_type_list[1]] = 3
+        expected = self._return_dictionary
+
+        coin_stocks = {
+            self._mock_coin_type_list[0]: 2,
+            self._mock_coin_type_list[1]: 3
+        }
+        # Act
+        self.test_coin_reserve = coin_reserve.CoinReserve(
+            self._mock_coin_type_manager,
+            coin_stocks
+        )
+        real = self.test_coin_reserve.get_coins_remaining()
+        # Assert
+        self.assertEqual(real, expected)
+
+    def test_coin_reserve_init_coin_stocks_invalid_coin_type(self):
+        # Arrange
+        coin_stocks = {
+            mock.create_autospec(spec=i_coin_type_manager.ICoinTypeManager, spec_set=True): 5
+        }
+        # Act
+        # Assert
+        with self.assertRaises(ValueError):
+            self.test_coin_reserve = coin_reserve.CoinReserve(
+                self._mock_coin_type_manager,
+                coin_stocks
+            )
+
+    def test_coin_reserve_init_coin_stocks_invalid_coin_number_above_max(self):
+        # Arrange
+        coin_stocks = {
+            self._mock_coin_type_list[0]: 50
+        }
+        # Act
+        # Assert
+        with self.assertRaises(ValueError):
+            self.test_coin_reserve = coin_reserve.CoinReserve(
+                self._mock_coin_type_manager,
+                coin_stocks
+            )
     def test_coin_reserve_get_manager(self):
         # Arrange
         expected = self._mock_coin_type_manager
