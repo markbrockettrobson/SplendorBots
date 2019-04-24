@@ -1,14 +1,15 @@
 import unittest
 import unittest.mock as mock
 
-import splendor_sim.src.coin.json_buildable_coin_type_manager as json_buildable_coin_type_manager
+import splendor_sim.src.coin.json_coin_type_manager as json_coin_type_manager
+import splendor_sim.src.factories.json_schemas as json_schemas
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 
 
-class TestJsonBuildableCoinTypeManager(unittest.TestCase):
+class TestJsonCoinTypeManager(unittest.TestCase):
     def setUp(self):
         self._validator_patcher = mock.patch(
-            'splendor_sim.src.coin.json_buildable_coin_type_manager.JsonBuildableCoinTypeManager._JSON_VALIDATOR',
+            'splendor_sim.src.coin.json_coin_type_manager.JsonCoinTypeManager._JSON_VALIDATOR',
             autospec=True
         )
         self._mock_validator = self._validator_patcher.start()
@@ -87,18 +88,18 @@ class TestJsonBuildableCoinTypeManager(unittest.TestCase):
             ]
         }
 
-        self._json_buildable_coin_patcher = mock.patch(
-            'splendor_sim.src.coin.json_buildable_coin_type.JsonBuildableCoinType',
+        self._json_coin_patcher = mock.patch(
+            'splendor_sim.src.coin.json_coin_type.JsonCoinType',
             autospec=True
         )
-        self._mock_json_coin_type = self._json_buildable_coin_patcher.start()
-        self.addCleanup(self._json_buildable_coin_patcher.stop)
+        self._mock_json_coin_type = self._json_coin_patcher.start()
+        self.addCleanup(self._json_coin_patcher.stop)
         self._mock_json_coin_type.build_from_json.side_effect = self._mock_coin_types
 
-    def test_json_buildable_coin_type_init(self):
+    def test_json_coin_type_init(self):
         # Arrange
         # Act
-        object_pointer = json_buildable_coin_type_manager.JsonBuildableCoinTypeManager(
+        object_pointer = json_coin_type_manager.JsonCoinTypeManager(
             self._mock_coin_type_set,
             self._mock_coin_equivalents
         )
@@ -109,10 +110,10 @@ class TestJsonBuildableCoinTypeManager(unittest.TestCase):
             self._mock_coin_equivalents
         )
 
-    def test_json_buildable_coin_type_build_from_json_valid(self):
+    def test_json_coin_type_build_from_json_valid(self):
         # Arrange
         # Act
-        object_pointer = json_buildable_coin_type_manager.JsonBuildableCoinTypeManager.build_from_json(
+        object_pointer = json_coin_type_manager.JsonCoinTypeManager.build_from_json(
             self._mock_json
         )
         # Assert
@@ -123,17 +124,17 @@ class TestJsonBuildableCoinTypeManager(unittest.TestCase):
             self._mock_coin_equivalents
         )
 
-    def test_json_buildable_coin_type_build_from_json_invalid(self):
+    def test_json_coin_type_build_from_json_invalid(self):
         # Arrange
         self._mock_validator.validate_json.return_value = False
         # Act
         # Assert
         with self.assertRaises(ValueError):
-            _ = json_buildable_coin_type_manager.JsonBuildableCoinTypeManager.build_from_json(
+            _ = json_coin_type_manager.JsonCoinTypeManager.build_from_json(
                 self._mock_json
             )
 
-    def test_json_buildable_coin_type_build_from_json_invalid_un_known_equivalent_coin_name(self):
+    def test_json_coin_type_build_from_json_invalid_un_known_equivalent_coin_name(self):
         # Arrange
         self._mock_json['coin_equivalents'].append(
             {
@@ -144,11 +145,11 @@ class TestJsonBuildableCoinTypeManager(unittest.TestCase):
         # Act
         # Assert
         with self.assertRaises(ValueError):
-            _ = json_buildable_coin_type_manager.JsonBuildableCoinTypeManager.build_from_json(
+            _ = json_coin_type_manager.JsonCoinTypeManager.build_from_json(
                 self._mock_json
             )
 
-    def test_json_buildable_coin_type_build_from_json_invalid_un_known_equivalent_equivalent_coins_name(self):
+    def test_json_coin_type_build_from_json_invalid_un_known_equivalent_equivalent_coins_name(self):
         # Arrange
         self._mock_json['coin_equivalents'].append(
             {
@@ -159,86 +160,26 @@ class TestJsonBuildableCoinTypeManager(unittest.TestCase):
         # Act
         # Assert
         with self.assertRaises(ValueError):
-            _ = json_buildable_coin_type_manager.JsonBuildableCoinTypeManager.build_from_json(
+            _ = json_coin_type_manager.JsonCoinTypeManager.build_from_json(
                 self._mock_json
             )
 
-    def test_json_buildable_coin_type_get_json_schema(self):
+    def test_json_coin_type_get_json_schema(self):
         # Arrange
         # Act
         # Assert
         self.assertEqual(
-            {
-                'coin_types': {
-                    'required': True,
-                    'type': 'list',
-                    'minlength': 1,
-                    'schema': {
-                        'name': {
-                            'required': True,
-                            'type': 'string'
-                        },
-                        'total_number': {
-                            'required': True,
-                            'type': 'integer'
-                        }
-                    }
-                },
-                'coin_equivalents': {
-                    'required': True,
-                    'type': 'list',
-                    'schema': {
-                        'coin_name': {
-                            'required': True,
-                            'type': 'string'
-                        },
-                        'equivalent_coins_name': {
-                            'required': True,
-                            'type': 'string'
-                        },
-                    }
-                }
-            },
-            json_buildable_coin_type_manager.JsonBuildableCoinTypeManager.get_json_schema()
+            json_schemas.JSON_COIN_TYPE_MANAGER_SCHEMA,
+            json_coin_type_manager.JsonCoinTypeManager.get_json_schema()
         )
 
-    def test_json_buildable_coin_type_get_json_schema_immutability(self):
+    def test_json_coin_type_get_json_schema_immutability(self):
         # Arrange
-        pre_mutation = json_buildable_coin_type_manager.JsonBuildableCoinTypeManager.get_json_schema()
+        pre_mutation = json_coin_type_manager.JsonCoinTypeManager.get_json_schema()
         # Act
         pre_mutation.pop(list(pre_mutation.keys())[0])
         # Assert
         self.assertEqual(
-            {
-                'coin_types': {
-                    'required': True,
-                    'type': 'list',
-                    'minlength': 1,
-                    'schema': {
-                        'name': {
-                            'required': True,
-                            'type': 'string'
-                        },
-                        'total_number': {
-                            'required': True,
-                            'type': 'integer'
-                        }
-                    }
-                },
-                'coin_equivalents': {
-                    'required': True,
-                    'type': 'list',
-                    'schema': {
-                        'coin_name': {
-                            'required': True,
-                            'type': 'string'
-                        },
-                        'equivalent_coins_name': {
-                            'required': True,
-                            'type': 'string'
-                        },
-                    }
-                }
-            },
-            json_buildable_coin_type_manager.JsonBuildableCoinTypeManager.get_json_schema()
+            json_schemas.JSON_COIN_TYPE_MANAGER_SCHEMA,
+            json_coin_type_manager.JsonCoinTypeManager.get_json_schema()
         )

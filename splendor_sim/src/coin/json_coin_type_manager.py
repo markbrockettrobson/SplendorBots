@@ -3,43 +3,22 @@ import typing
 
 import splendor_sim.interfaces.factories.i_json_buildable_object as i_json_buildable_object
 import splendor_sim.src.factories.json_validator as json_validator
+import splendor_sim.src.factories.json_schemas as json_schemas
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 import splendor_sim.src.coin.coin_type_manager as coin_type_manager
-import splendor_sim.src.coin.json_buildable_coin_type as json_buildable_coin_type
+import splendor_sim.src.coin.json_coin_type as json_buildable_coin_type
 
 
-class JsonBuildableCoinTypeManager(coin_type_manager.CoinTypeManager, i_json_buildable_object.IJsonBuildableObject):
-    _JSON_SCHEMA = {
-        'coin_types': {
-            'required': True,
-            'type': 'list',
-            'minlength': 1,
-            'schema': json_buildable_coin_type.JsonBuildableCoinType.get_json_schema()
-        },
-        'coin_equivalents': {
-            'required': True,
-            'type': 'list',
-            'schema': {
-                'coin_name': {
-                    'required': True,
-                    'type': 'string'
-                },
-                'equivalent_coins_name': {
-                    'required': True,
-                    'type': 'string'
-                },
-            }
-        }
-    }
+class JsonCoinTypeManager(coin_type_manager.CoinTypeManager, i_json_buildable_object.IJsonBuildableObject):
 
-    _JSON_VALIDATOR = json_validator.JsonValidator(_JSON_SCHEMA)
+    _JSON_VALIDATOR = json_validator.JsonValidator(json_schemas.JSON_COIN_TYPE_MANAGER_SCHEMA)
 
     def __init__(
             self,
             coin_type_set: typing.Set[i_coin_type.ICoinType],
             coin_equivalents: typing.Set[typing.Tuple[i_coin_type.ICoinType, i_coin_type.ICoinType]]
     ):
-        super(JsonBuildableCoinTypeManager, self).__init__(coin_type_set, coin_equivalents)
+        super(JsonCoinTypeManager, self).__init__(coin_type_set, coin_equivalents)
 
     @classmethod
     def build_from_json(
@@ -50,8 +29,10 @@ class JsonBuildableCoinTypeManager(coin_type_manager.CoinTypeManager, i_json_bui
         if not cls._JSON_VALIDATOR.validate_json(json):
             raise ValueError("Json does not meet schema")
 
-        coin_set = JsonBuildableCoinTypeManager._build_coin_type_set(json['coin_types'])
-        coin_equivalents = JsonBuildableCoinTypeManager._build_coin_coin_equivalents(
+        coin_set = JsonCoinTypeManager._build_coin_type_set(
+            json['coin_types']
+        )
+        coin_equivalents = JsonCoinTypeManager._build_coin_coin_equivalents(
             coin_set,
             json['coin_equivalents']
         )
@@ -62,12 +43,12 @@ class JsonBuildableCoinTypeManager(coin_type_manager.CoinTypeManager, i_json_bui
 
     @staticmethod
     def get_json_schema() -> typing.Dict:
-        return copy.deepcopy(JsonBuildableCoinTypeManager._JSON_SCHEMA)
+        return copy.deepcopy(json_schemas.JSON_COIN_TYPE_MANAGER_SCHEMA)
 
     @staticmethod
     def _build_coin_type_set(json_coin_list: typing.List) -> typing.Set[i_coin_type.ICoinType]:
         return {
-            json_buildable_coin_type.JsonBuildableCoinType.build_from_json(json_coin) for json_coin in json_coin_list
+            json_buildable_coin_type.JsonCoinType.build_from_json(json_coin) for json_coin in json_coin_list
         }
 
     @staticmethod
