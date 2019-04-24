@@ -3,26 +3,16 @@ import typing
 
 import splendor_sim.interfaces.factories.i_json_buildable_object as i_json_buildable_object
 import splendor_sim.src.factories.json_validator as json_validator
+import splendor_sim.src.factories.json_schemas as json_schemas
 import splendor_sim.src.coin.coin_type as coin_type
 
 
-class JsonBuildableCoinType(coin_type.CoinType, i_json_buildable_object.IJsonBuildableObject):
+class JsonCoinType(coin_type.CoinType, i_json_buildable_object.IJsonBuildableObject):
 
-    _JSON_SCHEMA = {
-        'name': {
-            'required': True,
-            'type': 'string'
-        },
-        'total_number': {
-            'required': True,
-            'type': 'integer'
-        }
-    }
-
-    _JSON_VALIDATOR = json_validator.JsonValidator(_JSON_SCHEMA)
+    _JSON_VALIDATOR = json_validator.JsonValidator(json_schemas.JSON_COIN_TYPE_SCHEMA)
 
     def __init__(self, name: str, total_number: int):
-        super(JsonBuildableCoinType, self).__init__(name, total_number)
+        super(JsonCoinType, self).__init__(name, total_number)
 
     @classmethod
     def build_from_json(
@@ -38,4 +28,4 @@ class JsonBuildableCoinType(coin_type.CoinType, i_json_buildable_object.IJsonBui
 
     @staticmethod
     def get_json_schema() -> typing.Dict:
-        return copy.deepcopy(JsonBuildableCoinType._JSON_SCHEMA)
+        return copy.deepcopy(json_schemas.JSON_COIN_TYPE_SCHEMA)
