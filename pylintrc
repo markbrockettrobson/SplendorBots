@@ -61,7 +61,8 @@ disable=
     unused-argument,
     super-init-not-called,
     too-many-public-methods,
-    useless-super-delegation
+    useless-super-delegation,
+    too-many-instance-attributes
 
 
 [REPORTS]
