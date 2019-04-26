@@ -8,7 +8,7 @@ import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 import splendor_sim.interfaces.coin.i_coin_type_manager as i_coin_type_manager
 
 
-class TestJsonCoinType(unittest.TestCase):
+class TestJsonCoinReserve(unittest.TestCase):
 
     def set_up_validator(self):
         self._validator_patcher = mock.patch(
@@ -105,7 +105,7 @@ class TestJsonCoinType(unittest.TestCase):
             'coin_stocks': self._mock_coin_stocks
         }
 
-    def test_json_buildable_coin_type_init(self):
+    def test_json_coin_reserve_init(self):
         # Arrange
         # Act
         object_pointer = json_coin_reserve.JsonCoinReserve(
@@ -118,7 +118,7 @@ class TestJsonCoinType(unittest.TestCase):
             None
         )
 
-    def test_json_buildable_coin_type_init_coin_stocks(self):
+    def test_json_coin_reserve_init_coin_stocks(self):
         # Arrange
         # Act
         object_pointer = json_coin_reserve.JsonCoinReserve(
@@ -132,7 +132,7 @@ class TestJsonCoinType(unittest.TestCase):
             self._mock_coin_stocks_by_object_pointer
         )
 
-    def test_json_buildable_coin_type_build_from_json_valid(self):
+    def test_json_coin_reserve_build_from_json_valid(self):
         # Arrange
         # Act
         object_pointer = json_coin_reserve.JsonCoinReserve.build_from_json(
@@ -146,7 +146,7 @@ class TestJsonCoinType(unittest.TestCase):
             self._mock_coin_stocks_by_object_pointer
         )
 
-    def test_json_buildable_coin_type_build_from_json_invalid(self):
+    def test_json_coin_reserve_build_from_json_invalid(self):
         # Arrange
 
         self._mock_validator.validate_json.return_value = False
@@ -157,7 +157,7 @@ class TestJsonCoinType(unittest.TestCase):
                 self._mock_json
             )
 
-    def test_json_buildable_coin_type_build_from_json_invalid_coin_name_not_in_manager(self):
+    def test_json_coin_reserve_build_from_json_invalid_coin_name_not_in_manager(self):
         # Arrange
         self._mock_coin_stocks.append(
             {
@@ -172,7 +172,7 @@ class TestJsonCoinType(unittest.TestCase):
                 self._mock_json
             )
 
-    def test_json_buildable_coin_type_get_json_schema(self):
+    def test_json_coin_reserve_get_json_schema(self):
         # Arrange
         object_pointer = json_coin_reserve.JsonCoinReserve.build_from_json(
             self._mock_json
@@ -181,7 +181,7 @@ class TestJsonCoinType(unittest.TestCase):
         # Assert
         self.assertEqual(object_pointer.get_json_schema(), json_schemas.JSON_COIN_RESERVE_SCHEMA)
 
-    def test_json_buildable_coin_type_get_json_schema_immutability(self):
+    def test_json_coin_reserve_get_json_schema_immutability(self):
         # Arrange
         object_pointer = json_coin_reserve.JsonCoinReserve.build_from_json(
             self._mock_json
