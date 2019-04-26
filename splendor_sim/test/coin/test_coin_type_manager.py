@@ -13,6 +13,8 @@ class TestCoinTypeManager(unittest.TestCase):
 
         for i, coin in enumerate(self._mock_coin_type_list):
             coin.get_name.return_value = self._mock_card_names[i]
+            coin.get_total_number.return_value = i
+            coin.to_json.return_value = {"json": "coin %s json" % self._mock_card_names[i]}
 
         self._mock_coin_equivalents = {
             (self._mock_coin_type_list[i], self._mock_coin_type_list[5]) for i in range(0, 5)
@@ -214,4 +216,39 @@ class TestCoinTypeManager(unittest.TestCase):
         self.assertEqual(
             test_coin_type_manager.get_name_set(),
             {"A", "B", "C", "D", "E", "F"}
+        )
+
+    def test_coin_type_manager_to_json(self):
+        # Arrange
+        test_coin_type_manager = coin_type_manager.CoinTypeManager(
+            self._mock_coin_type_set,
+            self._mock_coin_equivalents
+        )
+        # Act
+        expected = {
+            'coin_types': [
+                {"json": "coin A json"},
+                {"json": "coin B json"},
+                {"json": "coin C json"},
+                {"json": "coin D json"},
+                {"json": "coin E json"},
+                {"json": "coin F json"}
+            ],
+            'coin_equivalents': [
+                {'coin_name': 'A', 'equivalent_coins_name': 'F'},
+                {'coin_name': 'B', 'equivalent_coins_name': 'F'},
+                {'coin_name': 'C', 'equivalent_coins_name': 'F'},
+                {'coin_name': 'D', 'equivalent_coins_name': 'F'},
+                {'coin_name': 'E', 'equivalent_coins_name': 'F'}
+            ],
+        }
+        real = test_coin_type_manager.to_json()
+        # Assert
+        self.assertCountEqual(
+            expected['coin_types'],
+            real['coin_types']
+        )
+        self.assertCountEqual(
+            expected['coin_equivalents'],
+            real['coin_equivalents']
         )

@@ -73,3 +73,19 @@ class CoinTypeManager(i_coin_type_manager.ICoinTypeManager):
             self
     ) -> typing.Set[str]:
         return set(self._name_map.keys())
+
+    def to_json(self) -> typing.Dict:
+        coin_equivalents = []
+        for coin, use_set in self._usage_map.items():
+            for use in use_set:
+                if coin is not use:
+                    coin_equivalents.append(
+                        {
+                            'coin_name': coin.get_name(),
+                            'equivalent_coins_name': use.get_name()
+                        }
+                    )
+        return {
+            'coin_types': [coin.to_json() for coin in self.get_coin_set()],
+            'coin_equivalents': coin_equivalents
+        }

@@ -89,3 +89,11 @@ class ICoinTypeManager(abc.ABC):
         :return: returns a set of all coin names
                  <typing.Set[str]>
         """
+
+    @abc.abstractmethod
+    def to_json(self) -> typing.Dict:
+        """
+
+        :return: a json dict of the coin type manager object
+                 <typing.Dict>
+        """
