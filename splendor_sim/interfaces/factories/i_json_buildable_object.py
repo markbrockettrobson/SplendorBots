@@ -25,3 +25,10 @@ class IJsonBuildableObject(abc.ABC):
         :return: the schema used to validate that the json has all needed fields
                  <typing.Dict>
         """
+    @abc.abstractmethod
+    def to_json(self) -> typing.Dict:
+        """
+
+        :return: a json dict of the coin reserve object
+                 <typing.Dict>
+        """
