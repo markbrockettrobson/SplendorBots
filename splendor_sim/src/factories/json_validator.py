@@ -1,14 +1,16 @@
 import typing
-import cerberus.validator as cerberus_validator
+import cerberus.validator as validator
 
 import splendor_sim.interfaces.factories.i_json_validator as i_json_validator
 
 
 class JsonValidator(i_json_validator.IJsonValidator):
-    @staticmethod
-    def validate_json_schema(
-            json: typing.Dict,
-            schema: typing.Dict
+    def __init__(self, schema: typing.Dict):
+        self._schema = schema
+        self._validator = validator.Validator(schema)
+
+    def validate_json(
+            self,
+            json: typing.Dict
     ) -> bool:
-        validator = cerberus_validator.Validator(schema)
-        return validator.validate(json)
+        return self._validator.validate(json)

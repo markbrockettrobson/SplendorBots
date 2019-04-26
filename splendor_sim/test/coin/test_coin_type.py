@@ -31,3 +31,16 @@ class TestCoinType(unittest.TestCase):
         # Assert
         with self.assertRaises(ValueError):
             _ = coin_type.CoinType(self._name, self._total_number)
+
+    def test_coin_type_to_json(self):
+        # Arrange
+        # Act
+        test_coin_type = coin_type.CoinType(self._name, self._total_number)
+        # Assert
+        self.assertEqual(
+            test_coin_type.to_json(),
+            {
+                'name': "emerald",
+                'total_number': 7
+            }
+        )

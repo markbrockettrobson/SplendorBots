@@ -8,12 +8,12 @@ class IJsonBuildableObject(abc.ABC):
     @abc.abstractmethod
     def build_from_json(
             cls,
-            json: typing.Dict[str, str]
+            json: typing.Dict
     ):
         """
 
         :param json: json dict to build the project from
-               <typing.Dict[str, str]>
+               <typing.Dict>
         :return: The object built from the json
         """
 
@@ -23,5 +23,12 @@ class IJsonBuildableObject(abc.ABC):
         """
 
         :return: the schema used to validate that the json has all needed fields
+                 <typing.Dict>
+        """
+    @abc.abstractmethod
+    def to_json(self) -> typing.Dict:
+        """
+
+        :return: a json dict of the coin reserve object
                  <typing.Dict>
         """

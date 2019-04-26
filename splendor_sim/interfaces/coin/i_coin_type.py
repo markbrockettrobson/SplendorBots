@@ -1,5 +1,5 @@
 import abc
-
+import typing
 
 class ICoinType(abc.ABC):
     @abc.abstractmethod
@@ -26,4 +26,12 @@ class ICoinType(abc.ABC):
 
         :return: the total number of coins of this type
                  <int>
+        """
+
+    @abc.abstractmethod
+    def to_json(self) -> typing.Dict:
+        """
+
+        :return: a json dict of the coin type object
+                 <typing.Dict>
         """

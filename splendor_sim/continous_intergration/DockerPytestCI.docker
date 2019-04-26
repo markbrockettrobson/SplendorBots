@@ -1,10 +1,12 @@
 FROM python:3
 
 COPY requirements.txt ./
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 RUN git clone https://github.com/markbrockettrobson/SplendorBots.git
 
+COPY pylintrc ./SplendorBots
 WORKDIR /SplendorBots
 
 COPY splendor_sim ./splendor_sim

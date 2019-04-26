@@ -7,11 +7,17 @@ import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 
 class ICoinReserve(abc.ABC):
     @abc.abstractmethod
-    def __init__(self, coin_type_manager: i_coin_type_manager.ICoinTypeManager):
+    def __init__(
+            self,
+            coin_type_manager: i_coin_type_manager.ICoinTypeManager,
+            coin_stocks: typing.Dict[i_coin_type.ICoinType, int] = None
+    ):
         """
 
         :param coin_type_manager: holds all the coin types
                <i_coin_type_manager.ICoinTypeManager>
+        :param coin_stocks: the coins in stock, defaults to coin max
+               <typing.Dict[i_coin_type.ICoinType, int]>
         """
 
     @abc.abstractmethod
@@ -63,4 +69,12 @@ class ICoinReserve(abc.ABC):
         :param removed_coins: dictionary mapping each coin type in the manager to the amount to remove
                <typing.Dict[i_coin_type.ICoinType, int]>
         :return: None
+        """
+
+    @abc.abstractmethod
+    def to_json(self) -> typing.Dict:
+        """
+
+        :return: a json dict of the coin reserve
+                 <typing.Dict>
         """

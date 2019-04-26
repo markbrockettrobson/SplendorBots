@@ -11,14 +11,61 @@ class TestCoinReserve(unittest.TestCase):
         self._mock_coin_type_manager = mock.create_autospec(spec=i_coin_type_manager.ICoinTypeManager, spec_set=True)
         self._mock_coin_type_list = [mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True) for _ in range(6)]
         self._mock_coin_type_manager.get_coin_set.return_value = set(self._mock_coin_type_list)
-        for _mock_coin_type in self._mock_coin_type_list:
+        self._mock_coin_type_manager.to_json.return_value = 'coin type manager json'
+        for i, _mock_coin_type in enumerate(self._mock_coin_type_list):
             _mock_coin_type.get_total_number.return_value = 7
+            _mock_coin_type.get_name.return_value = '%d' % i
         self._mock_coin_type_list[-1].get_total_number.return_value = 5
 
         self._return_dictionary = {coin: 7 for coin in self._mock_coin_type_list}
         self._return_dictionary[self._mock_coin_type_list[-1]] = 5
 
         self.test_coin_reserve = coin_reserve.CoinReserve(self._mock_coin_type_manager)
+
+    def test_coin_reserve_init_coin_stocks(self):
+        # Arrange
+        self._return_dictionary[self._mock_coin_type_list[0]] = 2
+        self._return_dictionary[self._mock_coin_type_list[1]] = 3
+        expected = self._return_dictionary
+
+        coin_stocks = {
+            self._mock_coin_type_list[0]: 2,
+            self._mock_coin_type_list[1]: 3
+        }
+        # Act
+        self.test_coin_reserve = coin_reserve.CoinReserve(
+            self._mock_coin_type_manager,
+            coin_stocks
+        )
+        real = self.test_coin_reserve.get_coins_remaining()
+        # Assert
+        self.assertEqual(real, expected)
+
+    def test_coin_reserve_init_coin_stocks_invalid_coin_type(self):
+        # Arrange
+        coin_stocks = {
+            mock.create_autospec(spec=i_coin_type_manager.ICoinTypeManager, spec_set=True): 5
+        }
+        # Act
+        # Assert
+        with self.assertRaises(ValueError):
+            self.test_coin_reserve = coin_reserve.CoinReserve(
+                self._mock_coin_type_manager,
+                coin_stocks
+            )
+
+    def test_coin_reserve_init_coin_stocks_invalid_coin_number_above_max(self):
+        # Arrange
+        coin_stocks = {
+            self._mock_coin_type_list[0]: 50
+        }
+        # Act
+        # Assert
+        with self.assertRaises(ValueError):
+            self.test_coin_reserve = coin_reserve.CoinReserve(
+                self._mock_coin_type_manager,
+                coin_stocks
+            )
 
     def test_coin_reserve_get_manager(self):
         # Arrange
@@ -160,3 +207,34 @@ class TestCoinReserve(unittest.TestCase):
         pre_mutation.pop(list(pre_mutation.keys())[0])
         # Assert
         self.assertNotEqual(pre_mutation, self.test_coin_reserve.get_coins_remaining())
+
+    def test_coin_reserve_to_json(self):
+        # Arrange
+        # Act
+        # Assert
+        self.assertEqual(
+            {
+                'coin_type_manager': 'coin type manager json',
+                'coin_stocks': []
+            },
+            self.test_coin_reserve.to_json()
+        )
+
+    def test_coin_reserve_to_json_non_full(self):
+        # Arrange
+        coin_stocks = [
+            {
+                'coin_name': '0',
+                'count': 2
+            }
+        ]
+        self.test_coin_reserve.remove_coins({self._mock_coin_type_list[0]: 5})
+        # Act
+        # Assert
+        self.assertEqual(
+            {
+                'coin_type_manager': 'coin type manager json',
+                'coin_stocks': coin_stocks
+            },
+            self.test_coin_reserve.to_json()
+        )
