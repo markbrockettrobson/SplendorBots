@@ -64,3 +64,18 @@ class CoinReserve(i_coin_reserve.ICoinReserve):
         for key, value in dictionary.items():
             if key.get_total_number() < value:
                 raise ValueError(str(key) + "coin type cant have more stock then max number of coins")
+
+    def to_json(self) -> typing.Dict:
+        coin_stocks = []
+        for coin, value in self._current_coins.items():
+            if not value == coin.get_total_number():
+                coin_stocks.append(
+                    {
+                        'coin_name': coin.get_name(),
+                        'count': value
+                    }
+                )
+        return {
+            'coin_type_manager': self._coin_type_manager.to_json(),
+            'coin_stocks': coin_stocks
+        }

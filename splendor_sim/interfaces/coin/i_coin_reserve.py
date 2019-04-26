@@ -70,3 +70,11 @@ class ICoinReserve(abc.ABC):
                <typing.Dict[i_coin_type.ICoinType, int]>
         :return: None
         """
+
+    @abc.abstractmethod
+    def to_json(self) -> typing.Dict:
+        """
+
+        :return: a json dict of the coin type object
+                 <typing.Dict>
+        """
