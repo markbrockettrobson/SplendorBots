@@ -67,3 +67,11 @@ class ICard(abc.ABC):
         :return: the name of the card
                  <str>
         """
+
+    @abc.abstractmethod
+    def to_json(self) -> typing.Dict:
+        """
+
+        :return: a json dict of the card
+                 <typing.Dict>
+        """

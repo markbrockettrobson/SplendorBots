@@ -45,6 +45,22 @@ class Card(i_card.ICard):
     def get_name(self) -> str:
         return self._name
 
+    def to_json(self):
+        cost_json = [
+            {
+                'coin_name': coin.get_name(),
+                'count': value
+            }
+            for coin, value in self._cost.items()
+        ]
+        return {
+            'tier': self._tier,
+            'victory_points': self._victory_points,
+            'discounted_coin_type_name': self._discount.get_name(),
+            'cost': cost_json,
+            'name': self._name
+        }
+
     @staticmethod
     def _validate_tier(level: int) -> None:
         if level <= 0:
