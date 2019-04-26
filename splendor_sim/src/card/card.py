@@ -26,16 +26,7 @@ class Card(i_card.ICard):
         self._cost = copy.copy(cost)
         self._name: str
         if not name:
-            cost_string_builder = []
-            for coin, value in self._cost.items():
-                cost_string_builder.append("%s%d" % (coin.get_name(), value))
-
-            self._name = Card._DEFAULT_NAME_FORMAT % (
-                self._tier,
-                self._discount.get_name(),
-                self._victory_points,
-                "".join(cost_string_builder)
-            )
+            self._name = self._create_default_name()
         else:
             self._name = name
 
@@ -69,3 +60,15 @@ class Card(i_card.ICard):
         for _, value in cost.items():
             if value < 0:
                 raise ValueError("costs must be greater than or equal to 0")
+
+    def _create_default_name(self):
+        cost_string_builder = []
+        for coin, value in self._cost.items():
+            cost_string_builder.append("%s%d" % (coin.get_name(), value))
+
+        return Card._DEFAULT_NAME_FORMAT % (
+            self._tier,
+            self._discount.get_name(),
+            self._victory_points,
+            "".join(cost_string_builder)
+        )
