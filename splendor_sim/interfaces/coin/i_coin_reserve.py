@@ -75,6 +75,6 @@ class ICoinReserve(abc.ABC):
     def to_json(self) -> typing.Dict:
         """
 
-        :return: a json dict of the coin type object
+        :return: a json dict of the coin reserve
                  <typing.Dict>
         """
