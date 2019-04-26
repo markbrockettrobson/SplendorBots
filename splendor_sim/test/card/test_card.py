@@ -10,10 +10,30 @@ class TestCard(unittest.TestCase):
     def setUp(self):
         self._tier = 1
         self._victory_points = 0
-        self._discount = mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True)
-        self._cost = {mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True): 1 for _ in range(3)}
+        self._mock_coins = [mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True) for _ in range(4)]
+        for i, coin in enumerate(self._mock_coins):
+            coin.get_name.return_value = "ABCD"[i]
+        self._discount = self._mock_coins[0]
+        self._cost = {coin: 1 for coin in self._mock_coins[1:]}
+        self._name = "Card name"
 
     def test_card_init_valid(self):
+        # Arrange
+        # Act
+        test_card = card.Card(self._tier,
+                              self._victory_points,
+                              self._discount,
+                              self._cost,
+                              self._name)
+
+        # Assert
+        self.assertEqual(test_card.get_tier(), self._tier)
+        self.assertEqual(test_card.get_victory_points(), self._victory_points)
+        self.assertEqual(test_card.get_discount(), self._discount)
+        self.assertEqual(test_card.get_cost(), self._cost)
+        self.assertEqual(test_card.get_name(), self._name)
+
+    def test_card_init_default_name(self):
         # Arrange
         # Act
         test_card = card.Card(self._tier,
@@ -22,10 +42,7 @@ class TestCard(unittest.TestCase):
                               self._cost)
 
         # Assert
-        self.assertEqual(test_card.get_tier(), self._tier)
-        self.assertEqual(test_card.get_victory_points(), self._victory_points)
-        self.assertEqual(test_card.get_discount(), self._discount)
-        self.assertEqual(test_card.get_cost(), self._cost)
+        self.assertEqual(test_card.get_name(), "T1_DA_V0_CB1C1D1")
 
     def test_card_init_invalid_tier(self):
         # Arrange

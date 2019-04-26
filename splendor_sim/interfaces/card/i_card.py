@@ -11,7 +11,8 @@ class ICard(abc.ABC):
             tier: int,
             victory_points: int,
             discount: i_coin_type.ICoinType,
-            cost: typing.Dict[i_coin_type.ICoinType, int]
+            cost: typing.Dict[i_coin_type.ICoinType, int],
+            name: str = None
     ):
         """
 
@@ -23,6 +24,8 @@ class ICard(abc.ABC):
                <i_coin_type.ICoinType>
         :param cost: the cost of the card
                <typing.Dict[i_coin_type.ICoinType, int]>
+        :param name: the name of the card will auto gen if None
+               <str>
         """
 
     @abc.abstractmethod
@@ -55,4 +58,12 @@ class ICard(abc.ABC):
 
         :return: the cost of the card
                  <typing.Dict[i_coin_type.ICoinType, int]>
+        """
+
+    @abc.abstractmethod
+    def get_name(self) -> str:
+        """
+
+        :return: the name of the card
+                 <str>
         """
