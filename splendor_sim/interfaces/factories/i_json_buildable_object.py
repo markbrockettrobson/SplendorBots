@@ -29,6 +29,6 @@ class IJsonBuildableObject(abc.ABC):
     def to_json(self) -> typing.Dict:
         """
 
-        :return: a json dict of the coin reserve object
+        :return: a json dict of the object
                  <typing.Dict>
         """
