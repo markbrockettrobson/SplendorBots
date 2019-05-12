@@ -46,7 +46,7 @@ class TestJsonCardManager(unittest.TestCase):
 
         self._mock_game_state = mock.create_autospec(spec=i_game_state.IGameState, spec_set=True)
 
-    def test_json_card_init(self):
+    def test_json_card_manager_init(self):
         # Arrange
         # Act
         object_pointer = json_card_manager.JsonCardManager(
@@ -58,7 +58,7 @@ class TestJsonCardManager(unittest.TestCase):
             self._mock_card_set
         )
 
-    def test_json_card_build_from_json_valid(self):
+    def test_json_card_manager_build_from_json_valid(self):
         # Arrange
         # Act
         object_pointer = json_card_manager.JsonCardManager.build_from_json(
@@ -72,7 +72,7 @@ class TestJsonCardManager(unittest.TestCase):
             self._mock_card_set
         )
 
-    def test_json_coin_type_build_from_json_invalid(self):
+    def test_json_card_manager_build_from_json_invalid(self):
         # Arrange
         self._mock_validator.validate_json.return_value = False
         # Act
@@ -83,7 +83,7 @@ class TestJsonCardManager(unittest.TestCase):
                 self._mock_game_state
             )
 
-    def test_json_coin_type_get_json_schema(self):
+    def test_json_card_manager_get_json_schema(self):
         # Arrange
         # Act
         # Assert
@@ -92,7 +92,7 @@ class TestJsonCardManager(unittest.TestCase):
             json_card_manager.JsonCardManager.get_json_schema()
         )
 
-    def test_json_coin_type_get_json_schema_immutability(self):
+    def test_json_card_manager_json_schema_immutability(self):
         # Arrange
         pre_mutation = json_card_manager.JsonCardManager.get_json_schema()
         # Act

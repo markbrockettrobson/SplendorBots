@@ -120,7 +120,7 @@ class TestJsonCard(unittest.TestCase):
             self._mock_name
         )
 
-    def test_json_coin_type_build_from_json_invalid(self):
+    def test_json_card_build_from_json_invalid(self):
         # Arrange
         self._mock_validator.validate_json.return_value = False
         # Act
@@ -131,7 +131,7 @@ class TestJsonCard(unittest.TestCase):
                 self._mock_game_state
             )
 
-    def test_json_coin_type_build_from_json_coin_reserve_none(self):
+    def test_json_card_build_from_json_coin_reserve_none(self):
         # Arrange
         self._mock_game_state.get_coin_reserve.return_value = None
         # Act
@@ -142,7 +142,7 @@ class TestJsonCard(unittest.TestCase):
                 self._mock_game_state
             )
 
-    def test_json_coin_type_build_from_json_discount_unknown(self):
+    def test_json_card_build_from_json_discount_unknown(self):
         # Arrange
         self._mock_json['discounted_coin_type_name'] = 'Z'
         # Act
@@ -153,7 +153,7 @@ class TestJsonCard(unittest.TestCase):
                 self._mock_game_state
             )
 
-    def test_json_coin_type_build_from_json_coin_cost_unknown(self):
+    def test_json_card_build_from_json_coin_cost_unknown(self):
         # Arrange
         self._mock_cost_dict.append(
             {
@@ -169,7 +169,7 @@ class TestJsonCard(unittest.TestCase):
                 self._mock_game_state
             )
 
-    def test_json_coin_type_get_json_schema(self):
+    def test_json_card_get_json_schema(self):
         # Arrange
         # Act
         # Assert
@@ -178,7 +178,7 @@ class TestJsonCard(unittest.TestCase):
             json_card.JsonCard.get_json_schema()
         )
 
-    def test_json_coin_type_get_json_schema_immutability(self):
+    def test_json_card_get_json_schema_immutability(self):
         # Arrange
         pre_mutation = json_card.JsonCard.get_json_schema()
         # Act
