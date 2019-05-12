@@ -62,3 +62,118 @@ JSON_COIN_RESERVE_SCHEMA = {
         }
     }
 }
+JSON_CARD_SCHEMA = {
+    'name': {
+        'required': True,
+        'type': 'string'
+    },
+    'tier': {
+        'required': True,
+        'type': 'integer',
+        'min': 0,
+    },
+    'victory_points': {
+        'required': True,
+        'type': 'integer',
+        'min': 0,
+    },
+    'discounted_coin_type_name': {
+        'required': True,
+        'type': 'string'
+    },
+    'cost': {
+        'required': True,
+        'type': 'list',
+        'schema': {
+            'required': True,
+            'type': 'dict',
+            'schema': {
+                'coin_name': {
+                    'required': True,
+                    'type': 'string'
+                },
+                'count': {
+                    'required': True,
+                    'type': 'integer',
+                    'min': 0,
+                }
+            }
+        }
+    }
+}
+JSON_CARD_MANAGER = {
+    'cards': {
+        'required': True,
+        'type': 'List',
+        'schema': {
+            'required': True,
+            'type': 'dict',
+        }
+    }
+}
+JSON_DECK = {
+    'cards': {
+        'required': True,
+        'type': 'List',
+        'schema': {
+            'required': True,
+            'type': 'dict',
+
+        }
+    },
+    'tier': {
+        'required': True,
+        'type': 'int'
+    }
+}
+JSON_CARD_RESERVE = {
+    "card_manager": {
+        'required': True,
+        'type': 'dict',
+    },
+    "number_of_cards_on_sale": {
+        'required': True,
+        'type': 'int'
+    },
+    "decks": {
+        'required': True,
+        'type': 'List',
+        'schema': {
+            'required': True,
+            'type': 'dict',
+
+        }
+    },
+    "tiers": {
+        'required': True,
+        'type': 'List',
+        'schema': {
+            'required': True,
+            'type': 'int',
+
+        }
+    },
+    "cards_on_sale": {
+        'required': True,
+        'type': 'List',
+        'schema': {
+            'required': True,
+            'type': 'Dict',
+            'schema': {
+                "tier": {
+                    'required': True,
+                    'type': 'int',
+
+                },
+                "cards": {
+                    'required': True,
+                    'type': 'List',
+                    'schema': {
+                        'required': True,
+                        'type': 'str',
+                    }
+                }
+            }
+        }
+    }
+}
