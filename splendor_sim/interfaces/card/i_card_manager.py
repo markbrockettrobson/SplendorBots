@@ -40,3 +40,31 @@ class ICardManager(abc.ABC):
         :return: a set of all cards in the given tier
                  <typing.Set[i_card.ICoinType]>
         """
+
+    @abc.abstractmethod
+    def get_card_by_name(self, name: str) -> i_card.ICard:
+        """
+
+        :param name: the name of the card to return
+               <str>
+        :return: the card object
+                 <i_card.ICard>
+        """
+
+    @abc.abstractmethod
+    def is_card_in_manager_by_name(self, name: str) -> bool:
+        """
+
+        :param name: the name of the card to search for
+               <str>
+        :return: true if the manager contains a card by that name
+                 <bool>
+        """
+
+    @abc.abstractmethod
+    def to_json(self) -> typing.Dict:
+        """
+
+        :return: a json dict of the card manager
+                 <typing.Dict>
+        """
