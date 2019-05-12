@@ -1,6 +1,7 @@
 import copy
 import typing
 
+import splendor_sim.interfaces.game_state.i_game_state as i_game_state
 import splendor_sim.interfaces.factories.i_json_buildable_object as i_json_buildable_object
 import splendor_sim.src.factories.json_validator as json_validator
 import splendor_sim.src.factories.json_schemas as json_schemas
@@ -17,7 +18,8 @@ class JsonCoinType(coin_type.CoinType, i_json_buildable_object.IJsonBuildableObj
     @classmethod
     def build_from_json(
             cls,
-            json: typing.Dict
+            json: typing.Dict,
+            incomplete_game_state: i_game_state.IGameState
     ):
         if not cls._JSON_VALIDATOR.validate_json(json):
             raise ValueError("Json does not meet schema")
