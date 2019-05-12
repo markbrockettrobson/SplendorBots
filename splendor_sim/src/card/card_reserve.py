@@ -3,17 +3,25 @@ import copy
 import splendor_sim.interfaces.card.i_card as i_card
 import splendor_sim.interfaces.card.i_deck as i_deck
 import splendor_sim.interfaces.card.i_card_reserve as i_card_reserve
+import splendor_sim.interfaces.card.i_card_manager as i_card_manager
 
 
 class CardReserve(i_card_reserve.ICardReserve):
-    def __init__(self, cards_on_sale: int, decks: typing.Set[i_deck.IDeck]):
+    def __init__(
+            self,
+            card_manager: i_card_manager.ICardManager,
+            cards_on_sale: int,
+            decks: typing.Set[i_deck.IDeck]
+    ):
+        self._card_manager = card_manager
+
         self._validate_cards_on_sale(cards_on_sale)
         self._validate_decks(decks)
 
         self._create_decks_by_tier(decks)
 
         self._cards_on_sale = cards_on_sale
-        self._create__cards_on_sale()
+        self._create_cards_on_sale()
 
     @staticmethod
     def _validate_cards_on_sale(cards_on_sale: int) -> None:
@@ -32,17 +40,20 @@ class CardReserve(i_card_reserve.ICardReserve):
             tiers.add(deck.get_tier())
 
     def _create_decks_by_tier(self, decks: typing.Set[i_deck.IDeck]) -> None:
-        self._decks_by_tier = {}   # type: typing.Dict[int,i_deck.IDeck]
+        self._decks_by_tier = {}  # type: typing.Dict[int,i_deck.IDeck]
         for deck in decks:
             self._decks_by_tier[deck.get_tier()] = deck
 
-    def _create__cards_on_sale(self) -> None:
-        self._cards_on_sale_by_tier = {}   # type: typing.Dict[int,typing.Set[i_card.ICard]]
+    def _create_cards_on_sale(self) -> None:
+        self._cards_on_sale_by_tier = {}  # type: typing.Dict[int,typing.Set[i_card.ICard]]
         for tier in self._decks_by_tier:
             self._cards_on_sale_by_tier[tier] = set()
             for _ in range(self._cards_on_sale):
                 if self._decks_by_tier[tier].has_next():
                     self._cards_on_sale_by_tier[tier].add(self._decks_by_tier[tier].next())
+
+    def get_card_manager(self):
+        return self._card_manager
 
     def get_cards_for_sale(self) -> typing.Set[i_card.ICard]:
         card_set = set()  # type: typing.Set[i_card.ICard]
@@ -95,3 +106,22 @@ class CardReserve(i_card_reserve.ICardReserve):
         if tier not in self._decks_by_tier:
             raise ValueError("unknown tier")
         return self._decks_by_tier[tier].number_remaining_cards() + len(self._cards_on_sale_by_tier[tier])
+
+    def to_json(self):
+        return {
+            "card_manager": self._card_manager.to_json(),
+            "number_of_cards_on_sale": self._cards_on_sale,
+            "decks": [
+                deck.to_json() for deck in self._decks_by_tier.values()
+            ],
+            "tiers": self._decks_by_tier.keys(),
+            "cards_on_sale": [
+                {
+                    "tier": tier,
+                    "cards": [
+                        card.get_name() for card in self._cards_on_sale_by_tier[tier]
+                    ]
+                }
+                for tier in self._decks_by_tier
+            ]
+        }
