@@ -6,13 +6,21 @@ import splendor_sim.interfaces.card.i_card as i_card
 
 class IDeck(abc.ABC):
     @abc.abstractmethod
-    def __init__(self, tier: int, card_set: typing.Set[i_card.ICard]):
+    def __init__(self, tier: int, card_list_in_order: typing.List[i_card.ICard]):
         """
 
         :param tier: the tier of the deck
                <int>
-        :param card_set: the list of cards in the deck
-               <typing.Set[i_card.ICard]>
+        :param card_list_in_order: the list of cards in the deck
+               <typing.List[i_card.ICard]>
+        """
+
+    @abc.abstractmethod
+    def shuffle_deck(self, seed: int) -> None:
+        """
+
+        :param seed: the seed for the random shuffle
+        :return:
         """
 
     @abc.abstractmethod
