@@ -100,3 +100,39 @@ class TestCard(unittest.TestCase):
         pre_mutation.pop(list(pre_mutation.keys())[0])
         # Assert
         self.assertEqual(self._cost, test_card.get_cost())
+
+    def test_card_to_json(self):
+        # Arrange
+        test_card = card.Card(self._tier,
+                              self._victory_points,
+                              self._discount,
+                              self._cost,
+                              self._name)
+        # Act
+        # Assert
+        expected = {
+            'tier': 1,
+            'victory_points': 0,
+            'discounted_coin_type_name': 'A',
+            'cost': [
+                {
+                    'coin_name': 'B',
+                    'count': 1
+                },
+                {
+                    'coin_name': 'C',
+                    'count': 1
+                },
+                {
+                    'coin_name': 'D',
+                    'count': 1
+                }
+            ],
+            'name': self._name
+        }
+        real = test_card.to_json()
+        self.assertEqual(real['tier'], expected['tier'])
+        self.assertEqual(real['victory_points'], expected['victory_points'])
+        self.assertEqual(real['discounted_coin_type_name'], expected['discounted_coin_type_name'])
+        self.assertCountEqual(real['cost'], expected['cost'])
+        self.assertEqual(real['name'], expected['name'])
