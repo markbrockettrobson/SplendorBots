@@ -117,12 +117,12 @@ JSON_DECK_SCHEMA = {
         'type': 'list',
         'schema': {
             'required': True,
-            'type': 'dict',
+            'type': 'string',
         }
     },
     'tier': {
         'required': True,
-        'type': 'int'
+        'type': 'integer'
     }
 }
 JSON_CARD_RESERVE_SCHEMA = {
@@ -132,7 +132,7 @@ JSON_CARD_RESERVE_SCHEMA = {
     },
     "number_of_cards_on_sale": {
         'required': True,
-        'type': 'int'
+        'type': 'integer'
     },
     "decks": {
         'required': True,
@@ -147,7 +147,7 @@ JSON_CARD_RESERVE_SCHEMA = {
         'type': 'list',
         'schema': {
             'required': True,
-            'type': 'int',
+            'type': 'integer',
         }
     },
     "cards_on_sale": {
@@ -159,14 +159,14 @@ JSON_CARD_RESERVE_SCHEMA = {
             'schema': {
                 "tier": {
                     'required': True,
-                    'type': 'int',
+                    'type': 'integer',
                 },
                 "cards": {
                     'required': True,
                     'type': 'list',
                     'schema': {
                         'required': True,
-                        'type': 'str',
+                        'type': 'string',
                     }
                 }
             }
