@@ -54,3 +54,11 @@ class IDeck(abc.ABC):
         :return: a list of all cards left in the deck
                  <typing.set[i_card.ICard]>
         """
+
+    @abc.abstractmethod
+    def to_json(self) -> typing.Dict:
+        """
+
+        :return: a json dict of the deck
+                 <typing.Dict>
+        """

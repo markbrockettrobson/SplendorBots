@@ -11,8 +11,9 @@ class TestDeck(unittest.TestCase):
         self._tier = 2
         self._mock_card_list = [mock.create_autospec(spec=i_card.ICard, spec_set=True) for _ in range(10)]
         self._mock_card_set = set(self._mock_card_list)
-        for card in self._mock_card_list:
+        for i, card in enumerate(self._mock_card_list):
             card.get_tier.return_value = 2
+            card.get_name.return_value = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[i]
 
     def test_deck_init_valid_cards(self):
         # Arrange
@@ -119,3 +120,18 @@ class TestDeck(unittest.TestCase):
         card_set.pop()
         # Assert
         self.assertEqual(pre_mutaion, test_deck.get_remaining_cards())
+
+    def test_deck_to_json(self):
+        # Arrange
+        test_deck = deck.Deck(self._tier, self._mock_card_set)
+        expected_json = {
+            'cards': [
+                card.get_name for card in self._mock_card_set
+            ],
+            'tier': self._tier
+        }
+        real_json = test_deck.to_json()
+        # Act
+        # Assert
+        self.assertCountEqual(real_json["cards"], expected_json["cards"])
+        self.assertEqual(real_json["tier"], expected_json["tier"])

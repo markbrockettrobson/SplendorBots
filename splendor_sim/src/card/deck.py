@@ -32,6 +32,14 @@ class Deck(i_deck.IDeck):
     def get_remaining_cards(self) -> typing.Set[i_card.ICard]:
         return copy.copy(self._remaining_card_set)
 
+    def to_json(self):
+        return {
+            'cards': [
+                card.get_name for card in self._card_list
+            ],
+            'tier': self._tier
+        }
+
     @staticmethod
     def _validate_card_list(tier: int, card_set: typing.Set[i_card.ICard]):
         for card in card_set:
