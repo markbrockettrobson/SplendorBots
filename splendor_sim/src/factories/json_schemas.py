@@ -101,24 +101,23 @@ JSON_CARD_SCHEMA = {
         }
     }
 }
-JSON_CARD_MANAGER = {
+JSON_CARD_MANAGER_SCHEMA = {
     'cards': {
         'required': True,
-        'type': 'List',
+        'type': 'list',
         'schema': {
             'required': True,
             'type': 'dict',
         }
     }
 }
-JSON_DECK = {
+JSON_DECK_SCHEMA = {
     'cards': {
         'required': True,
-        'type': 'List',
+        'type': 'list',
         'schema': {
             'required': True,
             'type': 'dict',
-
         }
     },
     'tier': {
@@ -126,7 +125,7 @@ JSON_DECK = {
         'type': 'int'
     }
 }
-JSON_CARD_RESERVE = {
+JSON_CARD_RESERVE_SCHEMA = {
     "card_manager": {
         'required': True,
         'type': 'dict',
@@ -137,25 +136,23 @@ JSON_CARD_RESERVE = {
     },
     "decks": {
         'required': True,
-        'type': 'List',
+        'type': 'list',
         'schema': {
             'required': True,
             'type': 'dict',
-
         }
     },
     "tiers": {
         'required': True,
-        'type': 'List',
+        'type': 'list',
         'schema': {
             'required': True,
             'type': 'int',
-
         }
     },
     "cards_on_sale": {
         'required': True,
-        'type': 'List',
+        'type': 'list',
         'schema': {
             'required': True,
             'type': 'Dict',
@@ -163,11 +160,10 @@ JSON_CARD_RESERVE = {
                 "tier": {
                     'required': True,
                     'type': 'int',
-
                 },
                 "cards": {
                     'required': True,
-                    'type': 'List',
+                    'type': 'list',
                     'schema': {
                         'required': True,
                         'type': 'str',
