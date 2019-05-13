@@ -45,4 +45,3 @@ class JsonDeck(deck.Deck, i_json_buildable_object.IJsonBuildableObject):
     @staticmethod
     def get_json_schema() -> typing.Dict:
         return copy.deepcopy(json_schemas.JSON_DECK_SCHEMA)
-

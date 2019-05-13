@@ -1,4 +1,3 @@
-import typing
 import unittest
 import unittest.mock as mock
 
@@ -26,12 +25,12 @@ class TestJsonDeck(unittest.TestCase):
         )
         self._mock_deck = self._deck_patcher.start()
         self.addCleanup(self._deck_patcher.stop)
-        self._name_to_card_dict = {}  # type: typing.Dict[str, i_card.ICard]
 
         self._mock_cards = [mock.create_autospec(spec=i_card.ICard, spec_set=True) for _ in range(10)]
         for i, card in enumerate(self._mock_cards):
             card.get_name.return_value = "card %d" % i
-            self._name_to_card_dict["card %d" % i] = card
+
+        self._name_to_card_dict = {"card %d" % i: card for i, card in enumerate(self._mock_cards)}
 
         self._mock_card_set = set(self._mock_cards)
 
