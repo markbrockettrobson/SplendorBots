@@ -11,17 +11,20 @@ class ICardReserve(abc.ABC):
     def __init__(
             self,
             card_manager: i_card_manager.ICardManager,
-            cards_on_sale: int,
-            decks: typing.Set[i_deck.IDeck]
+            number_of_cards_on_sale: int,
+            decks: typing.Set[i_deck.IDeck],
+            cards_on_sale: typing.Set[i_card.ICard]
     ):
         """
 
         :param card_manager:  the card manager used to store cards
                <i_card_manager.ICardManager>
-        :param cards_on_sale:  the number of card of each tier to be sold
+        :param number_of_cards_on_sale:  the number of card of each tier to be sold
                <int>
         :param decks: the set of decks to sell cards from
                <typing.Set[i_deck.IDeck]>
+        :param cards_on_sale: cards to start on sale
+               <typing.Set[i_card.ICard]>
         """
 
     @abc.abstractmethod

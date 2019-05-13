@@ -155,21 +155,7 @@ JSON_CARD_RESERVE_SCHEMA = {
         'type': 'list',
         'schema': {
             'required': True,
-            'type': 'Dict',
-            'schema': {
-                "tier": {
-                    'required': True,
-                    'type': 'integer',
-                },
-                "cards": {
-                    'required': True,
-                    'type': 'list',
-                    'schema': {
-                        'required': True,
-                        'type': 'string',
-                    }
-                }
-            }
+            'type': 'string',
         }
     }
 }

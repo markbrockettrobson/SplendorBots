@@ -10,22 +10,23 @@ class CardReserve(i_card_reserve.ICardReserve):
     def __init__(
             self,
             card_manager: i_card_manager.ICardManager,
-            cards_on_sale: int,
-            decks: typing.Set[i_deck.IDeck]
+            number_of_cards_on_sale: int,
+            decks: typing.Set[i_deck.IDeck],
+            cards_on_sale: typing.Set[i_card.ICard]
     ):
         self._card_manager = card_manager
 
-        self._validate_cards_on_sale(cards_on_sale)
+        self._validate_cards_on_sale(number_of_cards_on_sale)
         self._validate_decks(decks)
 
         self._create_decks_by_tier(decks)
 
-        self._cards_on_sale = cards_on_sale
-        self._create_cards_on_sale()
+        self.number_of_cards_on_sale = number_of_cards_on_sale
+        self._create_cards_on_sale(cards_on_sale)
 
     @staticmethod
-    def _validate_cards_on_sale(cards_on_sale: int) -> None:
-        if cards_on_sale <= 0:
+    def _validate_cards_on_sale(number_of_cards_on_sale: int) -> None:
+        if number_of_cards_on_sale <= 0:
             raise ValueError("Cards on sale must be one or more")
 
     @staticmethod
@@ -44,13 +45,27 @@ class CardReserve(i_card_reserve.ICardReserve):
         for deck in decks:
             self._decks_by_tier[deck.get_tier()] = deck
 
-    def _create_cards_on_sale(self) -> None:
+    def _create_cards_on_sale(self, cards_on_sale: typing.Set[i_card.ICard]) -> None:
         self._cards_on_sale_by_tier = {}  # type: typing.Dict[int,typing.Set[i_card.ICard]]
+
+        for card in cards_on_sale:
+            tier = card.get_tier()
+            if tier not in self._cards_on_sale_by_tier:
+                self._cards_on_sale_by_tier[tier] = set()
+            self._cards_on_sale_by_tier[tier].add(card)
+
+        for tier in self._cards_on_sale_by_tier:
+            if len(self._cards_on_sale_by_tier[tier]) > self.number_of_cards_on_sale:
+                raise ValueError("too many cards on sale")
+
         for tier in self._decks_by_tier:
-            self._cards_on_sale_by_tier[tier] = set()
-            for _ in range(self._cards_on_sale):
+            if tier not in self._cards_on_sale_by_tier:
+                self._cards_on_sale_by_tier[tier] = set()
+            while len(self._cards_on_sale_by_tier[tier]) < self.number_of_cards_on_sale:
                 if self._decks_by_tier[tier].has_next():
                     self._cards_on_sale_by_tier[tier].add(self._decks_by_tier[tier].next())
+                else:
+                    break
 
     def get_card_manager(self):
         return self._card_manager
@@ -110,18 +125,12 @@ class CardReserve(i_card_reserve.ICardReserve):
     def to_json(self):
         return {
             "card_manager": self._card_manager.to_json(),
-            "number_of_cards_on_sale": self._cards_on_sale,
+            "number_of_cards_on_sale": self.number_of_cards_on_sale,
             "decks": [
                 deck.to_json() for deck in self._decks_by_tier.values()
             ],
             "tiers": self._decks_by_tier.keys(),
             "cards_on_sale": [
-                {
-                    "tier": tier,
-                    "cards": [
-                        card.get_name() for card in self._cards_on_sale_by_tier[tier]
-                    ]
-                }
-                for tier in self._decks_by_tier
+                card.get_name() for card in self.get_cards_for_sale()
             ]
         }
