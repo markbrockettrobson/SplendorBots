@@ -33,7 +33,7 @@ class JsonCardManager(card_manager.CardManager, i_json_buildable_object.IJsonBui
 
         card_set = set()
         for card_json in json["cards"]:
-            card_set.add(json_card.JsonCard.build_from_json(card_json, i_game_state))
+            card_set.add(json_card.JsonCard.build_from_json(card_json, incomplete_game_state))
 
         return cls(
             card_set
@@ -42,4 +42,3 @@ class JsonCardManager(card_manager.CardManager, i_json_buildable_object.IJsonBui
     @staticmethod
     def get_json_schema() -> typing.Dict:
         return copy.deepcopy(json_schemas.JSON_CARD_MANAGER_SCHEMA)
-

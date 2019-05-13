@@ -25,7 +25,7 @@ class TestJsonCardManager(unittest.TestCase):
         self.addCleanup(self._card_manager_patcher.stop)
 
         self._json_card_patcher = mock.patch(
-            'splendor_sim.src.card.json_card.JsonCard.__init__',
+            'splendor_sim.src.card.json_card.JsonCard',
             autospec=True
         )
         self._mock_json_card = self._json_card_patcher.start()
@@ -36,7 +36,7 @@ class TestJsonCardManager(unittest.TestCase):
             card.get_name.return_value = "card %d" % i
 
         self._mock_card_set = set(self._mock_cards)
-        self._mock_json_card.side_effect = self._mock_cards
+        self._mock_json_card.build_from_json.side_effect = self._mock_cards
 
         self._mock_json = {
             'cards': [
