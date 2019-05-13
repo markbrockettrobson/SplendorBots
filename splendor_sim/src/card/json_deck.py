@@ -35,6 +35,8 @@ class JsonDeck(deck.Deck, i_json_buildable_object.IJsonBuildableObject):
         card_list = []
         state_card_manager = incomplete_game_state.get_card_reserve().get_card_manager()
         for card_name in json['cards']:
+            if not state_card_manager.is_card_in_manager_by_name(card_name):
+                raise ValueError("Card not in manager")
             card_list.append(state_card_manager.get_card_by_name(card_name))
 
         return cls(

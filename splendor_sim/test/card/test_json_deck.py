@@ -49,8 +49,9 @@ class TestJsonDeck(unittest.TestCase):
         self._mock_game_state.get_card_reserve.return_value = self._mock_card_reserve
         self._mock_card_reserve.get_card_manager.return_value = self._mock_card_manager
         self._mock_card_manager.get_card_by_name.side_effect = lambda name: self._name_to_card_dict[name]
+        self._mock_card_manager.is_card_in_manager_by_name.return_value = True
 
-    def test_json_card_init(self):
+    def test_json_deck_init(self):
         # Arrange
         # Act
         object_pointer = json_deck.JsonDeck(
@@ -64,7 +65,7 @@ class TestJsonDeck(unittest.TestCase):
             self._mock_cards
         )
 
-    def test_json_card_build_from_json_valid(self):
+    def test_json_deck_build_from_json_valid(self):
         # Arrange
         # Act
         object_pointer = json_deck.JsonDeck.build_from_json(
@@ -79,7 +80,7 @@ class TestJsonDeck(unittest.TestCase):
             self._mock_cards
         )
 
-    def test_json_coin_type_build_from_json_invalid(self):
+    def test_json_deck_type_build_from_json_invalid_json(self):
         # Arrange
         self._mock_validator.validate_json.return_value = False
         # Act
@@ -90,7 +91,18 @@ class TestJsonDeck(unittest.TestCase):
                 self._mock_game_state
             )
 
-    def test_json_coin_type_get_json_schema(self):
+    def test_json_deck_type_build_from_json_invalid_card_not_in_manager(self):
+        # Arrange
+        self._mock_card_manager.is_card_in_manager_by_name.side_effect = [True, False, True]
+        # Act
+        # Assert
+        with self.assertRaises(ValueError):
+            _ = json_deck.JsonDeck.build_from_json(
+                self._mock_json,
+                self._mock_game_state
+            )
+
+    def test_json_deck_type_get_json_schema(self):
         # Arrange
         # Act
         # Assert
@@ -99,7 +111,7 @@ class TestJsonDeck(unittest.TestCase):
             json_deck.JsonDeck.get_json_schema()
         )
 
-    def test_json_coin_type_get_json_schema_immutability(self):
+    def test_json_deck_type_get_json_schema_immutability(self):
         # Arrange
         pre_mutation = json_deck.JsonDeck.get_json_schema()
         # Act
