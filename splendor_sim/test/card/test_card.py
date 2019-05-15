@@ -1,8 +1,11 @@
 import copy
 import unittest
 import unittest.mock as mock
+
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 import splendor_sim.src.card.card as card
+import splendor_sim.src.factories.json_validator as json_validator
+import splendor_sim.src.factories.json_schemas as json_schemas
 
 
 class TestCard(unittest.TestCase):
@@ -20,11 +23,13 @@ class TestCard(unittest.TestCase):
     def test_card_init_valid(self):
         # Arrange
         # Act
-        test_card = card.Card(self._tier,
-                              self._victory_points,
-                              self._discount,
-                              self._cost,
-                              self._name)
+        test_card = card.Card(
+            self._tier,
+            self._victory_points,
+            self._discount,
+            self._cost,
+            self._name
+        )
 
         # Assert
         self.assertEqual(test_card.get_tier(), self._tier)
@@ -36,10 +41,12 @@ class TestCard(unittest.TestCase):
     def test_card_init_default_name(self):
         # Arrange
         # Act
-        test_card = card.Card(self._tier,
-                              self._victory_points,
-                              self._discount,
-                              self._cost)
+        test_card = card.Card(
+            self._tier,
+            self._victory_points,
+            self._discount,
+            self._cost
+        )
 
         # Assert
         self.assertEqual(test_card.get_name(), "T1_DA_V0_CB1C1D1")
@@ -50,10 +57,12 @@ class TestCard(unittest.TestCase):
         # Act
         # Assert
         with self.assertRaises(ValueError):
-            _ = card.Card(self._tier,
-                          self._victory_points,
-                          self._discount,
-                          self._cost)
+            _ = card.Card(
+                self._tier,
+                self._victory_points,
+                self._discount,
+                self._cost
+            )
 
     def test_card_init_invalid_victory_points(self):
         # Arrange
@@ -61,10 +70,12 @@ class TestCard(unittest.TestCase):
         # Act
         # Assert
         with self.assertRaises(ValueError):
-            _ = card.Card(self._tier,
-                          self._victory_points,
-                          self._discount,
-                          self._cost)
+            _ = card.Card(
+                self._tier,
+                self._victory_points,
+                self._discount,
+                self._cost
+            )
 
     def test_card_init_invalid_cost(self):
         # Arrange
@@ -72,17 +83,21 @@ class TestCard(unittest.TestCase):
         # Act
         # Assert
         with self.assertRaises(ValueError):
-            _ = card.Card(self._tier,
-                          self._victory_points,
-                          self._discount,
-                          self._cost)
+            _ = card.Card(
+                self._tier,
+                self._victory_points,
+                self._discount,
+                self._cost
+            )
 
     def test_card_cost_post_init_immutability(self):
         # Arrange
-        test_card = card.Card(self._tier,
-                              self._victory_points,
-                              self._discount,
-                              self._cost)
+        test_card = card.Card(
+            self._tier,
+            self._victory_points,
+            self._discount,
+            self._cost
+        )
         pre_mutation = copy.copy(self._cost)
         # Act
         self._cost.pop(list(self._cost.keys())[0])
@@ -91,10 +106,12 @@ class TestCard(unittest.TestCase):
 
     def test_card_cost_immutability(self):
         # Arrange
-        test_card = card.Card(self._tier,
-                              self._victory_points,
-                              self._discount,
-                              self._cost)
+        test_card = card.Card(
+            self._tier,
+            self._victory_points,
+            self._discount,
+            self._cost
+        )
         pre_mutation = test_card.get_cost()
         # Act
         pre_mutation.pop(list(pre_mutation.keys())[0])
@@ -103,11 +120,13 @@ class TestCard(unittest.TestCase):
 
     def test_card_to_json(self):
         # Arrange
-        test_card = card.Card(self._tier,
-                              self._victory_points,
-                              self._discount,
-                              self._cost,
-                              self._name)
+        test_card = card.Card(
+            self._tier,
+            self._victory_points,
+            self._discount,
+            self._cost,
+            self._name
+        )
         # Act
         # Assert
         expected = {
@@ -136,3 +155,19 @@ class TestCard(unittest.TestCase):
         self.assertEqual(real['discounted_coin_type_name'], expected['discounted_coin_type_name'])
         self.assertCountEqual(real['cost'], expected['cost'])
         self.assertEqual(real['name'], expected['name'])
+
+    def test_card_to_json_complies_with_schema(self):
+        # Arrange
+        test_json_validator = json_validator.JsonValidator(json_schemas.JSON_CARD_SCHEMA)
+        # Act
+        test_card = card.Card(
+            self._tier,
+            self._victory_points,
+            self._discount,
+            self._cost,
+            self._name
+        )
+        # Assert
+        self.assertTrue(
+            test_json_validator.validate_json(test_card.to_json())
+        )
