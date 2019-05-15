@@ -1,18 +1,37 @@
 import abc
 import typing
+
 import splendor_sim.interfaces.card.i_card as i_card
 import splendor_sim.interfaces.card.i_deck as i_deck
+import splendor_sim.interfaces.card.i_card_manager as i_card_manager
 
 
 class ICardReserve(abc.ABC):
     @abc.abstractmethod
-    def __init__(self, cards_on_sale: int, decks: typing.Set[i_deck.IDeck]):
+    def __init__(
+            self,
+            card_manager: i_card_manager.ICardManager,
+            number_of_cards_on_sale: int,
+            decks: typing.Set[i_deck.IDeck],
+            cards_on_sale: typing.Set[i_card.ICard]
+    ):
         """
 
-        :param cards_on_sale:  the number of card of each tier to be sold
+        :param card_manager:  the card manager used to store cards
+               <i_card_manager.ICardManager>
+        :param number_of_cards_on_sale:  the number of card of each tier to be sold
                <int>
         :param decks: the set of decks to sell cards from
                <typing.Set[i_deck.IDeck]>
+        :param cards_on_sale: cards to start on sale
+               <typing.Set[i_card.ICard]>
+        """
+
+    @abc.abstractmethod
+    def get_card_manager(self) -> i_card_manager.ICardManager:
+        """
+
+        :return: the card manager used to store cards
         """
 
     @abc.abstractmethod
@@ -86,4 +105,12 @@ class ICardReserve(abc.ABC):
                <int>
         :return: the number of cards remaining in tier
                  <int>
+        """
+
+    @abc.abstractmethod
+    def to_json(self) -> typing.Dict:
+        """
+
+        :return: a json dict of the card reserve
+                 <typing.Dict>
         """

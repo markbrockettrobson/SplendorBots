@@ -6,12 +6,15 @@ import splendor_sim.interfaces.card.i_card as i_card
 
 
 class Card(i_card.ICard):
+    _DEFAULT_NAME_FORMAT = "T%d_D%s_V%d_C%s"
+
     def __init__(
             self,
             tier: int,
             victory_points: int,
             discount: i_coin_type.ICoinType,
-            cost: typing.Dict[i_coin_type.ICoinType, int]
+            cost: typing.Dict[i_coin_type.ICoinType, int],
+            name: str = None
     ):
         self._validate_tier(tier)
         self._validate_victory_points(victory_points)
@@ -21,6 +24,11 @@ class Card(i_card.ICard):
         self._victory_points = victory_points
         self._discount = discount
         self._cost = copy.copy(cost)
+        self._name: str
+        if not name:
+            self._name = self._create_default_name()
+        else:
+            self._name = name
 
     def get_tier(self) -> int:
         return self._tier
@@ -33,6 +41,25 @@ class Card(i_card.ICard):
 
     def get_cost(self) -> typing.Dict[i_coin_type.ICoinType, int]:
         return copy.copy(self._cost)
+
+    def get_name(self) -> str:
+        return self._name
+
+    def to_json(self):
+        cost_json = [
+            {
+                'coin_name': coin.get_name(),
+                'count': value
+            }
+            for coin, value in self._cost.items()
+        ]
+        return {
+            'tier': self._tier,
+            'victory_points': self._victory_points,
+            'discounted_coin_type_name': self._discount.get_name(),
+            'cost': cost_json,
+            'name': self._name
+        }
 
     @staticmethod
     def _validate_tier(level: int) -> None:
@@ -49,3 +76,15 @@ class Card(i_card.ICard):
         for _, value in cost.items():
             if value < 0:
                 raise ValueError("costs must be greater than or equal to 0")
+
+    def _create_default_name(self):
+        cost_string_builder = []
+        for coin, value in self._cost.items():
+            cost_string_builder.append("%s%d" % (coin.get_name(), value))
+
+        return Card._DEFAULT_NAME_FORMAT % (
+            self._tier,
+            self._discount.get_name(),
+            self._victory_points,
+            "".join(cost_string_builder)
+        )

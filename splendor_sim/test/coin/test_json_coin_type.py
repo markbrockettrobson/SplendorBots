@@ -3,6 +3,7 @@ import unittest.mock as mock
 
 import splendor_sim.src.coin.json_coin_type as json_coin_type
 import splendor_sim.src.factories.json_schemas as json_schemas
+import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
 
 
 class TestJsonCoinType(unittest.TestCase):
@@ -29,6 +30,8 @@ class TestJsonCoinType(unittest.TestCase):
             "total_number": self._mock_total_number
         }
 
+        self._mock_game_state = mock.create_autospec(spec=i_incomplete_game_state.IIncompleteGameState, spec_set=True)
+
     def test_json_coin_type_init(self):
         # Arrange
         # Act
@@ -40,7 +43,8 @@ class TestJsonCoinType(unittest.TestCase):
         # Arrange
         # Act
         object_pointer = json_coin_type.JsonCoinType.build_from_json(
-            self._mock_json
+            self._mock_json,
+            self._mock_game_state
         )
         # Assert
         self._mock_validator.validate_json.assert_called_once_with(self._mock_json)
@@ -53,7 +57,8 @@ class TestJsonCoinType(unittest.TestCase):
         # Assert
         with self.assertRaises(ValueError):
             _ = json_coin_type.JsonCoinType.build_from_json(
-                self._mock_json
+                self._mock_json,
+                self._mock_game_state
             )
 
     def test_json_coin_type_get_json_schema(self):

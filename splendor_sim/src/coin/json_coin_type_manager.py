@@ -1,6 +1,8 @@
 import copy
 import typing
 
+
+import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
 import splendor_sim.interfaces.factories.i_json_buildable_object as i_json_buildable_object
 import splendor_sim.src.factories.json_validator as json_validator
 import splendor_sim.src.factories.json_schemas as json_schemas
@@ -23,14 +25,16 @@ class JsonCoinTypeManager(coin_type_manager.CoinTypeManager, i_json_buildable_ob
     @classmethod
     def build_from_json(
             cls,
-            json: typing.Dict
+            json: typing.Dict,
+            incomplete_game_state: i_incomplete_game_state.IIncompleteGameState
     ):
 
         if not cls._JSON_VALIDATOR.validate_json(json):
             raise ValueError("Json does not meet schema")
 
         coin_set = JsonCoinTypeManager._build_coin_type_set(
-            json['coin_types']
+            json['coin_types'],
+            incomplete_game_state
         )
         coin_equivalents = JsonCoinTypeManager._build_coin_coin_equivalents(
             coin_set,
@@ -46,9 +50,15 @@ class JsonCoinTypeManager(coin_type_manager.CoinTypeManager, i_json_buildable_ob
         return copy.deepcopy(json_schemas.JSON_COIN_TYPE_MANAGER_SCHEMA)
 
     @staticmethod
-    def _build_coin_type_set(json_coin_list: typing.List) -> typing.Set[i_coin_type.ICoinType]:
+    def _build_coin_type_set(
+            json_coin_list: typing.List,
+            incomplete_game_state: i_incomplete_game_state.IIncompleteGameState
+    ) -> typing.Set[i_coin_type.ICoinType]:
         return {
-            json_buildable_coin_type.JsonCoinType.build_from_json(json_coin) for json_coin in json_coin_list
+            json_buildable_coin_type.JsonCoinType.build_from_json(
+                json_coin,
+                incomplete_game_state
+            ) for json_coin in json_coin_list
         }
 
     @staticmethod

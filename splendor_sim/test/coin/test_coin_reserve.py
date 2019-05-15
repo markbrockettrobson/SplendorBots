@@ -1,8 +1,11 @@
 import unittest
 import unittest.mock as mock
+
 import splendor_sim.src.coin.coin_reserve as coin_reserve
 import splendor_sim.interfaces.coin.i_coin_type_manager as i_coin_type_manager
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
+import splendor_sim.src.factories.json_validator as json_validator
+import splendor_sim.src.factories.json_schemas as json_schemas
 
 
 class TestCoinReserve(unittest.TestCase):
@@ -11,7 +14,7 @@ class TestCoinReserve(unittest.TestCase):
         self._mock_coin_type_manager = mock.create_autospec(spec=i_coin_type_manager.ICoinTypeManager, spec_set=True)
         self._mock_coin_type_list = [mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True) for _ in range(6)]
         self._mock_coin_type_manager.get_coin_set.return_value = set(self._mock_coin_type_list)
-        self._mock_coin_type_manager.to_json.return_value = 'coin type manager json'
+        self._mock_coin_type_manager.to_json.return_value = {'coin type manager json': 'json'}
         for i, _mock_coin_type in enumerate(self._mock_coin_type_list):
             _mock_coin_type.get_total_number.return_value = 7
             _mock_coin_type.get_name.return_value = '%d' % i
@@ -214,7 +217,7 @@ class TestCoinReserve(unittest.TestCase):
         # Assert
         self.assertEqual(
             {
-                'coin_type_manager': 'coin type manager json',
+                'coin_type_manager': {'coin type manager json': 'json'},
                 'coin_stocks': []
             },
             self.test_coin_reserve.to_json()
@@ -233,8 +236,17 @@ class TestCoinReserve(unittest.TestCase):
         # Assert
         self.assertEqual(
             {
-                'coin_type_manager': 'coin type manager json',
+                'coin_type_manager': {'coin type manager json': 'json'},
                 'coin_stocks': coin_stocks
             },
             self.test_coin_reserve.to_json()
+        )
+
+    def test_coin_reserve_to_json_complies_with_schema(self):
+        # Arrange
+        test_json_validator = json_validator.JsonValidator(json_schemas.JSON_COIN_RESERVE_SCHEMA)
+        # Act
+        # Assert
+        self.assertTrue(
+            test_json_validator.validate_json(self.test_coin_reserve.to_json())
         )
