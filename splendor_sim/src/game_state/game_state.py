@@ -1,14 +1,12 @@
-import abc
-
 import splendor_sim.interfaces.player.i_player_manager as i_player_manager
 import splendor_sim.interfaces.coin.i_coin_reserve as i_coin_reserve
 import splendor_sim.interfaces.card.i_card_reserve as i_card_reserve
 import splendor_sim.interfaces.sponsor.i_sponsor_reserve as i_sponsor_reserve
 import splendor_sim.interfaces.coin.i_payment_manager as i_payment_manager
+import splendor_sim.interfaces.game_state.i_game_state as i_game_state
 
 
-class GameState(abc.ABC):
-
+class GameState(i_game_state.IGameState):
     def __init__(
             self,
             player_manager: i_player_manager.IPlayerManager,
