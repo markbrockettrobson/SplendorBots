@@ -1,8 +1,11 @@
 import unittest
 import unittest.mock as mock
+
 import copy
 import splendor_sim.interfaces.card.i_card as i_card
 import splendor_sim.src.card.deck as deck
+import splendor_sim.src.factories.json_validator as json_validator
+import splendor_sim.src.factories.json_schemas as json_schemas
 
 
 class TestDeck(unittest.TestCase):
@@ -167,7 +170,7 @@ class TestDeck(unittest.TestCase):
         test_deck = deck.Deck(self._tier, self._mock_card_list)
         expected_json = {
             'cards': [
-                card.get_name for card in self._mock_card_set
+                card.get_name() for card in self._mock_card_set
             ],
             'tier': self._tier
         }
@@ -176,3 +179,13 @@ class TestDeck(unittest.TestCase):
         # Assert
         self.assertCountEqual(real_json["cards"], expected_json["cards"])
         self.assertEqual(real_json["tier"], expected_json["tier"])
+
+    def test_deck_to_json_complies_with_schema(self):
+        # Arrange
+        test_json_validator = json_validator.JsonValidator(json_schemas.JSON_DECK_SCHEMA)
+        # Act
+        test_deck = deck.Deck(self._tier, self._mock_card_list)
+        # Assert
+        self.assertTrue(
+            test_json_validator.validate_json(test_deck.to_json())
+        )
