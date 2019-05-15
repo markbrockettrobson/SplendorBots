@@ -1,8 +1,11 @@
 import copy
 import unittest
 import unittest.mock as mock
+
 import splendor_sim.interfaces.card.i_card as i_card
 import splendor_sim.src.card.card_manager as card_manager
+import splendor_sim.src.factories.json_validator as json_validator
+import splendor_sim.src.factories.json_schemas as json_schemas
 
 
 class TestCardManager(unittest.TestCase):
@@ -13,7 +16,7 @@ class TestCardManager(unittest.TestCase):
         for i, _mock_card in enumerate(self._mock_card_list):
             _mock_card.get_tier.return_value = i % 3 + 1
             _mock_card.get_name.return_value = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"[i]
-            _mock_card.to_json.return_value = "mock json for card %s" % _mock_card.get_name()
+            _mock_card.to_json.return_value = {"json": "mock json for card %s" % _mock_card.get_name()}
 
     def test_card_manager_init_valid(self):
         # Arrange
@@ -126,8 +129,18 @@ class TestCardManager(unittest.TestCase):
         # Arrange
         test_card_manager = card_manager.CardManager(self._mock_card_set)
         expected_json = {
-            'cards': [coin.to_json() for coin in self._mock_card_set]
+            'cards': [card.to_json() for card in self._mock_card_set]
         }
         # Act
         # Assert
         self.assertCountEqual(expected_json['cards'], test_card_manager.to_json()['cards'])
+
+    def test_card_manager_to_json_complies_with_schema(self):
+        # Arrange
+        test_json_validator = json_validator.JsonValidator(json_schemas.JSON_CARD_MANAGER_SCHEMA)
+        # Act
+        test_card_manager = card_manager.CardManager(self._mock_card_set)
+        # Assert
+        self.assertTrue(
+            test_json_validator.validate_json(test_card_manager.to_json())
+        )
