@@ -6,7 +6,7 @@ import splendor_sim.src.coin.json_coin_type_manager as json_coin_type_manager
 import splendor_sim.src.coin.json_coin_reserve as json_coin_reserve
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 import splendor_sim.interfaces.coin.i_coin_type_manager as i_coin_type_manager
-import splendor_sim.interfaces.game_state.i_game_state as i_game_state
+import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
 
 
 class TestJsonCoinReserve(unittest.TestCase):
@@ -106,7 +106,7 @@ class TestJsonCoinReserve(unittest.TestCase):
             'coin_stocks': self._mock_coin_stocks
         }
 
-        self._mock_game_state = mock.create_autospec(spec=i_game_state.IGameState, spec_set=True)
+        self._mock_game_state = mock.create_autospec(spec=i_incomplete_game_state.IIncompleteGameState, spec_set=True)
 
     def test_json_coin_reserve_init(self):
         # Arrange

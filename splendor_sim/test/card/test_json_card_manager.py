@@ -3,7 +3,7 @@ import unittest.mock as mock
 
 import splendor_sim.src.card.json_card_manager as json_card_manager
 import splendor_sim.src.factories.json_schemas as json_schemas
-import splendor_sim.interfaces.game_state.i_game_state as i_game_state
+import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
 import splendor_sim.interfaces.card.i_card as i_card
 
 
@@ -44,7 +44,7 @@ class TestJsonCardManager(unittest.TestCase):
             ]
         }
 
-        self._mock_game_state = mock.create_autospec(spec=i_game_state.IGameState, spec_set=True)
+        self._mock_game_state = mock.create_autospec(spec=i_incomplete_game_state.IIncompleteGameState, spec_set=True)
 
     def test_json_card_manager_init(self):
         # Arrange

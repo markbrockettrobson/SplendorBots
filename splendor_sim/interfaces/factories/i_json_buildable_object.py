@@ -1,6 +1,7 @@
 import abc
 import typing
-import splendor_sim.interfaces.game_state.i_game_state as i_game_state
+
+import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
 
 
 class IJsonBuildableObject(abc.ABC):
@@ -10,7 +11,7 @@ class IJsonBuildableObject(abc.ABC):
     def build_from_json(
             cls,
             json: typing.Dict,
-            incomplete_game_state: i_game_state.IGameState
+            incomplete_game_state: i_incomplete_game_state.IIncompleteGameState
     ):
         """
 

@@ -2,7 +2,7 @@ import copy
 import typing
 
 import splendor_sim.interfaces.factories.i_json_buildable_object as i_json_buildable_object
-import splendor_sim.interfaces.game_state.i_game_state as i_game_state
+import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 import splendor_sim.src.coin.json_coin_type_manager as json_coin_type_manager
 import splendor_sim.src.factories.json_validator as json_validator
@@ -25,7 +25,7 @@ class JsonCoinReserve(coin_reserve.CoinReserve, i_json_buildable_object.IJsonBui
     def build_from_json(
             cls,
             json: typing.Dict,
-            incomplete_game_state: i_game_state.IGameState
+            incomplete_game_state: i_incomplete_game_state.IIncompleteGameState
     ):
         if not cls._JSON_VALIDATOR.validate_json(json):
             raise ValueError("Json does not meet schema")

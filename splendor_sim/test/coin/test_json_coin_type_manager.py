@@ -1,7 +1,7 @@
 import unittest
 import unittest.mock as mock
 
-import splendor_sim.interfaces.game_state.i_game_state as i_game_state
+import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
 import splendor_sim.src.coin.json_coin_type_manager as json_coin_type_manager
 import splendor_sim.src.factories.json_schemas as json_schemas
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
@@ -97,9 +97,9 @@ class TestJsonCoinTypeManager(unittest.TestCase):
         self.addCleanup(self._json_coin_patcher.stop)
         self._mock_json_coin_type.build_from_json.side_effect = self._mock_coin_types
 
-        self._mock_game_state = mock.create_autospec(spec=i_game_state.IGameState, spec_set=True)
+        self._mock_game_state = mock.create_autospec(spec=i_incomplete_game_state.IIncompleteGameState, spec_set=True)
 
-    def test_json_coin_type_init(self):
+    def test_json_coin_type_manager_init(self):
         # Arrange
         # Act
         object_pointer = json_coin_type_manager.JsonCoinTypeManager(
@@ -113,7 +113,7 @@ class TestJsonCoinTypeManager(unittest.TestCase):
             self._mock_coin_equivalents
         )
 
-    def test_json_coin_type_build_from_json_valid(self):
+    def test_json_coin_type_manager_build_from_json_valid(self):
         # Arrange
         # Act
         object_pointer = json_coin_type_manager.JsonCoinTypeManager.build_from_json(
@@ -128,7 +128,7 @@ class TestJsonCoinTypeManager(unittest.TestCase):
             self._mock_coin_equivalents
         )
 
-    def test_json_coin_type_build_from_json_invalid(self):
+    def test_json_coin_type_manager_build_from_json_invalid(self):
         # Arrange
         self._mock_validator.validate_json.return_value = False
         # Act
@@ -139,7 +139,7 @@ class TestJsonCoinTypeManager(unittest.TestCase):
                 self._mock_game_state
             )
 
-    def test_json_coin_type_build_from_json_invalid_un_known_equivalent_coin_name(self):
+    def test_json_coin_type_manager_build_from_json_invalid_un_known_equivalent_coin_name(self):
         # Arrange
         self._mock_json['coin_equivalents'].append(
             {
@@ -155,7 +155,7 @@ class TestJsonCoinTypeManager(unittest.TestCase):
                 self._mock_game_state
             )
 
-    def test_json_coin_type_build_from_json_invalid_un_known_equivalent_equivalent_coins_name(self):
+    def test_json_coin_type_manager_build_from_json_invalid_un_known_equivalent_equivalent_coins_name(self):
         # Arrange
         self._mock_json['coin_equivalents'].append(
             {
@@ -171,7 +171,7 @@ class TestJsonCoinTypeManager(unittest.TestCase):
                 self._mock_game_state
             )
 
-    def test_json_coin_type_get_json_schema(self):
+    def test_json_coin_type_manager_get_json_schema(self):
         # Arrange
         # Act
         # Assert
@@ -180,7 +180,7 @@ class TestJsonCoinTypeManager(unittest.TestCase):
             json_coin_type_manager.JsonCoinTypeManager.get_json_schema()
         )
 
-    def test_json_coin_type_get_json_schema_immutability(self):
+    def test_json_coin_type_manager_get_json_schema_immutability(self):
         # Arrange
         pre_mutation = json_coin_type_manager.JsonCoinTypeManager.get_json_schema()
         # Act

@@ -2,7 +2,7 @@ import unittest
 import unittest.mock as mock
 
 import splendor_sim.src.card.json_card as json_card
-import splendor_sim.interfaces.game_state.i_game_state as i_game_state
+import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
 import splendor_sim.src.factories.json_schemas as json_schemas
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 import splendor_sim.interfaces.coin.i_coin_type_manager as i_coin_type_manager
@@ -16,7 +16,7 @@ class TestJsonCard(unittest.TestCase):
         ]
         self._mock_coin_name_map = {name: self._mock_coin_list[i] for i, name in enumerate("ABC")}
 
-        self._mock_game_state = mock.create_autospec(spec=i_game_state.IGameState, spec_set=True)
+        self._mock_game_state = mock.create_autospec(spec=i_incomplete_game_state.IIncompleteGameState, spec_set=True)
         self._mock_coin_reserve = mock.create_autospec(spec=i_coin_reserve.ICoinReserve, spec_set=True)
         self._mock_coin_type_manager = mock.create_autospec(spec=i_coin_type_manager.ICoinTypeManager, spec_set=True)
 

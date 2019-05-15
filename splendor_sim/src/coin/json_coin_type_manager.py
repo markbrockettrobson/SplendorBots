@@ -1,7 +1,8 @@
 import copy
 import typing
 
-import splendor_sim.interfaces.game_state.i_game_state as i_game_state
+
+import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
 import splendor_sim.interfaces.factories.i_json_buildable_object as i_json_buildable_object
 import splendor_sim.src.factories.json_validator as json_validator
 import splendor_sim.src.factories.json_schemas as json_schemas
@@ -25,7 +26,7 @@ class JsonCoinTypeManager(coin_type_manager.CoinTypeManager, i_json_buildable_ob
     def build_from_json(
             cls,
             json: typing.Dict,
-            incomplete_game_state: i_game_state.IGameState
+            incomplete_game_state: i_incomplete_game_state.IIncompleteGameState
     ):
 
         if not cls._JSON_VALIDATOR.validate_json(json):
@@ -51,7 +52,7 @@ class JsonCoinTypeManager(coin_type_manager.CoinTypeManager, i_json_buildable_ob
     @staticmethod
     def _build_coin_type_set(
             json_coin_list: typing.List,
-            incomplete_game_state: i_game_state.IGameState
+            incomplete_game_state: i_incomplete_game_state.IIncompleteGameState
     ) -> typing.Set[i_coin_type.ICoinType]:
         return {
             json_buildable_coin_type.JsonCoinType.build_from_json(

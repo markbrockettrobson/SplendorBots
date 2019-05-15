@@ -3,8 +3,7 @@ import unittest.mock as mock
 
 import splendor_sim.src.card.json_deck as json_deck
 import splendor_sim.src.factories.json_schemas as json_schemas
-import splendor_sim.interfaces.game_state.i_game_state as i_game_state
-import splendor_sim.interfaces.card.i_card_reserve as i_card_reserve
+import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
 import splendor_sim.interfaces.card.i_card_manager as i_card_manager
 import splendor_sim.interfaces.card.i_card as i_card
 
@@ -42,12 +41,10 @@ class TestJsonDeck(unittest.TestCase):
             ]
         }
 
-        self._mock_game_state = mock.create_autospec(spec=i_game_state.IGameState, spec_set=True)
-        self._mock_card_reserve = mock.create_autospec(spec=i_card_reserve.ICardReserve, spec_set=True)
+        self._mock_game_state = mock.create_autospec(spec=i_incomplete_game_state.IIncompleteGameState, spec_set=True)
         self._mock_card_manager = mock.create_autospec(spec=i_card_manager.ICardManager, spec_set=True)
 
-        self._mock_game_state.get_card_reserve.return_value = self._mock_card_reserve
-        self._mock_card_reserve.get_card_manager.return_value = self._mock_card_manager
+        self._mock_game_state.get_card_manager.return_value = self._mock_card_manager
         self._mock_card_manager.get_card_by_name.side_effect = lambda name: self._name_to_card_dict[name]
         self._mock_card_manager.is_card_in_manager_by_name.return_value = True
 

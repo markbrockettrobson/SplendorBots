@@ -1,7 +1,7 @@
 import copy
 import typing
 
-import splendor_sim.interfaces.game_state.i_game_state as i_game_state
+import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
 import splendor_sim.interfaces.factories.i_json_buildable_object as i_json_buildable_object
 import splendor_sim.interfaces.card.i_card as i_card
 import splendor_sim.src.factories.json_validator as json_validator
@@ -27,13 +27,13 @@ class JsonDeck(deck.Deck, i_json_buildable_object.IJsonBuildableObject):
     def build_from_json(
             cls,
             json: typing.Dict,
-            incomplete_game_state: i_game_state.IGameState
+            incomplete_game_state: i_incomplete_game_state.IIncompleteGameState
     ):
         if not cls._JSON_VALIDATOR.validate_json(json):
             raise ValueError("Json does not meet schema")
 
         card_list = []
-        state_card_manager = incomplete_game_state.get_card_reserve().get_card_manager()
+        state_card_manager = incomplete_game_state.get_card_manager()
         for card_name in json['cards']:
             if not state_card_manager.is_card_in_manager_by_name(card_name):
                 raise ValueError("Card not in manager")
