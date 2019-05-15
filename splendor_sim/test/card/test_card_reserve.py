@@ -6,6 +6,8 @@ import splendor_sim.interfaces.card.i_card as i_card
 import splendor_sim.interfaces.card.i_deck as i_deck
 import splendor_sim.interfaces.card.i_card_manager as i_card_manager
 import splendor_sim.src.card.card_reserve as card_reserve
+import splendor_sim.src.factories.json_validator as json_validator
+import splendor_sim.src.factories.json_schemas as json_schemas
 
 
 class TestCardReserve(unittest.TestCase):
@@ -25,7 +27,7 @@ class TestCardReserve(unittest.TestCase):
             spec=i_card_manager.ICardManager,
             spec_set=True
         )
-        self._mock_card_manager.to_json.return_value = "mock manager json"
+        self._mock_card_manager.to_json.return_value = {"JSON": "mock manager json"}
 
         self._mock_cards_sale = [
             mock.create_autospec(spec=i_card.ICard, spec_set=True) for _ in range(3)
@@ -56,7 +58,7 @@ class TestCardReserve(unittest.TestCase):
             deck.next.side_effect = new_mock_cards
             deck.has_next.side_effect = mock_has_next
             deck.get_tier.return_value = i + 1
-            deck.to_json.return_value = "mock deck %d json" % i
+            deck.to_json.return_value = {"JSON": "mock deck %d json" % i}
 
     def test_card_reserve_init_valid(self):
         # Arrange
@@ -686,3 +688,18 @@ class TestCardReserve(unittest.TestCase):
         self.assertCountEqual(real_json["cards_on_sale"], expected_json["cards_on_sale"])
         for card in real_json["cards_on_sale"]:
             self.assertIn(card, self._mock_card_names_by_tier)
+
+    def test_card_reserve_to_json_complies_with_schema(self):
+        # Arrange
+        test_json_validator = json_validator.JsonValidator(json_schemas.JSON_CARD_RESERVE_SCHEMA)
+        # Act
+        test_card_reserve = card_reserve.CardReserve(
+            self._mock_card_manager,
+            self._cards_on_sale,
+            self._mock_deck_set,
+            set()
+        )
+        # Assert
+        self.assertTrue(
+            test_json_validator.validate_json(test_card_reserve.to_json())
+        )
