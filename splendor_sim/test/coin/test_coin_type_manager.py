@@ -1,7 +1,10 @@
 import unittest
 import unittest.mock as mock
+
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 import splendor_sim.src.coin.coin_type_manager as coin_type_manager
+import splendor_sim.src.factories.json_validator as json_validator
+import splendor_sim.src.factories.json_schemas as json_schemas
 
 
 class TestCoinTypeManager(unittest.TestCase):
@@ -251,4 +254,17 @@ class TestCoinTypeManager(unittest.TestCase):
         self.assertCountEqual(
             expected['coin_equivalents'],
             real['coin_equivalents']
+        )
+
+    def test_coin_type_manager_to_json_complies_with_schema(self):
+        # Arrange
+        test_json_validator = json_validator.JsonValidator(json_schemas.JSON_COIN_TYPE_MANAGER_SCHEMA)
+        # Act
+        test_coin_type_manager = coin_type_manager.CoinTypeManager(
+            self._mock_coin_type_set,
+            self._mock_coin_equivalents
+        )
+        # Assert
+        self.assertTrue(
+            test_json_validator.validate_json(test_coin_type_manager.to_json())
         )
