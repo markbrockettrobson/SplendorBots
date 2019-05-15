@@ -129,7 +129,7 @@ class CardReserve(i_card_reserve.ICardReserve):
             "decks": [
                 deck.to_json() for deck in self._decks_by_tier.values()
             ],
-            "tiers": self._decks_by_tier.keys(),
+            "tiers": list(self._decks_by_tier.keys()),
             "cards_on_sale": [
                 card.get_name() for card in self.get_cards_for_sale()
             ]
