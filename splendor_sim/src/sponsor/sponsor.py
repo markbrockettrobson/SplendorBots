@@ -9,9 +9,11 @@ class Sponsor(i_sponsor.ISponsor):
 
     def __init__(
             self,
+            name: str,
             victory_points: int,
             cost: typing.Dict[i_coin_type.ICoinType, int]
     ):
+        self._name = name
         self._validate_victory_points(victory_points)
         self._validate_cost(cost)
         self._victory_points = victory_points
@@ -32,8 +34,24 @@ class Sponsor(i_sponsor.ISponsor):
         if not seen_cards:
             raise ValueError("must have one or more coin types")
 
+    def get_name(self) -> str:
+        return self._name
+
     def get_victory_points(self) -> int:
         return self._victory_points
 
     def get_cost(self) -> typing.Dict[i_coin_type.ICoinType, int]:
         return copy.copy(self._cost)
+
+    def to_json(self) -> typing.Dict:
+        return {
+            "name": self._name,
+            "victory_points": self._victory_points,
+            "cost": [
+                {
+                    'coin_name': coin.get_name(),
+                    'count': number
+                }
+                for coin, number in self._cost.items()
+            ]
+        }
