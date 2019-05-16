@@ -52,10 +52,10 @@ class TestIncompleteGameState(unittest.TestCase):
     def test_incomplete_game_state_get_card_reserve(self):
         # Arrange
         test_game_state = incomplete_game_state.IncompleteGameState()
-        test_game_state.set_coin_reserve(self._mock_coin_reserve)
+        test_game_state.set_card_reserve(self._mock_coin_reserve)
         # Act
         # Assert
-        self.assertEqual(test_game_state.get_coin_reserve(), self._mock_coin_reserve)
+        self.assertEqual(test_game_state.get_card_reserve(), self._mock_coin_reserve)
 
     def test_incomplete_game_state_get_card_reserve_no_reserve(self):
         # Arrange
@@ -68,7 +68,7 @@ class TestIncompleteGameState(unittest.TestCase):
     def test_incomplete_game_state_get_sponsor_reserve(self):
         # Arrange
         test_game_state = incomplete_game_state.IncompleteGameState()
-        test_game_state.set_coin_reserve(self._mock_sponsor_reserve)
+        test_game_state.set_sponsor_reserve(self._mock_sponsor_reserve)
         # Act
         # Assert
         self.assertEqual(test_game_state.get_sponsor_reserve(), self._mock_sponsor_reserve)
@@ -84,10 +84,10 @@ class TestIncompleteGameState(unittest.TestCase):
     def test_incomplete_game_state_get_card_manager(self):
         # Arrange
         test_game_state = incomplete_game_state.IncompleteGameState()
-        test_game_state.set_coin_reserve(self._mock_card_manager)
+        test_game_state.set_card_manager(self._mock_card_manager)
         # Act
         # Assert
-        self.assertEqual(test_game_state.get_sponsor_reserve(), self._mock_card_manager)
+        self.assertEqual(test_game_state.get_card_manager(), self._mock_card_manager)
 
     def test_incomplete_game_state_get_card_manager_no_reserve(self):
         # Arrange

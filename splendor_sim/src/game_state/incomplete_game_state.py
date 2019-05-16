@@ -36,17 +36,17 @@ class IncompleteGameState(i_incomplete_game_state.IIncompleteGameState):
         self._card_reserve = card_reserve
 
     def get_card_reserve(self) -> i_card_reserve.ICardReserve:
-        if not self._coin_reserve:
+        if not self._card_reserve:
             raise ValueError("no coin reserve")
-        return self._coin_reserve
+        return self._card_reserve
 
     def set_sponsor_reserve(self, sponsor_reserve: i_sponsor_reserve.ISponsorReserve) -> None:
         self._sponsor_reserve = sponsor_reserve
 
     def get_sponsor_reserve(self) -> i_sponsor_reserve.ISponsorReserve:
-        if not self._coin_reserve:
+        if not self._sponsor_reserve:
             raise ValueError("no coin reserve")
-        return self._coin_reserve
+        return self._sponsor_reserve
 
     def set_card_manager(self, card_manager: i_card_manager.ICardManager) -> None:
         self._card_manager = card_manager
