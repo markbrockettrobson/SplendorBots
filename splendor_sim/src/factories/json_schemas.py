@@ -159,3 +159,32 @@ JSON_CARD_RESERVE_SCHEMA = {
         }
     }
 }
+JSON_SPONSOR = {
+    'name': {
+        'required': True,
+        'type': 'string'
+    },
+    'victory_points': {
+        'required': True,
+        'type': 'integer'
+    },
+    'cost': {
+        'required': True,
+        'type': 'list',
+        'schema': {
+            'required': True,
+            'type': 'dict',
+            'schema': {
+                'coin_name': {
+                    'required': True,
+                    'type': 'string'
+                },
+                'count': {
+                    'required': True,
+                    'type': 'integer',
+                    'min': 0,
+                }
+            }
+        }
+    }
+}

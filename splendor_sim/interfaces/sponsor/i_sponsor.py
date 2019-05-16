@@ -45,3 +45,11 @@ class ISponsor(abc.ABC):
         :return: the cost of the sponsor
                  <typing.Dict[i_coin_type.ICoinType, int]>
         """
+
+    @abc.abstractmethod
+    def to_json(self) -> typing.Dict:
+        """
+
+        :return: a json dict of the sponsor
+                 <typing.Dict>
+        """

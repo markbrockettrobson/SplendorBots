@@ -92,3 +92,34 @@ class TestSponsor(unittest.TestCase):
         return_value.pop(list(return_value)[0])
         # Assert
         self.assertEqual(test_sponsor.get_cost(), pre_mutation)
+
+    def test_sponsor_to_json(self):
+        # Arrange
+        test_sponsor = sponsor.Sponsor(self._mock_name, self._mock_victory_points, self._mock_cost)
+        # Act
+        # Assert
+        expected = {
+            "name": self._mock_name,
+            "victory_points": self._mock_victory_points,
+            "cost": [
+                {
+                    'coin_name': coin.get_name(),
+                    'count': number
+                }
+                for coin, number in self._mock_cost.items()
+            ]
+        }
+        real = test_sponsor.to_json()
+        self.assertEqual(real['name'], expected['name'])
+        self.assertEqual(real['victory_points'], expected['victory_points'])
+        self.assertCountEqual(real['cost'], expected['cost'])
+
+    def test_card_to_json_complies_with_schema(self):
+        # Arrange
+        test_json_validator = json_validator.JsonValidator(json_schemas.JSON_SPONSOR)
+        # Act
+        test_sponsor = sponsor.Sponsor(self._mock_name, self._mock_victory_points, self._mock_cost)
+        # Assert
+        self.assertTrue(
+            test_json_validator.validate_json(test_sponsor.to_json())
+        )

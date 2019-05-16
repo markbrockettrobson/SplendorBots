@@ -42,3 +42,16 @@ class Sponsor(i_sponsor.ISponsor):
 
     def get_cost(self) -> typing.Dict[i_coin_type.ICoinType, int]:
         return copy.copy(self._cost)
+
+    def to_json(self) -> typing.Dict:
+        return {
+            "name": self._name,
+            "victory_points": self._victory_points,
+            "cost": [
+                {
+                    'coin_name': coin.get_name(),
+                    'count': number
+                }
+                for coin, number in self._cost.items()
+            ]
+        }
