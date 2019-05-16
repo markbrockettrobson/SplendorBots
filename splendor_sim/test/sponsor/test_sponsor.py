@@ -67,7 +67,7 @@ class TestSponsor(unittest.TestCase):
         test_sponsor = sponsor.Sponsor(self._mock_name, self._mock_victory_points, self._mock_cost)
         # Act
         # Assert
-        self.assertEqual(test_sponsor.get_victory_points(), self._mock_victory_points)
+        self.assertEqual(test_sponsor.get_name(), self._mock_name)
 
     def test_sponsor_get_victory_points(self):
         # Arrange
