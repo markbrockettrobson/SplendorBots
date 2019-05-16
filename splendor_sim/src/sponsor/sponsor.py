@@ -9,9 +9,11 @@ class Sponsor(i_sponsor.ISponsor):
 
     def __init__(
             self,
+            name: str,
             victory_points: int,
             cost: typing.Dict[i_coin_type.ICoinType, int]
     ):
+        self._name = name
         self._validate_victory_points(victory_points)
         self._validate_cost(cost)
         self._victory_points = victory_points
@@ -31,6 +33,9 @@ class Sponsor(i_sponsor.ISponsor):
             seen_cards.add(coin)
         if not seen_cards:
             raise ValueError("must have one or more coin types")
+
+    def get_name(self) -> str:
+        return self._name
 
     def get_victory_points(self) -> int:
         return self._victory_points
