@@ -114,7 +114,7 @@ class TestSponsor(unittest.TestCase):
         self.assertEqual(real['victory_points'], expected['victory_points'])
         self.assertCountEqual(real['cost'], expected['cost'])
 
-    def test_card_to_json_complies_with_schema(self):
+    def test_sponsor_to_json_complies_with_schema(self):
         # Arrange
         test_json_validator = json_validator.JsonValidator(json_schemas.JSON_SPONSOR)
         # Act
