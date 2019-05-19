@@ -188,3 +188,14 @@ JSON_SPONSOR = {
         }
     }
 }
+JSON_SPONSOR_MANAGER = {
+    'sponsors': {
+        'required': True,
+        'type': 'list',
+        'minlength': 1,
+        'schema': {
+            'required': True,
+            'type': 'dict'
+        }
+    },
+}
