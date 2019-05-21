@@ -108,7 +108,7 @@ class TestSponsorManager(unittest.TestCase):
 
     def test_sponsor_manager_to_json_complies_with_schema(self):
         # Arrange
-        test_json_validator = json_validator.JsonValidator(json_schemas.JSON_SPONSOR_MANAGER)
+        test_json_validator = json_validator.JsonValidator(json_schemas.JSON_SPONSOR_MANAGER_SCHEMA)
         # Act
         test_sponsor_manager = sponsor_manager.SponsorManager(self._mock_sponsor_set)
         # Assert
