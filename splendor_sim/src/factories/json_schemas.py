@@ -159,7 +159,7 @@ JSON_CARD_RESERVE_SCHEMA = {
         }
     }
 }
-JSON_SPONSOR = {
+JSON_SPONSOR_SCHEMA = {
     'name': {
         'required': True,
         'type': 'string'
@@ -188,7 +188,7 @@ JSON_SPONSOR = {
         }
     }
 }
-JSON_SPONSOR_MANAGER = {
+JSON_SPONSOR_MANAGER_SCHEMA = {
     'sponsors': {
         'required': True,
         'type': 'list',
@@ -198,4 +198,18 @@ JSON_SPONSOR_MANAGER = {
             'type': 'dict'
         }
     },
+}
+JSON_SPONSOR_RESERVE_SCHEMA = {
+    "sponsor_manager": {
+        'required': True,
+        'type': 'dict',
+    },
+    "sponsors": {
+        'required': True,
+        'type': 'list',
+        'schema': {
+            'required': True,
+            'type': 'string',
+        }
+    }
 }
