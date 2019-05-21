@@ -100,7 +100,7 @@ class TestSponsorReserve(unittest.TestCase):
         with self.assertRaises(ValueError):
             test_sponsor_reserve.remove_sponsor(new_sponsor)
 
-    def test_sponsor_manager_to_json(self):
+    def test_sponsor_reserve_to_json(self):
         # Arrange
         test_sponsor_reserve = sponsor_reserve.SponsorReserve(self._mock_sponsor_manager, self._mock_sponsor_set)
         # Act
@@ -115,7 +115,7 @@ class TestSponsorReserve(unittest.TestCase):
         self.assertEqual(real['sponsor_manager'], expected['sponsor_manager'])
         self.assertCountEqual(real['sponsors'], expected['sponsors'])
 
-    def test_sponsor_manager_to_json_complies_with_schema(self):
+    def test_sponsor_reserve_to_json_complies_with_schema(self):
         # Arrange
         test_json_validator = json_validator.JsonValidator(json_schemas.JSON_SPONSOR_RESERVE_SCHEMA)
         # Act
