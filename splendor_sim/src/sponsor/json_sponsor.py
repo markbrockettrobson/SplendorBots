@@ -43,7 +43,7 @@ class JsonSponsor(sponsor.Sponsor, i_json_buildable_object.IJsonBuildableObject)
             if coin in cost:
                 raise ValueError("coin name repeated")
             cost[coin] = count
-            
+
         return cls(
             json['name'],
             json['victory_points'],
