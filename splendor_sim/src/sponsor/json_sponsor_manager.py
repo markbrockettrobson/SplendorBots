@@ -29,12 +29,12 @@ class JsonSponsorManager(sponsor_manager.SponsorManager, i_json_buildable_object
         if not cls._JSON_VALIDATOR.validate_json(json):
             raise ValueError("Json does not meet schema")
 
-        sponsor_list = set()  # type: typing.Set[i_sponsor.ISponsor]
+        sponsor_set = set()  # type: typing.Set[i_sponsor.ISponsor]
         for sponsor_json in json["sponsors"]:
-            sponsor_list.add(json_sponsor.JsonSponsor.build_from_json(sponsor_json, incomplete_game_state))
+            sponsor_set.add(json_sponsor.JsonSponsor.build_from_json(sponsor_json, incomplete_game_state))
 
         return cls(
-            sponsor_list
+            sponsor_set
         )
 
     @staticmethod
