@@ -7,11 +7,17 @@ import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 
 class IPlayerCoinInventory(abc.ABC):
     @abc.abstractmethod
-    def __init__(self, coin_type_manager: i_coin_type_manager.ICoinTypeManager):
+    def __init__(
+            self,
+            coin_type_manager: i_coin_type_manager.ICoinTypeManager,
+            current_coins: typing.Dict[i_coin_type.ICoinType, int]
+    ):
         """
 
         :param coin_type_manager: holds all the coin types
                <i_coin_type_manager.ICoinTypeManager>
+        :param current_coins: dictionary mapping each coin type in the manager to the amount the player has
+               <typing.Dict[i_coin_type.ICoinType, int]>
         """
 
     @abc.abstractmethod
@@ -55,4 +61,12 @@ class IPlayerCoinInventory(abc.ABC):
         :param coins: dictionary mapping each coin type in the manager to the amount to remove
                <typing.Dict[i_coin_type.ICoinType, int]>
         :return: None
+        """
+
+    @abc.abstractmethod
+    def to_json(self) -> typing.Dict:
+        """
+
+        :return: a json dict of the player Coin inventory object
+                 <typing.Dict>
         """

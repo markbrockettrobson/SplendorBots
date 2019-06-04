@@ -213,3 +213,24 @@ JSON_SPONSOR_RESERVE_SCHEMA = {
         }
     }
 }
+JSON_PLAYER_COIN_INVENTORY = {
+    'coin_stocks': {
+        'required': True,
+        'type': 'list',
+        'schema': {
+            'required': True,
+            'type': 'dict',
+            'schema': {
+                'coin_name': {
+                    'required': True,
+                    'type': 'string'
+                },
+                'count': {
+                    'required': True,
+                    'type': 'integer',
+                    'min': 0,
+                }
+            }
+        }
+    }
+}
