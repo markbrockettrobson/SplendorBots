@@ -3,23 +3,25 @@ import unittest.mock as mock
 import splendor_sim.src.player.player_coin_inventory as player_coin_inventory
 import splendor_sim.interfaces.coin.i_coin_type_manager as i_coin_type_manager
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
+import splendor_sim.src.factories.json_validator as json_validator
+import splendor_sim.src.factories.json_schemas as json_schemas
 
 
 class TestPlayerCoinInventory(unittest.TestCase):
-
     def setUp(self):
         self._mock_coin_type_manager = mock.create_autospec(spec=i_coin_type_manager.ICoinTypeManager, spec_set=True)
         self._mock_coin_type_list = [mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True) for _ in range(6)]
         self._mock_coin_type_set = set(self._mock_coin_type_list)
         self._mock_coin_type_manager.get_coin_set.return_value = self._mock_coin_type_set
-        for _mock_coin_type in self._mock_coin_type_list:
+        for i, _mock_coin_type in enumerate(self._mock_coin_type_list):
             _mock_coin_type.get_total_number.return_value = 7
+            _mock_coin_type.get_name.return_value = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[i]
         self._mock_coin_type_list[-1].get_total_number.return_value = 5
 
         self._return_dictionary = {coin: 7 for coin in self._mock_coin_type_list}
         self._return_dictionary[self._mock_coin_type_list[-1]] = 5
 
-        self.test_player_coin_inventory = player_coin_inventory.PlayerCoinInventory(self._mock_coin_type_manager)
+        self.test_player_coin_inventory = player_coin_inventory.PlayerCoinInventory(self._mock_coin_type_manager, {})
 
     def test_player_coin_inventory_get_coins_remaining(self):
         # Arrange
@@ -27,7 +29,7 @@ class TestPlayerCoinInventory(unittest.TestCase):
                self._mock_coin_type_list[2]: 2,
                self._mock_coin_type_list[-1]: 1}
         expected = add
-        self.test_player_coin_inventory.add_coins(add)
+        self.test_player_coin_inventory = player_coin_inventory.PlayerCoinInventory(self._mock_coin_type_manager, add)
         # Act
         real = self.test_player_coin_inventory.get_coins()
         # Assert
@@ -176,3 +178,51 @@ class TestPlayerCoinInventory(unittest.TestCase):
         real = self.test_player_coin_inventory.get_number_of_coins()
         # Assert
         self.assertEqual(real, 6)
+
+    def test_coin_reserve_to_json(self):
+        # Arrange
+        # Act
+        # Assert
+        self.assertEqual(
+            {
+                'coin_stocks': [],
+            },
+            self.test_player_coin_inventory.to_json()
+        )
+
+    def test_coin_reserve_to_json_non_full(self):
+        # Arrange
+        add = {self._mock_coin_type_list[0]: 1,
+               self._mock_coin_type_list[1]: 2,
+               self._mock_coin_type_list[2]: 3}
+        self.test_player_coin_inventory = player_coin_inventory.PlayerCoinInventory(self._mock_coin_type_manager, add)
+        # Act
+        # Assert
+        self.assertEqual(
+            {
+                'coin_stocks': [
+                    {
+                        'coin_name': "A",
+                        'count': 1
+                    },
+                    {
+                        'coin_name': "B",
+                        'count': 2
+                    },
+                    {
+                        'coin_name': "C",
+                        'count': 3
+                    },
+                ],
+            },
+            self.test_player_coin_inventory.to_json()
+        )
+
+    def test_coin_reserve_to_json_complies_with_schema(self):
+        # Arrange
+        test_json_validator = json_validator.JsonValidator(json_schemas.JSON_PLAYER_COIN_INVENTORY)
+        # Act
+        # Assert
+        self.assertTrue(
+            test_json_validator.validate_json(self.test_player_coin_inventory.to_json())
+        )

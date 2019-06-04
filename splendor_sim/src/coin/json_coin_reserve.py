@@ -37,7 +37,7 @@ class JsonCoinReserve(coin_reserve.CoinReserve, i_json_buildable_object.IJsonBui
             )
         json_coin_reserve = cls(
             coin_type_manager,
-            cls.make_coin_stocks(
+            cls._make_coin_stocks(
                 coin_type_manager,
                 json["coin_stocks"]
             )
@@ -50,7 +50,7 @@ class JsonCoinReserve(coin_reserve.CoinReserve, i_json_buildable_object.IJsonBui
         return copy.deepcopy(json_schemas.JSON_COIN_RESERVE_SCHEMA)
 
     @staticmethod
-    def make_coin_stocks(
+    def _make_coin_stocks(
             coin_type_manager: json_coin_type_manager.JsonCoinTypeManager,
             json: typing.List
     ) -> typing.Dict[i_coin_type.ICoinType, int]:
