@@ -179,7 +179,7 @@ class TestPlayerCoinInventory(unittest.TestCase):
         # Assert
         self.assertEqual(real, 6)
 
-    def test_coin_reserve_to_json(self):
+    def test_coin_reserve_to_json_empty(self):
         # Arrange
         # Act
         # Assert
@@ -190,7 +190,7 @@ class TestPlayerCoinInventory(unittest.TestCase):
             self.test_player_coin_inventory.to_json()
         )
 
-    def test_coin_reserve_to_json_non_full(self):
+    def test_coin_reserve_to_json(self):
         # Arrange
         add = {self._mock_coin_type_list[0]: 1,
                self._mock_coin_type_list[1]: 2,
@@ -213,6 +213,30 @@ class TestPlayerCoinInventory(unittest.TestCase):
                         'coin_name': "C",
                         'count': 3
                     },
+                ],
+            },
+            self.test_player_coin_inventory.to_json()
+        )
+
+    def test_coin_reserve_to_json_non_empty_coins_not_transfer(self):
+        # Arrange
+        add = {self._mock_coin_type_list[0]: 1,
+               self._mock_coin_type_list[1]: 2,
+               self._mock_coin_type_list[2]: 0}
+        self.test_player_coin_inventory = player_coin_inventory.PlayerCoinInventory(self._mock_coin_type_manager, add)
+        # Act
+        # Assert
+        self.assertEqual(
+            {
+                'coin_stocks': [
+                    {
+                        'coin_name': "A",
+                        'count': 1
+                    },
+                    {
+                        'coin_name': "B",
+                        'count': 2
+                    }
                 ],
             },
             self.test_player_coin_inventory.to_json()
