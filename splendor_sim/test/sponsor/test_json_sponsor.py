@@ -127,7 +127,6 @@ class TestJsonSponsor(unittest.TestCase):
                 'count': 3
             }
         )
-        print(self._mock_cost_json)
         # Act
         # Assert
         with self.assertRaises(ValueError):
