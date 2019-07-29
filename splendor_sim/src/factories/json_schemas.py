@@ -254,3 +254,12 @@ JSON_PLAYER_CARD_INVENTORY = {
         }
     }
 }
+JSON_PLAYER_SPONSOR_INVENTORY = {
+    'sponsors': {
+        'required': True,
+        'type': 'list',
+        'schema': {
+            'type': 'string'
+        }
+    }
+}

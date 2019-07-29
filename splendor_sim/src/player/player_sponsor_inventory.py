@@ -7,9 +7,11 @@ import splendor_sim.interfaces.player.i_player_sponsor_inventory as i_player_spo
 
 class PlayerSponsorInventory(i_player_sponsor_inventory.IPlayerSponsorInventory):
 
-    def __init__(self):
+    def __init__(self, sponsors: typing.Set[i_sponsor.ISponsor]):
         self._sponsors = set()
         self._total_victory_points = 0
+        for sponsor in sponsors:
+            self.add_sponsor(sponsor)
 
     def get_sponsor_set(self) -> typing.Set[i_sponsor.ISponsor]:
         return copy.copy(self._sponsors)
@@ -22,3 +24,8 @@ class PlayerSponsorInventory(i_player_sponsor_inventory.IPlayerSponsorInventory)
 
     def get_total_victory_points(self) -> int:
         return self._total_victory_points
+
+    def to_json(self) -> typing.Dict:
+        return {
+            'sponsors': [sponsor.get_name() for sponsor in list(self._sponsors)]
+        }

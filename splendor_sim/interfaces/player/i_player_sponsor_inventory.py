@@ -34,3 +34,11 @@ class IPlayerSponsorInventory(abc.ABC):
         :return: the total number of victory_points that the payer would have from the sponsors in this inventory
                  <int>
         """
+
+    @abc.abstractmethod
+    def to_json(self) -> typing.Dict:
+        """
+
+        :return: a json dict of the player sponsor inventory object
+                 <typing.Dict>
+        """
