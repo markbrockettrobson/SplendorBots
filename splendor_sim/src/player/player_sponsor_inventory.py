@@ -8,7 +8,7 @@ import splendor_sim.interfaces.player.i_player_sponsor_inventory as i_player_spo
 class PlayerSponsorInventory(i_player_sponsor_inventory.IPlayerSponsorInventory):
 
     def __init__(self, sponsors: typing.Set[i_sponsor.ISponsor]):
-        self._sponsors = set()
+        self._sponsors: typing.Set[i_sponsor.ISponsor] = set()
         self._total_victory_points = 0
         for sponsor in sponsors:
             self.add_sponsor(sponsor)
