@@ -234,3 +234,23 @@ JSON_PLAYER_COIN_INVENTORY = {
         }
     }
 }
+JSON_PLAYER_CARD_INVENTORY = {
+    'max_reserved_cards': {
+        'required': True,
+        'type': 'integer'
+    },
+    'reserved_cards': {
+        'required': True,
+        'type': 'list',
+        'schema': {
+            'type': 'string'
+        }
+    },
+    'cards': {
+        'required': True,
+        'type': 'list',
+        'schema': {
+            'type': 'string'
+        }
+    }
+}

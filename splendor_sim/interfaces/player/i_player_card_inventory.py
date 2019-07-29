@@ -8,7 +8,12 @@ import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 class IPlayerCardInventory(abc.ABC):
 
     @abc.abstractmethod
-    def __init__(self, max_reserved_cards: int):
+    def __init__(
+            self,
+            max_reserved_cards: int,
+            reserved_cards: typing.Set[i_card.ICard],
+            cards: typing.Set[i_card.ICard]
+    ):
         """
 
         :param max_reserved_cards: the max number of cards the player can reserve
@@ -92,4 +97,12 @@ class IPlayerCardInventory(abc.ABC):
         :param card: the card to be removed from the card set
                <i_card.ICard>
         :return: None
+        """
+
+    @abc.abstractmethod
+    def to_json(self) -> typing.Dict:
+        """
+
+        :return: a json dict of the player card inventory object
+                 <typing.Dict>
         """
