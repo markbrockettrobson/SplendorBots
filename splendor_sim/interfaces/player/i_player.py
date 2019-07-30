@@ -1,4 +1,5 @@
 import abc
+import typing
 
 import splendor_sim.interfaces.player.i_player_coin_inventory as i_player_coin_inventory
 import splendor_sim.interfaces.player.i_player_card_inventory as i_player_card_inventory
@@ -44,4 +45,11 @@ class IPlayer(abc.ABC):
 
         :return: the sponsor inventory of a player
                  <i_player_sponsor_inventory.IPlayerSponsorInventory>
+        """
+    @abc.abstractmethod
+    def to_json(self) -> typing.Dict:
+        """
+
+        :return: a json dict of the player object
+                 <typing.Dict>
         """

@@ -1,3 +1,5 @@
+import typing
+
 import splendor_sim.interfaces.player.i_player as i_player
 import splendor_sim.interfaces.player.i_player_coin_inventory as i_player_coin_inventory
 import splendor_sim.interfaces.player.i_player_card_inventory as i_player_card_inventory
@@ -22,3 +24,10 @@ class Player(i_player.IPlayer):
 
     def get_sponsor_inventory(self) -> i_player_sponsor_inventory.IPlayerSponsorInventory:
         return self._sponsor_inventory
+
+    def to_json(self) -> typing.Dict:
+        return {
+            'coin_inventory': self._coin_inventory.to_json(),
+            'card_inventory': self._card_inventory.to_json(),
+            'sponsor_inventory': self._sponsor_inventory.to_json()
+        }
