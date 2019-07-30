@@ -263,3 +263,17 @@ JSON_PLAYER_SPONSOR_INVENTORY = {
         }
     }
 }
+JSON_PLAYER = {
+    'coin_inventory': {
+        'required': True,
+        'type': 'dict'
+    },
+    'card_inventory': {
+        'required': True,
+        'type': 'dict'
+    },
+    'sponsor_inventory': {
+        'required': True,
+        'type': 'dict'
+    }
+}
