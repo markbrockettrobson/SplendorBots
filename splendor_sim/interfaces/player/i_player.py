@@ -28,7 +28,7 @@ class IPlayer(abc.ABC):
 
         """
     @abc.abstractmethod
-    def get_name(self) -> i_player_coin_inventory.IPlayerCoinInventory:
+    def get_name(self) -> str:
         """
 
         :return: the name of a player

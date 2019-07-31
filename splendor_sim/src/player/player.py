@@ -9,11 +9,11 @@ import splendor_sim.interfaces.player.i_player_sponsor_inventory as i_player_spo
 class Player(i_player.IPlayer):
 
     def __init__(
-        self,
-        name: str,
-        coin_inventory: i_player_coin_inventory.IPlayerCoinInventory,
-        card_inventory: i_player_card_inventory.IPlayerCardInventory,
-        sponsor_inventory: i_player_sponsor_inventory.IPlayerSponsorInventory
+            self,
+            name: str,
+            coin_inventory: i_player_coin_inventory.IPlayerCoinInventory,
+            card_inventory: i_player_card_inventory.IPlayerCardInventory,
+            sponsor_inventory: i_player_sponsor_inventory.IPlayerSponsorInventory
     ):
         self._name = name
         self._coin_inventory = coin_inventory
