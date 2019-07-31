@@ -264,6 +264,10 @@ JSON_PLAYER_SPONSOR_INVENTORY = {
     }
 }
 JSON_PLAYER = {
+    'name': {
+        'required': True,
+        'type': 'string'
+    },
     'coin_inventory': {
         'required': True,
         'type': 'dict'
@@ -276,4 +280,22 @@ JSON_PLAYER = {
         'required': True,
         'type': 'dict'
     }
+}
+JSON_PLAYER_MANAGER = {
+    'players': {
+        'required': True,
+        'type': 'list',
+        'schema': {
+            'required': True,
+            'type': 'dict',
+        }
+    },
+    "current_player": {
+        'required': True,
+        'type': 'string',
+    },
+    "turn_number": {
+        'required': True,
+        'type': 'integer',
+    },
 }
