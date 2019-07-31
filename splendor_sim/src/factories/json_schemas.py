@@ -281,3 +281,21 @@ JSON_PLAYER = {
         'type': 'dict'
     }
 }
+JSON_PLAYER_MANAGER = {
+    'players': {
+        'required': True,
+        'type': 'list',
+        'schema': {
+            'required': True,
+            'type': 'dict',
+        }
+    },
+    "current_player": {
+        'required': True,
+        'type': 'string',
+    },
+    "turn_number": {
+        'required': True,
+        'type': 'integer',
+    },
+}
