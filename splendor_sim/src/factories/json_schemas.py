@@ -264,6 +264,10 @@ JSON_PLAYER_SPONSOR_INVENTORY = {
     }
 }
 JSON_PLAYER = {
+    'name': {
+        'required': True,
+        'type': 'string'
+    },
     'coin_inventory': {
         'required': True,
         'type': 'dict'
