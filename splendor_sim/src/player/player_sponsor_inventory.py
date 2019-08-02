@@ -1,8 +1,8 @@
 import copy
 import typing
 
-import splendor_sim.interfaces.sponsor.i_sponsor as i_sponsor
 import splendor_sim.interfaces.player.i_player_sponsor_inventory as i_player_sponsor_inventory
+import splendor_sim.interfaces.sponsor.i_sponsor as i_sponsor
 
 
 class PlayerSponsorInventory(i_player_sponsor_inventory.IPlayerSponsorInventory):

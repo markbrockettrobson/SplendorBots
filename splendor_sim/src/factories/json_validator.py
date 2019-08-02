@@ -1,4 +1,5 @@
 import typing
+
 import cerberus.validator as validator
 
 import splendor_sim.interfaces.factories.i_json_validator as i_json_validator

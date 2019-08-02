@@ -3,9 +3,9 @@ import unittest
 import unittest.mock as mock
 
 import splendor_sim.interfaces.player.i_player as i_player
-import splendor_sim.src.player.player_manager as player_manager
-import splendor_sim.src.factories.json_validator as json_validator
 import splendor_sim.src.factories.json_schemas as json_schemas
+import splendor_sim.src.factories.json_validator as json_validator
+import splendor_sim.src.player.player_manager as player_manager
 
 
 class TestPlayerManager(unittest.TestCase):

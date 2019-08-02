@@ -1,11 +1,11 @@
 import copy
 import typing
 
-import splendor_sim.interfaces.game_state.i_game_state as i_game_state
 import splendor_sim.interfaces.action.i_action as i_action
-import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
-import splendor_sim.interfaces.player.i_player as i_player
 import splendor_sim.interfaces.card.i_card as i_card
+import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
+import splendor_sim.interfaces.game_state.i_game_state as i_game_state
+import splendor_sim.interfaces.player.i_player as i_player
 
 
 class PurchaseReservedCardAction(i_action.IAction):

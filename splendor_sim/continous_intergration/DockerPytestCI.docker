@@ -11,5 +11,5 @@ WORKDIR /SplendorBots
 
 COPY splendor_sim ./splendor_sim
 
-RUN python -m pytest --mypy --mypy-ignore-missing-imports --pylint --cov splendor_sim
+RUN python -m pytest --isort --mypy --mypy-ignore-missing-imports --pylint --cov splendor_sim
 RUN python -m codecov --token=a810b1b1-f488-4eae-bdf0-9e2f8146cf84

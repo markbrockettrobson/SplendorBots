@@ -1,5 +1,6 @@
 import abc
 import typing
+
 import splendor_sim.interfaces.card.i_card as i_card
 
 

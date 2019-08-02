@@ -1,8 +1,8 @@
 import abc
 import typing
 
-import splendor_sim.interfaces.player.i_player_coin_inventory as i_player_coin_inventory
 import splendor_sim.interfaces.player.i_player_card_inventory as i_player_card_inventory
+import splendor_sim.interfaces.player.i_player_coin_inventory as i_player_coin_inventory
 import splendor_sim.interfaces.player.i_player_sponsor_inventory as i_player_sponsor_inventory
 
 

@@ -1,8 +1,8 @@
 import abc
 import typing
 
-import splendor_sim.interfaces.coin.i_coin_type_manager as i_coin_type_manager
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
+import splendor_sim.interfaces.coin.i_coin_type_manager as i_coin_type_manager
 
 
 class IPlayerCoinInventory(abc.ABC):

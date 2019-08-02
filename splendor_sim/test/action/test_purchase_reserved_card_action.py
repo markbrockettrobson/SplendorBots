@@ -1,15 +1,15 @@
 import unittest
 import unittest.mock as mock
 
-import splendor_sim.interfaces.game_state.i_game_state as i_game_state
+import splendor_sim.interfaces.card.i_card as i_card
+import splendor_sim.interfaces.card.i_card_reserve as i_card_reserve
 import splendor_sim.interfaces.coin.i_coin_reserve as i_coin_reserve
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 import splendor_sim.interfaces.coin.i_payment_manager as i_payment_manager
-import splendor_sim.interfaces.card.i_card_reserve as i_card_reserve
-import splendor_sim.interfaces.card.i_card as i_card
+import splendor_sim.interfaces.game_state.i_game_state as i_game_state
 import splendor_sim.interfaces.player.i_player as i_player
-import splendor_sim.interfaces.player.i_player_coin_inventory as i_player_coin_inventory
 import splendor_sim.interfaces.player.i_player_card_inventory as i_player_card_inventory
+import splendor_sim.interfaces.player.i_player_coin_inventory as i_player_coin_inventory
 import splendor_sim.src.action.purchase_reserved_card_action as purchase_reserved_card_action
 
 

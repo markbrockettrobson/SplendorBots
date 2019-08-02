@@ -1,12 +1,12 @@
 import copy
 import typing
 
+import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
+import splendor_sim.interfaces.coin.i_coin_type_manager as i_coin_type_manager
 import splendor_sim.interfaces.factories.i_json_buildable_object as i_json_buildable_object
 import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
-import splendor_sim.interfaces.coin.i_coin_type_manager as i_coin_type_manager
-import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
-import splendor_sim.src.factories.json_validator as json_validator
 import splendor_sim.src.factories.json_schemas as json_schemas
+import splendor_sim.src.factories.json_validator as json_validator
 import splendor_sim.src.player.player_coin_inventory as player_coin_inventory
 
 

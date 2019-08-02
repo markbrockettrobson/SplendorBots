@@ -1,8 +1,8 @@
 import unittest
 
 import splendor_sim.src.coin.coin_type as coin_type
-import splendor_sim.src.factories.json_validator as json_validator
 import splendor_sim.src.factories.json_schemas as json_schemas
+import splendor_sim.src.factories.json_validator as json_validator
 
 
 class TestCoinType(unittest.TestCase):

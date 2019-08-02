@@ -1,11 +1,11 @@
 import unittest
 import unittest.mock as mock
 
-import splendor_sim.src.sponsor.json_sponsor_reserve as json_sponsor_reserve
-import splendor_sim.src.factories.json_schemas as json_schemas
 import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
 import splendor_sim.interfaces.sponsor.i_sponsor as i_sponsor
 import splendor_sim.interfaces.sponsor.i_sponsor_manager as i_sponsor_manager
+import splendor_sim.src.factories.json_schemas as json_schemas
+import splendor_sim.src.sponsor.json_sponsor_reserve as json_sponsor_reserve
 
 
 class TestJsonSponsorReserve(unittest.TestCase):

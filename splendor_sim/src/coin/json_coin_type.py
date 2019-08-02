@@ -1,11 +1,11 @@
 import copy
 import typing
 
-import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
 import splendor_sim.interfaces.factories.i_json_buildable_object as i_json_buildable_object
-import splendor_sim.src.factories.json_validator as json_validator
-import splendor_sim.src.factories.json_schemas as json_schemas
+import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
 import splendor_sim.src.coin.coin_type as coin_type
+import splendor_sim.src.factories.json_schemas as json_schemas
+import splendor_sim.src.factories.json_validator as json_validator
 
 
 class JsonCoinType(coin_type.CoinType, i_json_buildable_object.IJsonBuildableObject):
