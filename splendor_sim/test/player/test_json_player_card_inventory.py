@@ -60,15 +60,15 @@ class TestJsonPlayerCoinInventory(unittest.TestCase):
         # Act
         object_pointer = json_player_card_inventory.JsonPlayerCardInventory(
             4,
-            set([card for card in self._mock_cards[:2]]),
-            set([card for card in self._mock_cards[2:]])
+            set(self._mock_cards[:2]),
+            set(self._mock_cards[2:])
         )
         # Assert
         self._mock_player_card_inventory_init.assert_called_once_with(
             object_pointer,
             4,
-            set([card for card in self._mock_cards[:2]]),
-            set([card for card in self._mock_cards[2:]])
+            set(self._mock_cards[:2]),
+            set(self._mock_cards[2:])
         )
 
     def test_json_player_card_inventory_build_from_json_valid(self):
@@ -83,8 +83,8 @@ class TestJsonPlayerCoinInventory(unittest.TestCase):
         self._mock_player_card_inventory_init.assert_called_once_with(
             object_pointer,
             4,
-            set([card for card in self._mock_cards[:2]]),
-            set([card for card in self._mock_cards[2:]])
+            set(self._mock_cards[:2]),
+            set(self._mock_cards[2:])
         )
 
     def test_json_player_card_inventory_build_from_json_invalid(self):
