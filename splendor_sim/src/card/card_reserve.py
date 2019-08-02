@@ -1,9 +1,10 @@
-import typing
 import copy
+import typing
+
 import splendor_sim.interfaces.card.i_card as i_card
-import splendor_sim.interfaces.card.i_deck as i_deck
-import splendor_sim.interfaces.card.i_card_reserve as i_card_reserve
 import splendor_sim.interfaces.card.i_card_manager as i_card_manager
+import splendor_sim.interfaces.card.i_card_reserve as i_card_reserve
+import splendor_sim.interfaces.card.i_deck as i_deck
 
 
 class CardReserve(i_card_reserve.ICardReserve):

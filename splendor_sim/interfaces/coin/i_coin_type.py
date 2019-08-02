@@ -1,6 +1,7 @@
 import abc
 import typing
 
+
 class ICoinType(abc.ABC):
     @abc.abstractmethod
     def __init__(self, name: str, total_number: int):

@@ -1,11 +1,11 @@
+import copy
 import unittest
 import unittest.mock as mock
 
-import copy
 import splendor_sim.interfaces.card.i_card as i_card
 import splendor_sim.src.card.deck as deck
-import splendor_sim.src.factories.json_validator as json_validator
 import splendor_sim.src.factories.json_schemas as json_schemas
+import splendor_sim.src.factories.json_validator as json_validator
 
 
 class TestDeck(unittest.TestCase):

@@ -1,4 +1,5 @@
 import typing
+
 import networkx
 
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type

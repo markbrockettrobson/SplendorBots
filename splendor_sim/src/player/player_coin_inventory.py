@@ -1,9 +1,9 @@
 import copy
 import typing
 
-import splendor_sim.interfaces.player.i_player_coin_inventory as i_player_coin_inventory
-import splendor_sim.interfaces.coin.i_coin_type_manager as i_coin_type_manager
 import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
+import splendor_sim.interfaces.coin.i_coin_type_manager as i_coin_type_manager
+import splendor_sim.interfaces.player.i_player_coin_inventory as i_player_coin_inventory
 
 
 class PlayerCoinInventory(i_player_coin_inventory.IPlayerCoinInventory):

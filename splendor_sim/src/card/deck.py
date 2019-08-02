@@ -1,6 +1,7 @@
 import copy
-import typing
 import random
+import typing
+
 import splendor_sim.interfaces.card.i_card as i_card
 import splendor_sim.interfaces.card.i_deck as i_deck
 

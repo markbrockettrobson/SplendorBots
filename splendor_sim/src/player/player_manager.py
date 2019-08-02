@@ -1,5 +1,6 @@
 import copy
 import typing
+
 import splendor_sim.interfaces.player.i_player as i_player
 import splendor_sim.interfaces.player.i_player_manager as i_player_manager
 

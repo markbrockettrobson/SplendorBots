@@ -1,8 +1,10 @@
 cerberus
 codecov
+isort
 networkx
 pylint
 pytest
 pytest-cov
+pytest-isort
 pytest-mypy
 pytest-pylint

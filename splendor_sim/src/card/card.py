@@ -1,8 +1,8 @@
 import copy
 import typing
 
-import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 import splendor_sim.interfaces.card.i_card as i_card
+import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 
 
 class Card(i_card.ICard):

@@ -1,11 +1,12 @@
 import unittest
 import unittest.mock as mock
-import splendor_sim.src.player.player as player
-import splendor_sim.interfaces.player.i_player_coin_inventory as i_player_coin_inventory
+
 import splendor_sim.interfaces.player.i_player_card_inventory as i_player_card_inventory
+import splendor_sim.interfaces.player.i_player_coin_inventory as i_player_coin_inventory
 import splendor_sim.interfaces.player.i_player_sponsor_inventory as i_player_sponsor_inventory
-import splendor_sim.src.factories.json_validator as json_validator
 import splendor_sim.src.factories.json_schemas as json_schemas
+import splendor_sim.src.factories.json_validator as json_validator
+import splendor_sim.src.player.player as player
 
 
 class TestPlayer(unittest.TestCase):

@@ -1,11 +1,11 @@
 import unittest
 import unittest.mock as mock
 
+import splendor_sim.interfaces.card.i_card as i_card
+import splendor_sim.interfaces.card.i_card_manager as i_card_manager
+import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
 import splendor_sim.src.card.json_deck as json_deck
 import splendor_sim.src.factories.json_schemas as json_schemas
-import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
-import splendor_sim.interfaces.card.i_card_manager as i_card_manager
-import splendor_sim.interfaces.card.i_card as i_card
 
 
 class TestJsonDeck(unittest.TestCase):

@@ -3,11 +3,11 @@ import unittest
 import unittest.mock as mock
 
 import splendor_sim.interfaces.card.i_card as i_card
-import splendor_sim.interfaces.card.i_deck as i_deck
 import splendor_sim.interfaces.card.i_card_manager as i_card_manager
+import splendor_sim.interfaces.card.i_deck as i_deck
 import splendor_sim.src.card.card_reserve as card_reserve
-import splendor_sim.src.factories.json_validator as json_validator
 import splendor_sim.src.factories.json_schemas as json_schemas
+import splendor_sim.src.factories.json_validator as json_validator
 
 
 class TestCardReserve(unittest.TestCase):

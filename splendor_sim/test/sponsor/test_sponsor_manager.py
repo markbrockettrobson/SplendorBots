@@ -1,11 +1,11 @@
+import copy
 import unittest
 import unittest.mock as mock
-import copy
 
 import splendor_sim.interfaces.sponsor.i_sponsor as i_sponsor
-import splendor_sim.src.sponsor.sponsor_manager as sponsor_manager
-import splendor_sim.src.factories.json_validator as json_validator
 import splendor_sim.src.factories.json_schemas as json_schemas
+import splendor_sim.src.factories.json_validator as json_validator
+import splendor_sim.src.sponsor.sponsor_manager as sponsor_manager
 
 
 class TestSponsorManager(unittest.TestCase):

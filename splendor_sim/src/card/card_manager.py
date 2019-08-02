@@ -1,5 +1,5 @@
-import typing
 import copy
+import typing
 
 import splendor_sim.interfaces.card.i_card as i_card
 import splendor_sim.interfaces.card.i_card_manager as i_card_manager

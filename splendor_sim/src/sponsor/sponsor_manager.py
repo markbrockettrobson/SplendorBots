@@ -1,5 +1,5 @@
-import typing
 import copy
+import typing
 
 import splendor_sim.interfaces.sponsor.i_sponsor as i_sponsor
 import splendor_sim.interfaces.sponsor.i_sponsor_manager as i_sponsor_manager

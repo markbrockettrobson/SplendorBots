@@ -4,8 +4,8 @@ import unittest.mock as mock
 
 import splendor_sim.interfaces.card.i_card as i_card
 import splendor_sim.src.card.card_manager as card_manager
-import splendor_sim.src.factories.json_validator as json_validator
 import splendor_sim.src.factories.json_schemas as json_schemas
+import splendor_sim.src.factories.json_validator as json_validator
 
 
 class TestCardManager(unittest.TestCase):
