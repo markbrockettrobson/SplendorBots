@@ -111,7 +111,7 @@ class TestJsonPlayerCoinInventory(unittest.TestCase):
 
     def test_json_player_card_inventory_build_from_json_invalid_reserved_card_name_not_in_manager(self):
         # Arrange
-        self._mock_json['cards'].append("not a name in the manager")
+        self._mock_json['reserved_cards'].append("not a name in the manager")
         # Act
         # Assert
         with self.assertRaises(ValueError):
