@@ -65,14 +65,14 @@ class TestPlayerManager(unittest.TestCase):
             _ = player_manager.PlayerManager(
                 self._mock_player_list,
                 self._mock_player_list[0],
-                -1
+                -200
             )
 
         with self.assertRaises(ValueError):
             _ = player_manager.PlayerManager(
                 self._mock_player_list,
                 self._mock_player_list[0],
-                0
+                -1
             )
 
         with self.assertRaises(ValueError):
