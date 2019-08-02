@@ -27,5 +27,5 @@ class PlayerSponsorInventory(i_player_sponsor_inventory.IPlayerSponsorInventory)
 
     def to_json(self) -> typing.Dict:
         return {
-            'sponsors': [sponsor.get_name() for sponsor in list(self._sponsors)]
+            'sponsors': [sponsor.get_name() for sponsor in self._sponsors]
         }
