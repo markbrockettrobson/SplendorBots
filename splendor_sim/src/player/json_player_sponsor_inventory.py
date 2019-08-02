@@ -10,8 +10,8 @@ import splendor_sim.src.player.player_sponsor_inventory as player_sponsor_invent
 
 
 class JsonPlayerSponsorInventory(
-    player_sponsor_inventory.PlayerSponsorInventory,
-    i_json_buildable_object.IJsonBuildableObject
+        player_sponsor_inventory.PlayerSponsorInventory,
+        i_json_buildable_object.IJsonBuildableObject
 ):
 
     _JSON_VALIDATOR = json_validator.JsonValidator(json_schemas.JSON_PLAYER_SPONSOR_INVENTORY)
