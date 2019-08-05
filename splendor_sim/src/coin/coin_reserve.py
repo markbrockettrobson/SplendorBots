@@ -14,10 +14,12 @@ class CoinReserve(i_coin_reserve.ICoinReserve):
     ):
         self._coin_type_manager = coin_type_manager
         self._coin_set = self._coin_type_manager.get_coin_set()
-        self._max_coin_size = {coin: coin.get_total_number() for coin in self._coin_set}
-        # type: typing.Dict[i_coin_type.ICoinType, int]
-        self._current_coins = {coin: coin.get_total_number() for coin in self._coin_set}
-        # type: typing.Dict[i_coin_type.ICoinType, int]
+        self._max_coin_size: typing.Dict[i_coin_type.ICoinType, int] = {
+            coin: coin.get_total_number() for coin in self._coin_set
+        }
+        self._current_coins: typing.Dict[i_coin_type.ICoinType, int] = {
+            coin: coin.get_total_number() for coin in self._coin_set
+        }
         if coin_stocks:
             self._validate_coin_stocks(coin_stocks)
             for coin, count in coin_stocks.items():
