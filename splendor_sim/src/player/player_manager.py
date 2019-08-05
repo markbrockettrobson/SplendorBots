@@ -6,12 +6,11 @@ import splendor_sim.interfaces.player.i_player_manager as i_player_manager
 
 
 class PlayerManager(i_player_manager.IPlayerManager):
-
     def __init__(
-            self,
-            player_list: typing.List[i_player.IPlayer],
-            current_player: i_player.IPlayer,
-            turn_number: int = 1
+        self,
+        player_list: typing.List[i_player.IPlayer],
+        current_player: i_player.IPlayer,
+        turn_number: int = 1,
     ):
         name_set: typing.Set[str] = set()
         for player in player_list:
@@ -40,7 +39,10 @@ class PlayerManager(i_player_manager.IPlayerManager):
         return self._player_list[self._current_player]
 
     def next_players_turn(self) -> i_player.IPlayer:
-        if self._current_player % (self._number_of_players-1) == 0 and self._current_player != 0:
+        if (
+            self._current_player % (self._number_of_players - 1) == 0
+            and self._current_player != 0
+        ):
             self._turn_number += 1
             self._current_player = 0
         else:

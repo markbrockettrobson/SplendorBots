@@ -5,13 +5,12 @@ import splendor_sim.interfaces.player.i_player as i_player
 
 
 class IPlayerManager(abc.ABC):
-
     @abc.abstractmethod
     def __init__(
-            self,
-            player_list: typing.List[i_player.IPlayer],
-            current_player: i_player.IPlayer,
-            turn_number: int
+        self,
+        player_list: typing.List[i_player.IPlayer],
+        current_player: i_player.IPlayer,
+        turn_number: int,
     ):
         """
 
@@ -19,6 +18,7 @@ class IPlayerManager(abc.ABC):
         :param current_player: the current player
         :param turn_number: the number of turns that have passed
         """
+
     @abc.abstractmethod
     def get_player_list(self) -> typing.List[i_player.IPlayer]:
         """

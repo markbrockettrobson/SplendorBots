@@ -12,16 +12,15 @@ import splendor_sim.src.sponsor.json_sponsor as json_sponsor
 class TestJsonSponsor(unittest.TestCase):
     def setUp(self):
         self._validator_patcher = mock.patch(
-            'splendor_sim.src.sponsor.json_sponsor.JsonSponsor._JSON_VALIDATOR',
-            autospec=True
+            "splendor_sim.src.sponsor.json_sponsor.JsonSponsor._JSON_VALIDATOR",
+            autospec=True,
         )
         self._mock_validator = self._validator_patcher.start()
         self.addCleanup(self._validator_patcher.stop)
         self._mock_validator.validate_json.return_value = True
 
         self._sponsor_patcher = mock.patch(
-            'splendor_sim.src.sponsor.sponsor.Sponsor.__init__',
-            autospec=True
+            "splendor_sim.src.sponsor.sponsor.Sponsor.__init__", autospec=True
         )
         self._mock_sponsor = self._sponsor_patcher.start()
         self.addCleanup(self._sponsor_patcher.stop)
@@ -40,56 +39,55 @@ class TestJsonSponsor(unittest.TestCase):
         self._mock_victory_points = 4
         self._mock_cost = {coin: 3 for coin in self._mock_coins}
         self._mock_cost_json = [
-            {
-                'coin_name': coin.get_name(),
-                'count': 3
-            }
-            for coin in self._mock_coins
-
+            {"coin_name": coin.get_name(), "count": 3} for coin in self._mock_coins
         ]
 
         self._mock_json = {
             "name": self._mock_name,
             "victory_points": self._mock_victory_points,
-            "cost": self._mock_cost_json
+            "cost": self._mock_cost_json,
         }
 
-        self._mock_game_state = mock.create_autospec(spec=i_incomplete_game_state.IIncompleteGameState, spec_set=True)
-        self._mock_coin_reserve = mock.create_autospec(spec=i_coin_reserve.ICoinReserve, spec_set=True)
-        self._mock_coin_type_manager = mock.create_autospec(spec=i_coin_type_manager.ICoinTypeManager, spec_set=True)
+        self._mock_game_state = mock.create_autospec(
+            spec=i_incomplete_game_state.IIncompleteGameState, spec_set=True
+        )
+        self._mock_coin_reserve = mock.create_autospec(
+            spec=i_coin_reserve.ICoinReserve, spec_set=True
+        )
+        self._mock_coin_type_manager = mock.create_autospec(
+            spec=i_coin_type_manager.ICoinTypeManager, spec_set=True
+        )
 
         self._mock_game_state.get_coin_reserve.return_value = self._mock_coin_reserve
         self._mock_coin_reserve.get_manager.return_value = self._mock_coin_type_manager
-        self._mock_coin_type_manager.get_coin_by_name.side_effect = lambda name: self._mock_coin_name_map[name]
-        self._mock_coin_type_manager.is_coin_in_manager_by_name.side_effect = \
+        self._mock_coin_type_manager.get_coin_by_name.side_effect = lambda name: self._mock_coin_name_map[
+            name
+        ]
+        self._mock_coin_type_manager.is_coin_in_manager_by_name.side_effect = (
             lambda name: name in self._mock_coin_name_map
+        )
 
     def test_json_sponsor_init(self):
         # Arrange
         # Act
-        object_pointer = json_sponsor.JsonSponsor(self._mock_name, self._mock_victory_points, self._mock_cost)
+        object_pointer = json_sponsor.JsonSponsor(
+            self._mock_name, self._mock_victory_points, self._mock_cost
+        )
         # Assert
         self._mock_sponsor.assert_called_once_with(
-            object_pointer,
-            self._mock_name,
-            self._mock_victory_points,
-            self._mock_cost
+            object_pointer, self._mock_name, self._mock_victory_points, self._mock_cost
         )
 
     def test_json_sponsor_build_from_json_valid(self):
         # Arrange
         # Act
         object_pointer = json_sponsor.JsonSponsor.build_from_json(
-            self._mock_json,
-            self._mock_game_state
+            self._mock_json, self._mock_game_state
         )
         # Assert
         self._mock_validator.validate_json.assert_called_once_with(self._mock_json)
         self._mock_sponsor.assert_called_once_with(
-            object_pointer,
-            self._mock_name,
-            self._mock_victory_points,
-            self._mock_cost
+            object_pointer, self._mock_name, self._mock_victory_points, self._mock_cost
         )
 
     def test_json_sponsor_build_from_json_invalid(self):
@@ -99,40 +97,27 @@ class TestJsonSponsor(unittest.TestCase):
         # Assert
         with self.assertRaises(ValueError):
             _ = json_sponsor.JsonSponsor.build_from_json(
-                self._mock_json,
-                self._mock_game_state
+                self._mock_json, self._mock_game_state
             )
 
     def test_json_sponsor_build_from_json_invalid_unknown_coin_name(self):
         # Arrange
-        self._mock_cost_json.append(
-            {
-                'coin_name': "not a coin name",
-                'count': 3
-            }
-        )
+        self._mock_cost_json.append({"coin_name": "not a coin name", "count": 3})
         # Act
         # Assert
         with self.assertRaises(ValueError):
             _ = json_sponsor.JsonSponsor.build_from_json(
-                self._mock_json,
-                self._mock_game_state
+                self._mock_json, self._mock_game_state
             )
 
     def test_json_sponsor_build_from_json_invalid_repeated_coin_name(self):
         # Arrange
-        self._mock_cost_json.append(
-            {
-                'coin_name': "A",
-                'count': 3
-            }
-        )
+        self._mock_cost_json.append({"coin_name": "A", "count": 3})
         # Act
         # Assert
         with self.assertRaises(ValueError):
             _ = json_sponsor.JsonSponsor.build_from_json(
-                self._mock_json,
-                self._mock_game_state
+                self._mock_json, self._mock_game_state
             )
 
     def test_json_sponsor_get_json_schema(self):
@@ -140,8 +125,7 @@ class TestJsonSponsor(unittest.TestCase):
         # Act
         # Assert
         self.assertEqual(
-            json_schemas.JSON_SPONSOR_SCHEMA,
-            json_sponsor.JsonSponsor.get_json_schema()
+            json_schemas.JSON_SPONSOR_SCHEMA, json_sponsor.JsonSponsor.get_json_schema()
         )
 
     def test_json_sponsor_get_json_schema_immutability(self):
@@ -151,6 +135,5 @@ class TestJsonSponsor(unittest.TestCase):
         pre_mutation.pop(list(pre_mutation.keys())[0])
         # Assert
         self.assertEqual(
-            json_schemas.JSON_SPONSOR_SCHEMA,
-            json_sponsor.JsonSponsor.get_json_schema()
+            json_schemas.JSON_SPONSOR_SCHEMA, json_sponsor.JsonSponsor.get_json_schema()
         )

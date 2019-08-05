@@ -9,11 +9,11 @@ import splendor_sim.interfaces.card.i_deck as i_deck
 
 class CardReserve(i_card_reserve.ICardReserve):
     def __init__(
-            self,
-            card_manager: i_card_manager.ICardManager,
-            number_of_cards_on_sale: int,
-            decks: typing.Set[i_deck.IDeck],
-            cards_on_sale: typing.Set[i_card.ICard]
+        self,
+        card_manager: i_card_manager.ICardManager,
+        number_of_cards_on_sale: int,
+        decks: typing.Set[i_deck.IDeck],
+        cards_on_sale: typing.Set[i_card.ICard],
     ):
         self._card_manager = card_manager
 
@@ -47,7 +47,9 @@ class CardReserve(i_card_reserve.ICardReserve):
             self._decks_by_tier[deck.get_tier()] = deck
 
     def _create_cards_on_sale(self, cards_on_sale: typing.Set[i_card.ICard]) -> None:
-        self._cards_on_sale_by_tier = {}  # type: typing.Dict[int,typing.Set[i_card.ICard]]
+        self._cards_on_sale_by_tier = (
+            {}
+        )  # type: typing.Dict[int,typing.Set[i_card.ICard]]
 
         for card in cards_on_sale:
             tier = card.get_tier()
@@ -64,7 +66,9 @@ class CardReserve(i_card_reserve.ICardReserve):
                 self._cards_on_sale_by_tier[tier] = set()
             while len(self._cards_on_sale_by_tier[tier]) < self.number_of_cards_on_sale:
                 if self._decks_by_tier[tier].has_next():
-                    self._cards_on_sale_by_tier[tier].add(self._decks_by_tier[tier].next())
+                    self._cards_on_sale_by_tier[tier].add(
+                        self._decks_by_tier[tier].next()
+                    )
                 else:
                     break
 
@@ -87,7 +91,9 @@ class CardReserve(i_card_reserve.ICardReserve):
             if card in self._cards_on_sale_by_tier[tier]:
                 self._cards_on_sale_by_tier[tier].remove(card)
                 if self._decks_by_tier[tier].has_next():
-                    self._cards_on_sale_by_tier[tier].add(self._decks_by_tier[tier].next())
+                    self._cards_on_sale_by_tier[tier].add(
+                        self._decks_by_tier[tier].next()
+                    )
                 return
         raise ValueError("card not for sale")
 
@@ -102,7 +108,9 @@ class CardReserve(i_card_reserve.ICardReserve):
     def get_remaining_cards(self) -> typing.Set[i_card.ICard]:
         total_cards = set()  # type: typing.Set[i_card.ICard]
         for tier in self._decks_by_tier:
-            total_cards = total_cards.union(self._decks_by_tier[tier].get_remaining_cards())
+            total_cards = total_cards.union(
+                self._decks_by_tier[tier].get_remaining_cards()
+            )
         return total_cards
 
     def get_remaining_cards_by_tier(self, tier: int) -> typing.Set[i_card.ICard]:
@@ -121,17 +129,15 @@ class CardReserve(i_card_reserve.ICardReserve):
     def get_number_of_remaining_cards_by_tier(self, tier: int) -> int:
         if tier not in self._decks_by_tier:
             raise ValueError("unknown tier")
-        return self._decks_by_tier[tier].number_remaining_cards() + len(self._cards_on_sale_by_tier[tier])
+        return self._decks_by_tier[tier].number_remaining_cards() + len(
+            self._cards_on_sale_by_tier[tier]
+        )
 
     def to_json(self):
         return {
             "card_manager": self._card_manager.to_json(),
             "number_of_cards_on_sale": self.number_of_cards_on_sale,
-            "decks": [
-                deck.to_json() for deck in self._decks_by_tier.values()
-            ],
+            "decks": [deck.to_json() for deck in self._decks_by_tier.values()],
             "tiers": list(self._decks_by_tier.keys()),
-            "cards_on_sale": [
-                card.get_name() for card in self.get_cards_for_sale()
-            ]
+            "cards_on_sale": [card.get_name() for card in self.get_cards_for_sale()],
         }

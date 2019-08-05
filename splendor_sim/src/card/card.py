@@ -9,12 +9,12 @@ class Card(i_card.ICard):
     _DEFAULT_NAME_FORMAT = "T%d_D%s_V%d_C%s"
 
     def __init__(
-            self,
-            tier: int,
-            victory_points: int,
-            discount: i_coin_type.ICoinType,
-            cost: typing.Dict[i_coin_type.ICoinType, int],
-            name: str = None
+        self,
+        tier: int,
+        victory_points: int,
+        discount: i_coin_type.ICoinType,
+        cost: typing.Dict[i_coin_type.ICoinType, int],
+        name: str = None,
     ):
         self._validate_tier(tier)
         self._validate_victory_points(victory_points)
@@ -47,18 +47,15 @@ class Card(i_card.ICard):
 
     def to_json(self):
         cost_json = [
-            {
-                'coin_name': coin.get_name(),
-                'count': value
-            }
+            {"coin_name": coin.get_name(), "count": value}
             for coin, value in self._cost.items()
         ]
         return {
-            'tier': self._tier,
-            'victory_points': self._victory_points,
-            'discounted_coin_type_name': self._discount.get_name(),
-            'cost': cost_json,
-            'name': self._name
+            "tier": self._tier,
+            "victory_points": self._victory_points,
+            "discounted_coin_type_name": self._discount.get_name(),
+            "cost": cost_json,
+            "name": self._name,
         }
 
     @staticmethod
@@ -86,5 +83,5 @@ class Card(i_card.ICard):
             self._tier,
             self._discount.get_name(),
             self._victory_points,
-            "".join(cost_string_builder)
+            "".join(cost_string_builder),
         )

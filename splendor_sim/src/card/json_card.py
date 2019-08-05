@@ -15,26 +15,20 @@ class JsonCard(card.Card, i_json_buildable_object.IJsonBuildableObject):
     _JSON_VALIDATOR = json_validator.JsonValidator(json_schemas.JSON_CARD_SCHEMA)
 
     def __init__(
-            self,
-            tier: int,
-            victory_points: int,
-            discount: i_coin_type.ICoinType,
-            cost: typing.Dict[i_coin_type.ICoinType, int],
-            name: str = None
+        self,
+        tier: int,
+        victory_points: int,
+        discount: i_coin_type.ICoinType,
+        cost: typing.Dict[i_coin_type.ICoinType, int],
+        name: str = None,
     ):
-        super(JsonCard, self).__init__(
-            tier,
-            victory_points,
-            discount,
-            cost,
-            name
-        )
+        super(JsonCard, self).__init__(tier, victory_points, discount, cost, name)
 
     @classmethod
     def build_from_json(
-            cls,
-            json: typing.Dict,
-            incomplete_game_state: i_incomplete_game_state.IIncompleteGameState
+        cls,
+        json: typing.Dict,
+        incomplete_game_state: i_incomplete_game_state.IIncompleteGameState,
     ):
         if not cls._JSON_VALIDATOR.validate_json(json):
             raise ValueError("Json does not meet schema")
@@ -42,40 +36,40 @@ class JsonCard(card.Card, i_json_buildable_object.IJsonBuildableObject):
             raise ValueError("Game state needs a coin reserve")
 
         coin_type_manager = incomplete_game_state.get_coin_reserve().get_manager()
-        cls._validated_coin_name(json['discounted_coin_type_name'], coin_type_manager)
+        cls._validated_coin_name(json["discounted_coin_type_name"], coin_type_manager)
 
-        for coin in json['cost']:
+        for coin in json["cost"]:
             coin_name = coin["coin_name"]
             cls._validated_coin_name(coin_name, coin_type_manager)
 
-        coin_discount = coin_type_manager.get_coin_by_name(json['discounted_coin_type_name'])
-        coin_costs = cls._build_coin_costs(json['cost'], coin_type_manager)
+        coin_discount = coin_type_manager.get_coin_by_name(
+            json["discounted_coin_type_name"]
+        )
+        coin_costs = cls._build_coin_costs(json["cost"], coin_type_manager)
 
         return cls(
-            json['tier'],
-            json['victory_points'],
+            json["tier"],
+            json["victory_points"],
             coin_discount,
             coin_costs,
-            json['name'],
+            json["name"],
         )
 
     @staticmethod
     def _validated_coin_name(
-            coin_name: str,
-            coin_type_manager: i_coin_type_manager.ICoinTypeManager
+        coin_name: str, coin_type_manager: i_coin_type_manager.ICoinTypeManager
     ):
         if not coin_type_manager.is_coin_in_manager_by_name(coin_name):
             raise ValueError("Unknown discount coin type name ")
 
     @staticmethod
     def _build_coin_costs(
-            json: typing.Dict,
-            coin_type_manage: i_coin_type_manager.ICoinTypeManager,
+        json: typing.Dict, coin_type_manage: i_coin_type_manager.ICoinTypeManager
     ) -> typing.Dict[i_coin_type.ICoinType, int]:
         coin_costs = {}
         for coin in json:
-            coin_name = coin['coin_name']
-            value = coin['count']
+            coin_name = coin["coin_name"]
+            value = coin["count"]
             coin_costs[coin_type_manage.get_coin_by_name(coin_name)] = value
         return coin_costs
 

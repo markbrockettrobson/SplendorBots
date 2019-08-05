@@ -8,12 +8,11 @@ import splendor_sim.interfaces.player.i_player as i_player
 
 
 class CollectThreeCoinsAction(i_action.IAction):
-
     def __init__(
-            self,
-            valid_coin_type_set: typing.Set[i_coin_type.ICoinType],
-            current_player: i_player.IPlayer,
-            coins: typing.Dict[i_coin_type.ICoinType, int],
+        self,
+        valid_coin_type_set: typing.Set[i_coin_type.ICoinType],
+        current_player: i_player.IPlayer,
+        coins: typing.Dict[i_coin_type.ICoinType, int],
     ):
         self._validate_input(valid_coin_type_set, coins)
         self._coin_dictionary = copy.copy(coins)
@@ -30,11 +29,13 @@ class CollectThreeCoinsAction(i_action.IAction):
 
     @staticmethod
     def _validate_input(
-            valid_coin_type_set: typing.Set[i_coin_type.ICoinType],
-            coins: typing.Dict[i_coin_type.ICoinType, int]
+        valid_coin_type_set: typing.Set[i_coin_type.ICoinType],
+        coins: typing.Dict[i_coin_type.ICoinType, int],
     ):
         if len(coins.keys()) not in range(1, 4):
-            raise ValueError("can only take 1 to 3 types of coins but was " + str(len(coins.keys())))
+            raise ValueError(
+                "can only take 1 to 3 types of coins but was " + str(len(coins.keys()))
+            )
         for coin_type, number_of_coins in coins.items():
             if number_of_coins != 1:
                 raise ValueError("can only take one of each coin")

@@ -8,17 +8,16 @@ import splendor_sim.interfaces.sponsor.i_sponsor_reserve as i_sponsor_reserve
 
 
 class IIncompleteGameState(abc.ABC):
-
     @abc.abstractmethod
-    def __init__(
-            self
-    ):
+    def __init__(self):
         """
 
         """
 
     @abc.abstractmethod
-    def set_player_manager(self, player_manager: i_player_manager.IPlayerManager) -> None:
+    def set_player_manager(
+        self, player_manager: i_player_manager.IPlayerManager
+    ) -> None:
         """
 
         :param player_manager:
@@ -69,7 +68,9 @@ class IIncompleteGameState(abc.ABC):
         """
 
     @abc.abstractmethod
-    def set_sponsor_reserve(self, sponsor_reserve: i_sponsor_reserve.ISponsorReserve) -> None:
+    def set_sponsor_reserve(
+        self, sponsor_reserve: i_sponsor_reserve.ISponsorReserve
+    ) -> None:
         """
 
         :param sponsor_reserve:

@@ -11,11 +11,21 @@ import splendor_sim.src.game_state.incomplete_game_state as incomplete_game_stat
 
 class TestIncompleteGameState(unittest.TestCase):
     def setUp(self):
-        self._mock_player_manager = mock.create_autospec(spec=i_player_manager.IPlayerManager, spec_set=True)
-        self._mock_coin_reserve = mock.create_autospec(spec=i_coin_reserve.ICoinReserve, spec_set=True)
-        self._mock_card_reserve = mock.create_autospec(spec=i_card_reserve.ICardReserve, spec_set=True)
-        self._mock_card_manager = mock.create_autospec(spec=i_card_manager.ICardManager, spec_set=True)
-        self._mock_sponsor_reserve = mock.create_autospec(spec=i_sponsor_reserve.ISponsorReserve, spec_set=True)
+        self._mock_player_manager = mock.create_autospec(
+            spec=i_player_manager.IPlayerManager, spec_set=True
+        )
+        self._mock_coin_reserve = mock.create_autospec(
+            spec=i_coin_reserve.ICoinReserve, spec_set=True
+        )
+        self._mock_card_reserve = mock.create_autospec(
+            spec=i_card_reserve.ICardReserve, spec_set=True
+        )
+        self._mock_card_manager = mock.create_autospec(
+            spec=i_card_manager.ICardManager, spec_set=True
+        )
+        self._mock_sponsor_reserve = mock.create_autospec(
+            spec=i_sponsor_reserve.ISponsorReserve, spec_set=True
+        )
 
     def test_incomplete_game_state_get_player_manager(self):
         # Arrange
@@ -23,7 +33,9 @@ class TestIncompleteGameState(unittest.TestCase):
         test_game_state.set_player_manager(self._mock_player_manager)
         # Act
         # Assert
-        self.assertEqual(test_game_state.get_player_manager(), self._mock_player_manager)
+        self.assertEqual(
+            test_game_state.get_player_manager(), self._mock_player_manager
+        )
 
     def test_incomplete_game_state_get_player_manager_no_manager(self):
         # Arrange
@@ -71,7 +83,9 @@ class TestIncompleteGameState(unittest.TestCase):
         test_game_state.set_sponsor_reserve(self._mock_sponsor_reserve)
         # Act
         # Assert
-        self.assertEqual(test_game_state.get_sponsor_reserve(), self._mock_sponsor_reserve)
+        self.assertEqual(
+            test_game_state.get_sponsor_reserve(), self._mock_sponsor_reserve
+        )
 
     def test_incomplete_game_state_get_sponsor_reserve_no_reserve(self):
         # Arrange

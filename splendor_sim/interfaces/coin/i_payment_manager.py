@@ -7,10 +7,7 @@ import splendor_sim.interfaces.coin.i_coin_type_manager as i_coin_type_manager
 
 class IPaymentManager(abc.ABC):
     @abc.abstractmethod
-    def __init__(
-            self,
-            coin_type_manager: i_coin_type_manager.ICoinTypeManager
-    ):
+    def __init__(self, coin_type_manager: i_coin_type_manager.ICoinTypeManager):
         """
 
         :param coin_type_manager: the coin type manager responsible for holding the relationships between coins\
@@ -18,10 +15,10 @@ class IPaymentManager(abc.ABC):
         """
 
     def validate_payment(
-            self,
-            cost: typing.Dict[i_coin_type.ICoinType, int],
-            payment: typing.Dict[i_coin_type.ICoinType, int],
-            discount: typing.Dict[i_coin_type.ICoinType, int]
+        self,
+        cost: typing.Dict[i_coin_type.ICoinType, int],
+        payment: typing.Dict[i_coin_type.ICoinType, int],
+        discount: typing.Dict[i_coin_type.ICoinType, int],
     ) -> bool:
         """
 

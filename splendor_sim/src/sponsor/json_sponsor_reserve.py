@@ -11,29 +11,32 @@ import splendor_sim.src.sponsor.json_sponsor_manager as json_sponsor_manager
 import splendor_sim.src.sponsor.sponsor_reserve as sponsor_reserve
 
 
-class JsonSponsorReserve(sponsor_reserve.SponsorReserve, i_json_buildable_object.IJsonBuildableObject):
+class JsonSponsorReserve(
+    sponsor_reserve.SponsorReserve, i_json_buildable_object.IJsonBuildableObject
+):
 
-    _JSON_VALIDATOR = json_validator.JsonValidator(json_schemas.JSON_SPONSOR_RESERVE_SCHEMA)
+    _JSON_VALIDATOR = json_validator.JsonValidator(
+        json_schemas.JSON_SPONSOR_RESERVE_SCHEMA
+    )
 
     def __init__(
-            self,
-            sponsor_manager: i_sponsor_manager.ISponsorManager,
-            sponsor_set: typing.Set[i_sponsor.ISponsor]
+        self,
+        sponsor_manager: i_sponsor_manager.ISponsorManager,
+        sponsor_set: typing.Set[i_sponsor.ISponsor],
     ):
         super(JsonSponsorReserve, self).__init__(sponsor_manager, sponsor_set)
 
     @classmethod
     def build_from_json(
-            cls,
-            json: typing.Dict,
-            incomplete_game_state: i_incomplete_game_state.IIncompleteGameState
+        cls,
+        json: typing.Dict,
+        incomplete_game_state: i_incomplete_game_state.IIncompleteGameState,
     ):
         if not cls._JSON_VALIDATOR.validate_json(json):
             raise ValueError("Json does not meet schema")
 
         sponsor_manager = json_sponsor_manager.JsonSponsorManager.build_from_json(
-            json["sponsor_manager"],
-            incomplete_game_state
+            json["sponsor_manager"], incomplete_game_state
         )
 
         sponsor_set = set()  # type: typing.Set[i_sponsor.ISponsor]
@@ -42,10 +45,7 @@ class JsonSponsorReserve(sponsor_reserve.SponsorReserve, i_json_buildable_object
                 raise ValueError("sponsor not in manager")
             sponsor_set.add(sponsor_manager.get_sponsor_by_name(sponsor_name))
 
-        return cls(
-            sponsor_manager,
-            sponsor_set
-        )
+        return cls(sponsor_manager, sponsor_set)
 
     @staticmethod
     def get_json_schema() -> typing.Dict:

@@ -9,23 +9,30 @@ import splendor_sim.src.factories.json_validator as json_validator
 import splendor_sim.src.player.player_card_inventory as player_card_inventory
 
 
-class JsonPlayerCardInventory(player_card_inventory.PlayerCardInventory, i_json_buildable_object.IJsonBuildableObject):
+class JsonPlayerCardInventory(
+    player_card_inventory.PlayerCardInventory,
+    i_json_buildable_object.IJsonBuildableObject,
+):
 
-    _JSON_VALIDATOR = json_validator.JsonValidator(json_schemas.JSON_PLAYER_CARD_INVENTORY)
+    _JSON_VALIDATOR = json_validator.JsonValidator(
+        json_schemas.JSON_PLAYER_CARD_INVENTORY
+    )
 
     def __init__(
-            self,
-            max_reserved_cards: int,
-            reserved_cards: typing.Set[i_card.ICard],
-            cards: typing.Set[i_card.ICard]
+        self,
+        max_reserved_cards: int,
+        reserved_cards: typing.Set[i_card.ICard],
+        cards: typing.Set[i_card.ICard],
     ):
-        super(JsonPlayerCardInventory, self).__init__(max_reserved_cards, reserved_cards, cards)
+        super(JsonPlayerCardInventory, self).__init__(
+            max_reserved_cards, reserved_cards, cards
+        )
 
     @classmethod
     def build_from_json(
-            cls,
-            json: typing.Dict,
-            incomplete_game_state: i_incomplete_game_state.IIncompleteGameState
+        cls,
+        json: typing.Dict,
+        incomplete_game_state: i_incomplete_game_state.IIncompleteGameState,
     ):
         if not cls._JSON_VALIDATOR.validate_json(json):
             raise ValueError("Json does not meet schema")
@@ -45,9 +52,7 @@ class JsonPlayerCardInventory(player_card_inventory.PlayerCardInventory, i_json_
             cards.add(card_manager.get_card_by_name(card_name))
 
         json_player_card_inventory = cls(
-            json["max_reserved_cards"],
-            reserved_cards,
-            cards
+            json["max_reserved_cards"], reserved_cards, cards
         )
 
         return json_player_card_inventory

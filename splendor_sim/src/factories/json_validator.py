@@ -10,8 +10,5 @@ class JsonValidator(i_json_validator.IJsonValidator):
         self._schema = schema
         self._validator = validator.Validator(schema)
 
-    def validate_json(
-            self,
-            json: typing.Dict
-    ) -> bool:
+    def validate_json(self, json: typing.Dict) -> bool:
         return self._validator.validate(json)

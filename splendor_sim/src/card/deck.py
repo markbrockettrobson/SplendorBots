@@ -39,10 +39,8 @@ class Deck(i_deck.IDeck):
 
     def to_json(self):
         return {
-            'cards': [
-                card.get_name() for card in self._card_list
-            ],
-            'tier': self._tier
+            "cards": [card.get_name() for card in self._card_list],
+            "tier": self._tier,
         }
 
     @staticmethod

@@ -7,11 +7,10 @@ import splendor_sim.interfaces.player.i_player_coin_inventory as i_player_coin_i
 
 
 class PlayerCoinInventory(i_player_coin_inventory.IPlayerCoinInventory):
-
     def __init__(
-            self,
-            coin_type_manager: i_coin_type_manager.ICoinTypeManager,
-            current_coins: typing.Dict[i_coin_type.ICoinType, int]
+        self,
+        coin_type_manager: i_coin_type_manager.ICoinTypeManager,
+        current_coins: typing.Dict[i_coin_type.ICoinType, int],
     ):
         self._coin_type_manager = coin_type_manager
         self._coin_set = self._coin_type_manager.get_coin_set()
@@ -50,7 +49,9 @@ class PlayerCoinInventory(i_player_coin_inventory.IPlayerCoinInventory):
             if self._current_coins[coin] == 0:
                 self._current_coins.pop(coin)
 
-    def _validate_input_dictionary(self, dictionary: typing.Dict[i_coin_type.ICoinType, int]) -> None:
+    def _validate_input_dictionary(
+        self, dictionary: typing.Dict[i_coin_type.ICoinType, int]
+    ) -> None:
         for key in dictionary:
             if key not in self._coin_set:
                 raise ValueError(str(key) + "is not a coin type in this Reserve")
@@ -59,13 +60,6 @@ class PlayerCoinInventory(i_player_coin_inventory.IPlayerCoinInventory):
         coin_json = []
         for coin, value in self._current_coins.items():
             if value > 0:
-                coin_json.append(
-                    {
-                        'coin_name': coin.get_name(),
-                        'count': value
-                    }
-                )
+                coin_json.append({"coin_name": coin.get_name(), "count": value})
 
-        return {
-            'coin_stocks': coin_json
-        }
+        return {"coin_stocks": coin_json}

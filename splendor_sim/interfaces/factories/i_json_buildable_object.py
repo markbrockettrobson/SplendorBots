@@ -5,13 +5,12 @@ import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplet
 
 
 class IJsonBuildableObject(abc.ABC):
-
     @classmethod
     @abc.abstractmethod
     def build_from_json(
-            cls,
-            json: typing.Dict,
-            incomplete_game_state: i_incomplete_game_state.IIncompleteGameState
+        cls,
+        json: typing.Dict,
+        incomplete_game_state: i_incomplete_game_state.IIncompleteGameState,
     ):
         """
 
@@ -30,6 +29,7 @@ class IJsonBuildableObject(abc.ABC):
         :return: the schema used to validate that the json has all needed fields
                  <typing.Dict>
         """
+
     @abc.abstractmethod
     def to_json(self) -> typing.Dict:
         """

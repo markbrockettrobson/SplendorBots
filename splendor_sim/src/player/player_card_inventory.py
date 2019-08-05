@@ -7,12 +7,11 @@ import splendor_sim.interfaces.player.i_player_card_inventory as i_player_card_i
 
 
 class PlayerCardInventory(i_player_card_inventory.IPlayerCardInventory):
-
     def __init__(
-            self,
-            max_reserved_cards: int,
-            reserved_cards: typing.Set[i_card.ICard],
-            cards: typing.Set[i_card.ICard]
+        self,
+        max_reserved_cards: int,
+        reserved_cards: typing.Set[i_card.ICard],
+        cards: typing.Set[i_card.ICard],
     ):
         if max_reserved_cards < 0:
             raise ValueError("max_reserved_cards must be zero or more")
@@ -24,7 +23,9 @@ class PlayerCardInventory(i_player_card_inventory.IPlayerCardInventory):
         self._victory_points: int = 0
 
         if len(reserved_cards) > max_reserved_cards:
-            raise ValueError("can not reserve more then the max number of reserve cards")
+            raise ValueError(
+                "can not reserve more then the max number of reserve cards"
+            )
 
         for card in reserved_cards:
             self.add_card_to_reserved(card)
@@ -80,5 +81,5 @@ class PlayerCardInventory(i_player_card_inventory.IPlayerCardInventory):
         return {
             "max_reserved_cards": self._max_reserved_cards,
             "reserved_cards": [card.get_name() for card in self._reserved_cards],
-            "cards": [card.get_name() for card in self._cards]
+            "cards": [card.get_name() for card in self._cards],
         }

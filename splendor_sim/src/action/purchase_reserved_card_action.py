@@ -9,13 +9,12 @@ import splendor_sim.interfaces.player.i_player as i_player
 
 
 class PurchaseReservedCardAction(i_action.IAction):
-
     def __init__(
-            self,
-            valid_coin_type_set: typing.Set[i_coin_type.ICoinType],
-            current_player: i_player.IPlayer,
-            coins: typing.Dict[i_coin_type.ICoinType, int],
-            card: i_card.ICard
+        self,
+        valid_coin_type_set: typing.Set[i_coin_type.ICoinType],
+        current_player: i_player.IPlayer,
+        coins: typing.Dict[i_coin_type.ICoinType, int],
+        card: i_card.ICard,
     ):
         self._validate_input(valid_coin_type_set, coins)
         self._card = card
@@ -24,12 +23,18 @@ class PurchaseReservedCardAction(i_action.IAction):
 
     def validate(self, game_state: i_game_state.IGameState) -> bool:
 
-        if self._card in self._current_player.get_card_inventory().get_reserved_card_set():
+        if (
+            self._card
+            in self._current_player.get_card_inventory().get_reserved_card_set()
+        ):
             if game_state.get_payment_manager().validate_payment(
-                    self._card.get_cost(),
-                    self._coin_dictionary,
-                    self._current_player.get_card_inventory().get_total_discount()):
-                if self._current_player.get_coin_inventory().has_minimum(self._coin_dictionary):
+                self._card.get_cost(),
+                self._coin_dictionary,
+                self._current_player.get_card_inventory().get_total_discount(),
+            ):
+                if self._current_player.get_coin_inventory().has_minimum(
+                    self._coin_dictionary
+                ):
                     return True
         return False
 
@@ -38,13 +43,15 @@ class PurchaseReservedCardAction(i_action.IAction):
             raise ValueError("invalid action")
         game_state.get_coin_reserve().add_coins(self._coin_dictionary)
         self._current_player.get_coin_inventory().remove_coins(self._coin_dictionary)
-        self._current_player.get_card_inventory().remove_from_reserved_card_set(self._card)
+        self._current_player.get_card_inventory().remove_from_reserved_card_set(
+            self._card
+        )
         self._current_player.get_card_inventory().add_card(self._card)
 
     @staticmethod
     def _validate_input(
-            valid_coin_type_set: typing.Set[i_coin_type.ICoinType],
-            coins: typing.Dict[i_coin_type.ICoinType, int]
+        valid_coin_type_set: typing.Set[i_coin_type.ICoinType],
+        coins: typing.Dict[i_coin_type.ICoinType, int],
     ):
         for coin_type in coins.keys():
             if coin_type not in valid_coin_type_set:

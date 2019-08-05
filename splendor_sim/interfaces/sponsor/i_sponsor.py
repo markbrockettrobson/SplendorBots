@@ -7,10 +7,10 @@ import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 class ISponsor(abc.ABC):
     @abc.abstractmethod
     def __init__(
-            self,
-            name: str,
-            victory_points: int,
-            cost: typing.Dict[i_coin_type.ICoinType, int]
+        self,
+        name: str,
+        victory_points: int,
+        cost: typing.Dict[i_coin_type.ICoinType, int],
     ):
         """
 

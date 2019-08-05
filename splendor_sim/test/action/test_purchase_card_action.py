@@ -14,9 +14,11 @@ import splendor_sim.src.action.purchase_card_action as purchase_card_action
 
 
 class TestPurchaseCardAction(unittest.TestCase):
-
     def setUp(self):
-        self._mock_coin_types = [mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True) for _ in range(4)]
+        self._mock_coin_types = [
+            mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True)
+            for _ in range(4)
+        ]
         self._mock_valid_coin_type_set = {
             self._mock_coin_types[0],
             self._mock_coin_types[1],
@@ -26,13 +28,11 @@ class TestPurchaseCardAction(unittest.TestCase):
 
         self._mock_player = mock.create_autospec(spec=i_player.IPlayer, spec_set=True)
         self._mock_coin_inventory = mock.create_autospec(
-            spec=i_player_coin_inventory.IPlayerCoinInventory,
-            spec_set=True
+            spec=i_player_coin_inventory.IPlayerCoinInventory, spec_set=True
         )
         self._mock_coin_inventory.has_minimum.return_value = True
         self._mock_card_inventory = mock.create_autospec(
-            spec=i_player_card_inventory.IPlayerCardInventory,
-            spec_set=True
+            spec=i_player_card_inventory.IPlayerCardInventory, spec_set=True
         )
         self._mock_player.get_coin_inventory.return_value = self._mock_coin_inventory
         self._mock_player.get_card_inventory.return_value = self._mock_card_inventory
@@ -42,20 +42,28 @@ class TestPurchaseCardAction(unittest.TestCase):
             self._mock_coin_types[2]: 4,
         }
 
-        self._mock_game_state = mock.create_autospec(spec=i_game_state.IGameState, spec_set=True)
+        self._mock_game_state = mock.create_autospec(
+            spec=i_game_state.IGameState, spec_set=True
+        )
 
-        self._mock_coin_reserve = mock.create_autospec(spec=i_coin_reserve.ICoinReserve, spec_set=True)
+        self._mock_coin_reserve = mock.create_autospec(
+            spec=i_coin_reserve.ICoinReserve, spec_set=True
+        )
         self._mock_game_state.get_coin_reserve.return_value = self._mock_coin_reserve
 
-        self._mock_card_reserve = mock.create_autospec(spec=i_card_reserve.ICardReserve, spec_set=True)
-        self._mock_card_reserve.get_cards_for_sale.return_value = {
-            self._mock_card
-        }
+        self._mock_card_reserve = mock.create_autospec(
+            spec=i_card_reserve.ICardReserve, spec_set=True
+        )
+        self._mock_card_reserve.get_cards_for_sale.return_value = {self._mock_card}
         self._mock_game_state.get_card_reserve.return_value = self._mock_card_reserve
 
-        self._mock_payment_manager = mock.create_autospec(spec=i_payment_manager.IPaymentManager, spec_set=True)
+        self._mock_payment_manager = mock.create_autospec(
+            spec=i_payment_manager.IPaymentManager, spec_set=True
+        )
         self._mock_payment_manager.validate_payment.return_value = True
-        self._mock_game_state.get_payment_manager.return_value = self._mock_payment_manager
+        self._mock_game_state.get_payment_manager.return_value = (
+            self._mock_payment_manager
+        )
 
     def test_purchase_card_action_init_valid(self):
         # Arrange
@@ -64,7 +72,7 @@ class TestPurchaseCardAction(unittest.TestCase):
             self._mock_valid_coin_type_set,
             self._mock_player,
             self._mock_coins,
-            self._mock_card
+            self._mock_card,
         )
         # Assert
         self.assertTrue(test_action.validate(self._mock_game_state))
@@ -75,7 +83,7 @@ class TestPurchaseCardAction(unittest.TestCase):
             self._mock_valid_coin_type_set,
             self._mock_player,
             self._mock_coins,
-            self._mock_card
+            self._mock_card,
         )
         # Act
         self._mock_coins.pop(self._mock_coin_types[0])
@@ -84,9 +92,7 @@ class TestPurchaseCardAction(unittest.TestCase):
 
     def test_purchase_card_action_invalid_coin_type(self):
         # Arrange
-        self._mock_coins = {
-            self._mock_coin_types[3]: 2
-        }
+        self._mock_coins = {self._mock_coin_types[3]: 2}
         # Act
         # Assert
         with self.assertRaises(ValueError):
@@ -94,7 +100,7 @@ class TestPurchaseCardAction(unittest.TestCase):
                 self._mock_valid_coin_type_set,
                 self._mock_player,
                 self._mock_coins,
-                self._mock_card
+                self._mock_card,
             )
 
     def test_purchase_card_action_init_validate_true(self):
@@ -104,7 +110,7 @@ class TestPurchaseCardAction(unittest.TestCase):
             self._mock_valid_coin_type_set,
             self._mock_player,
             self._mock_coins,
-            self._mock_card
+            self._mock_card,
         )
         # Assert
         self.assertTrue(test_action.validate(self._mock_game_state))
@@ -117,7 +123,7 @@ class TestPurchaseCardAction(unittest.TestCase):
             self._mock_valid_coin_type_set,
             self._mock_player,
             self._mock_coins,
-            self._mock_card
+            self._mock_card,
         )
         # Assert
         self.assertFalse(test_action.validate(self._mock_game_state))
@@ -130,7 +136,7 @@ class TestPurchaseCardAction(unittest.TestCase):
             self._mock_valid_coin_type_set,
             self._mock_player,
             self._mock_coins,
-            self._mock_card
+            self._mock_card,
         )
         # Assert
         self.assertFalse(test_action.validate(self._mock_game_state))
@@ -143,7 +149,7 @@ class TestPurchaseCardAction(unittest.TestCase):
             self._mock_valid_coin_type_set,
             self._mock_player,
             self._mock_coins,
-            self._mock_card
+            self._mock_card,
         )
         # Assert
         self.assertFalse(test_action.validate(self._mock_game_state))
@@ -155,7 +161,7 @@ class TestPurchaseCardAction(unittest.TestCase):
             self._mock_valid_coin_type_set,
             self._mock_player,
             self._mock_coins,
-            self._mock_card
+            self._mock_card,
         )
         # Act
         # Assert
@@ -168,7 +174,7 @@ class TestPurchaseCardAction(unittest.TestCase):
             self._mock_valid_coin_type_set,
             self._mock_player,
             self._mock_coins,
-            self._mock_card
+            self._mock_card,
         )
         # Act
         test_action.execute(self._mock_game_state)
@@ -181,7 +187,7 @@ class TestPurchaseCardAction(unittest.TestCase):
             self._mock_valid_coin_type_set,
             self._mock_player,
             self._mock_coins,
-            self._mock_card
+            self._mock_card,
         )
         # Act
         test_action.execute(self._mock_game_state)
@@ -194,7 +200,7 @@ class TestPurchaseCardAction(unittest.TestCase):
             self._mock_valid_coin_type_set,
             self._mock_player,
             self._mock_coins,
-            self._mock_card
+            self._mock_card,
         )
         # Act
         test_action.execute(self._mock_game_state)
@@ -207,7 +213,7 @@ class TestPurchaseCardAction(unittest.TestCase):
             self._mock_valid_coin_type_set,
             self._mock_player,
             self._mock_coins,
-            self._mock_card
+            self._mock_card,
         )
         # Act
         test_action.execute(self._mock_game_state)

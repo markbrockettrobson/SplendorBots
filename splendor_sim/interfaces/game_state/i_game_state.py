@@ -8,15 +8,14 @@ import splendor_sim.interfaces.sponsor.i_sponsor_reserve as i_sponsor_reserve
 
 
 class IGameState(abc.ABC):
-
     @abc.abstractmethod
     def __init__(
-            self,
-            player_manager: i_player_manager.IPlayerManager,
-            coin_reserve: i_coin_reserve.ICoinReserve,
-            card_reserve: i_card_reserve.ICardReserve,
-            sponsor_reserve: i_sponsor_reserve.ISponsorReserve,
-            payment_manager: i_payment_manager.IPaymentManager
+        self,
+        player_manager: i_player_manager.IPlayerManager,
+        coin_reserve: i_coin_reserve.ICoinReserve,
+        card_reserve: i_card_reserve.ICardReserve,
+        sponsor_reserve: i_sponsor_reserve.ISponsorReserve,
+        payment_manager: i_payment_manager.IPaymentManager,
     ):
         """
 
