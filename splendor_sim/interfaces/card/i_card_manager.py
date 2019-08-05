@@ -6,10 +6,7 @@ import splendor_sim.interfaces.card.i_card as i_card
 
 class ICardManager(abc.ABC):
     @abc.abstractmethod
-    def __init__(
-            self,
-            card_set: typing.Set[i_card.ICard]
-    ):
+    def __init__(self, card_set: typing.Set[i_card.ICard]):
         """
 
         :param card_set: a set of cards in the game

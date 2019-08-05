@@ -9,14 +9,19 @@ import splendor_sim.src.factories.json_validator as json_validator
 
 
 class TestCardManager(unittest.TestCase):
-
     def setUp(self):
-        self._mock_card_list = [mock.create_autospec(spec=i_card.ICard, spec_set=True) for _ in range(30)]
+        self._mock_card_list = [
+            mock.create_autospec(spec=i_card.ICard, spec_set=True) for _ in range(30)
+        ]
         self._mock_card_set = set(self._mock_card_list)
         for i, _mock_card in enumerate(self._mock_card_list):
             _mock_card.get_tier.return_value = i % 3 + 1
-            _mock_card.get_name.return_value = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"[i]
-            _mock_card.to_json.return_value = {"json": "mock json for card %s" % _mock_card.get_name()}
+            _mock_card.get_name.return_value = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"[
+                i
+            ]
+            _mock_card.to_json.return_value = {
+                "json": "mock json for card %s" % _mock_card.get_name()
+            }
 
     def test_card_manager_init_valid(self):
         # Arrange
@@ -30,7 +35,7 @@ class TestCardManager(unittest.TestCase):
 
     def test_card_manager_init_invalid_repeated_card_name(self):
         # Arrange
-        self._mock_card_list[1].get_name.return_value = 'a'
+        self._mock_card_list[1].get_name.return_value = "a"
         # Act
         # Assert
         with self.assertRaises(ValueError):
@@ -63,9 +68,11 @@ class TestCardManager(unittest.TestCase):
     def test_card_manager_get_card_tier(self):
         # Arrange
         test_card_manager = card_manager.CardManager(self._mock_card_set)
-        expected = {1: {self._mock_card_list[i] for i in range(0, 30, 3)},
-                    2: {self._mock_card_list[i] for i in range(1, 30, 3)},
-                    3: {self._mock_card_list[i] for i in range(2, 30, 3)}}
+        expected = {
+            1: {self._mock_card_list[i] for i in range(0, 30, 3)},
+            2: {self._mock_card_list[i] for i in range(1, 30, 3)},
+            3: {self._mock_card_list[i] for i in range(2, 30, 3)},
+        }
         for i in range(1, 4):
             # Act
             card_set = test_card_manager.get_card_tier(i)
@@ -94,28 +101,32 @@ class TestCardManager(unittest.TestCase):
         test_card_manager = card_manager.CardManager(self._mock_card_set)
         # Act
         # Assert
-        self.assertTrue(test_card_manager.is_card_in_manager_by_name('a'))
-        self.assertTrue(test_card_manager.is_card_in_manager_by_name('r'))
-        self.assertTrue(test_card_manager.is_card_in_manager_by_name('q'))
-        self.assertTrue(test_card_manager.is_card_in_manager_by_name('A'))
+        self.assertTrue(test_card_manager.is_card_in_manager_by_name("a"))
+        self.assertTrue(test_card_manager.is_card_in_manager_by_name("r"))
+        self.assertTrue(test_card_manager.is_card_in_manager_by_name("q"))
+        self.assertTrue(test_card_manager.is_card_in_manager_by_name("A"))
 
     def test_card_manager_is_card_in_manager_by_name_false(self):
         # Arrange
         test_card_manager = card_manager.CardManager(self._mock_card_set)
         # Act
         # Assert
-        self.assertFalse(test_card_manager.is_card_in_manager_by_name('Z'))
-        self.assertFalse(test_card_manager.is_card_in_manager_by_name('K'))
-        self.assertFalse(test_card_manager.is_card_in_manager_by_name('F'))
-        self.assertFalse(test_card_manager.is_card_in_manager_by_name('1'))
+        self.assertFalse(test_card_manager.is_card_in_manager_by_name("Z"))
+        self.assertFalse(test_card_manager.is_card_in_manager_by_name("K"))
+        self.assertFalse(test_card_manager.is_card_in_manager_by_name("F"))
+        self.assertFalse(test_card_manager.is_card_in_manager_by_name("1"))
 
     def test_card_manager_get_card_by_name(self):
         # Arrange
         test_card_manager = card_manager.CardManager(self._mock_card_set)
         # Act
         # Assert
-        self.assertEqual(test_card_manager.get_card_by_name('a'), self._mock_card_list[0])
-        self.assertEqual(test_card_manager.get_card_by_name('z'), self._mock_card_list[25])
+        self.assertEqual(
+            test_card_manager.get_card_by_name("a"), self._mock_card_list[0]
+        )
+        self.assertEqual(
+            test_card_manager.get_card_by_name("z"), self._mock_card_list[25]
+        )
 
     def test_card_manager_get_card_by_name_name_not_in_manger(self):
         # Arrange
@@ -123,24 +134,24 @@ class TestCardManager(unittest.TestCase):
         # Act
         # Assert
         with self.assertRaises(ValueError):
-            _ = test_card_manager.get_card_by_name('Z')
+            _ = test_card_manager.get_card_by_name("Z")
 
     def test_card_manager_to_json(self):
         # Arrange
         test_card_manager = card_manager.CardManager(self._mock_card_set)
-        expected_json = {
-            'cards': [card.to_json() for card in self._mock_card_set]
-        }
+        expected_json = {"cards": [card.to_json() for card in self._mock_card_set]}
         # Act
         # Assert
-        self.assertCountEqual(expected_json['cards'], test_card_manager.to_json()['cards'])
+        self.assertCountEqual(
+            expected_json["cards"], test_card_manager.to_json()["cards"]
+        )
 
     def test_card_manager_to_json_complies_with_schema(self):
         # Arrange
-        test_json_validator = json_validator.JsonValidator(json_schemas.JSON_CARD_MANAGER_SCHEMA)
+        test_json_validator = json_validator.JsonValidator(
+            json_schemas.JSON_CARD_MANAGER_SCHEMA
+        )
         # Act
         test_card_manager = card_manager.CardManager(self._mock_card_set)
         # Assert
-        self.assertTrue(
-            test_json_validator.validate_json(test_card_manager.to_json())
-        )
+        self.assertTrue(test_json_validator.validate_json(test_card_manager.to_json()))

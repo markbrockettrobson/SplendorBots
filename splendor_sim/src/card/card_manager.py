@@ -6,11 +6,7 @@ import splendor_sim.interfaces.card.i_card_manager as i_card_manager
 
 
 class CardManager(i_card_manager.ICardManager):
-
-    def __init__(
-            self,
-            card_set: typing.Set[i_card.ICard]
-    ):
+    def __init__(self, card_set: typing.Set[i_card.ICard]):
 
         self._card_set = copy.copy(card_set)
         self._cards_by_tier = self._sort_cards_by_tier(self._card_set)
@@ -42,14 +38,12 @@ class CardManager(i_card_manager.ICardManager):
         return self._name_dictionary[name]
 
     def to_json(self):
-        return {
-            'cards': [
-                card.to_json() for card in self._card_set
-            ]
-        }
+        return {"cards": [card.to_json() for card in self._card_set]}
 
     @staticmethod
-    def _sort_cards_by_tier(card_set: typing.Set[i_card.ICard]) -> typing.Dict[int, typing.Set[i_card.ICard]]:
+    def _sort_cards_by_tier(
+        card_set: typing.Set[i_card.ICard]
+    ) -> typing.Dict[int, typing.Set[i_card.ICard]]:
         cards_by_tier = {}  # type: typing.Dict[int, typing.Set[i_card.ICard]]
         for card in card_set:
             tier = card.get_tier()

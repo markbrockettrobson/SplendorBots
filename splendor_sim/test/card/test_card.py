@@ -9,11 +9,13 @@ import splendor_sim.src.factories.json_validator as json_validator
 
 
 class TestCard(unittest.TestCase):
-
     def setUp(self):
         self._tier = 1
         self._victory_points = 0
-        self._mock_coins = [mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True) for _ in range(4)]
+        self._mock_coins = [
+            mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True)
+            for _ in range(4)
+        ]
         for i, coin in enumerate(self._mock_coins):
             coin.get_name.return_value = "ABCD"[i]
         self._discount = self._mock_coins[0]
@@ -24,11 +26,7 @@ class TestCard(unittest.TestCase):
         # Arrange
         # Act
         test_card = card.Card(
-            self._tier,
-            self._victory_points,
-            self._discount,
-            self._cost,
-            self._name
+            self._tier, self._victory_points, self._discount, self._cost, self._name
         )
 
         # Assert
@@ -42,10 +40,7 @@ class TestCard(unittest.TestCase):
         # Arrange
         # Act
         test_card = card.Card(
-            self._tier,
-            self._victory_points,
-            self._discount,
-            self._cost
+            self._tier, self._victory_points, self._discount, self._cost
         )
 
         # Assert
@@ -57,12 +52,7 @@ class TestCard(unittest.TestCase):
         # Act
         # Assert
         with self.assertRaises(ValueError):
-            _ = card.Card(
-                self._tier,
-                self._victory_points,
-                self._discount,
-                self._cost
-            )
+            _ = card.Card(self._tier, self._victory_points, self._discount, self._cost)
 
     def test_card_init_invalid_victory_points(self):
         # Arrange
@@ -70,12 +60,7 @@ class TestCard(unittest.TestCase):
         # Act
         # Assert
         with self.assertRaises(ValueError):
-            _ = card.Card(
-                self._tier,
-                self._victory_points,
-                self._discount,
-                self._cost
-            )
+            _ = card.Card(self._tier, self._victory_points, self._discount, self._cost)
 
     def test_card_init_invalid_cost(self):
         # Arrange
@@ -83,20 +68,12 @@ class TestCard(unittest.TestCase):
         # Act
         # Assert
         with self.assertRaises(ValueError):
-            _ = card.Card(
-                self._tier,
-                self._victory_points,
-                self._discount,
-                self._cost
-            )
+            _ = card.Card(self._tier, self._victory_points, self._discount, self._cost)
 
     def test_card_cost_post_init_immutability(self):
         # Arrange
         test_card = card.Card(
-            self._tier,
-            self._victory_points,
-            self._discount,
-            self._cost
+            self._tier, self._victory_points, self._discount, self._cost
         )
         pre_mutation = copy.copy(self._cost)
         # Act
@@ -107,10 +84,7 @@ class TestCard(unittest.TestCase):
     def test_card_cost_immutability(self):
         # Arrange
         test_card = card.Card(
-            self._tier,
-            self._victory_points,
-            self._discount,
-            self._cost
+            self._tier, self._victory_points, self._discount, self._cost
         )
         pre_mutation = test_card.get_cost()
         # Act
@@ -121,53 +95,38 @@ class TestCard(unittest.TestCase):
     def test_card_to_json(self):
         # Arrange
         test_card = card.Card(
-            self._tier,
-            self._victory_points,
-            self._discount,
-            self._cost,
-            self._name
+            self._tier, self._victory_points, self._discount, self._cost, self._name
         )
         # Act
         # Assert
         expected = {
-            'tier': 1,
-            'victory_points': 0,
-            'discounted_coin_type_name': 'A',
-            'cost': [
-                {
-                    'coin_name': 'B',
-                    'count': 1
-                },
-                {
-                    'coin_name': 'C',
-                    'count': 1
-                },
-                {
-                    'coin_name': 'D',
-                    'count': 1
-                }
+            "tier": 1,
+            "victory_points": 0,
+            "discounted_coin_type_name": "A",
+            "cost": [
+                {"coin_name": "B", "count": 1},
+                {"coin_name": "C", "count": 1},
+                {"coin_name": "D", "count": 1},
             ],
-            'name': self._name
+            "name": self._name,
         }
         real = test_card.to_json()
-        self.assertEqual(real['tier'], expected['tier'])
-        self.assertEqual(real['victory_points'], expected['victory_points'])
-        self.assertEqual(real['discounted_coin_type_name'], expected['discounted_coin_type_name'])
-        self.assertCountEqual(real['cost'], expected['cost'])
-        self.assertEqual(real['name'], expected['name'])
+        self.assertEqual(real["tier"], expected["tier"])
+        self.assertEqual(real["victory_points"], expected["victory_points"])
+        self.assertEqual(
+            real["discounted_coin_type_name"], expected["discounted_coin_type_name"]
+        )
+        self.assertCountEqual(real["cost"], expected["cost"])
+        self.assertEqual(real["name"], expected["name"])
 
     def test_card_to_json_complies_with_schema(self):
         # Arrange
-        test_json_validator = json_validator.JsonValidator(json_schemas.JSON_CARD_SCHEMA)
+        test_json_validator = json_validator.JsonValidator(
+            json_schemas.JSON_CARD_SCHEMA
+        )
         # Act
         test_card = card.Card(
-            self._tier,
-            self._victory_points,
-            self._discount,
-            self._cost,
-            self._name
+            self._tier, self._victory_points, self._discount, self._cost, self._name
         )
         # Assert
-        self.assertTrue(
-            test_json_validator.validate_json(test_card.to_json())
-        )
+        self.assertTrue(test_json_validator.validate_json(test_card.to_json()))

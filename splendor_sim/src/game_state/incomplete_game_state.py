@@ -7,16 +7,16 @@ import splendor_sim.interfaces.sponsor.i_sponsor_reserve as i_sponsor_reserve
 
 
 class IncompleteGameState(i_incomplete_game_state.IIncompleteGameState):
-    def __init__(
-            self
-    ):
+    def __init__(self):
         self._player_manager = None
         self._coin_reserve = None
         self._card_reserve = None
         self._card_manager = None
         self._sponsor_reserve = None
 
-    def set_player_manager(self, player_manager: i_player_manager.IPlayerManager) -> None:
+    def set_player_manager(
+        self, player_manager: i_player_manager.IPlayerManager
+    ) -> None:
         self._player_manager = player_manager
 
     def get_player_manager(self) -> i_player_manager.IPlayerManager:
@@ -40,7 +40,9 @@ class IncompleteGameState(i_incomplete_game_state.IIncompleteGameState):
             raise ValueError("no coin reserve")
         return self._card_reserve
 
-    def set_sponsor_reserve(self, sponsor_reserve: i_sponsor_reserve.ISponsorReserve) -> None:
+    def set_sponsor_reserve(
+        self, sponsor_reserve: i_sponsor_reserve.ISponsorReserve
+    ) -> None:
         self._sponsor_reserve = sponsor_reserve
 
     def get_sponsor_reserve(self) -> i_sponsor_reserve.ISponsorReserve:

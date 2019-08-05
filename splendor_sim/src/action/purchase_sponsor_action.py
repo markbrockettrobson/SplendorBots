@@ -8,20 +8,18 @@ import splendor_sim.interfaces.sponsor.i_sponsor as i_sponsor
 
 
 class PurchaseCardAction(i_action.IAction):
-
-    def __init__(
-            self,
-            current_player: i_player.IPlayer,
-            sponsor: i_sponsor.ISponsor
-    ):
+    def __init__(self, current_player: i_player.IPlayer, sponsor: i_sponsor.ISponsor):
         self._current_player = current_player
         self._sponsor = sponsor
 
     def validate(self, game_state: i_game_state.IGameState) -> bool:
-        if self._sponsor in game_state.get_sponsor_reserve().get_remaining_sponsor_set():
+        if (
+            self._sponsor
+            in game_state.get_sponsor_reserve().get_remaining_sponsor_set()
+        ):
             return self.validate_payment(
                 self._current_player.get_card_inventory().get_total_discount(),
-                self._sponsor.get_cost()
+                self._sponsor.get_cost(),
             )
         return False
 
@@ -33,8 +31,8 @@ class PurchaseCardAction(i_action.IAction):
 
     @staticmethod
     def validate_payment(
-            total_discount: typing.Dict[i_coin_type.ICoinType, int],
-            sponsor_cost: typing.Dict[i_coin_type.ICoinType, int]
+        total_discount: typing.Dict[i_coin_type.ICoinType, int],
+        sponsor_cost: typing.Dict[i_coin_type.ICoinType, int],
     ) -> bool:
         for key, value in sponsor_cost.items():
             if key not in total_discount:

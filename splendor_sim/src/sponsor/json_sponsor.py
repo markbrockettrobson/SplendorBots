@@ -14,18 +14,18 @@ class JsonSponsor(sponsor.Sponsor, i_json_buildable_object.IJsonBuildableObject)
     _JSON_VALIDATOR = json_validator.JsonValidator(json_schemas.JSON_SPONSOR_SCHEMA)
 
     def __init__(
-            self,
-            name: str,
-            victory_points: int,
-            cost: typing.Dict[i_coin_type.ICoinType, int]
+        self,
+        name: str,
+        victory_points: int,
+        cost: typing.Dict[i_coin_type.ICoinType, int],
     ):
         super(JsonSponsor, self).__init__(name, victory_points, cost)
 
     @classmethod
     def build_from_json(
-            cls,
-            json: typing.Dict,
-            incomplete_game_state: i_incomplete_game_state.IIncompleteGameState
+        cls,
+        json: typing.Dict,
+        incomplete_game_state: i_incomplete_game_state.IIncompleteGameState,
     ):
         if not cls._JSON_VALIDATOR.validate_json(json):
             raise ValueError("Json does not meet schema")
@@ -44,11 +44,7 @@ class JsonSponsor(sponsor.Sponsor, i_json_buildable_object.IJsonBuildableObject)
                 raise ValueError("coin name repeated")
             cost[coin] = count
 
-        return cls(
-            json['name'],
-            json['victory_points'],
-            cost
-        )
+        return cls(json["name"], json["victory_points"], cost)
 
     @staticmethod
     def get_json_schema() -> typing.Dict:

@@ -6,7 +6,6 @@ import splendor_sim.src.factories.json_validator as json_validator
 
 
 class TestCoinType(unittest.TestCase):
-
     def setUp(self):
         self._name = "emerald"
         self._total_number = 7
@@ -41,19 +40,15 @@ class TestCoinType(unittest.TestCase):
         test_coin_type = coin_type.CoinType(self._name, self._total_number)
         # Assert
         self.assertEqual(
-            test_coin_type.to_json(),
-            {
-                'name': "emerald",
-                'total_number': 7
-            }
+            test_coin_type.to_json(), {"name": "emerald", "total_number": 7}
         )
 
     def test_coin_type_to_json_complies_with_schema(self):
         # Arrange
-        test_json_validator = json_validator.JsonValidator(json_schemas.JSON_COIN_TYPE_SCHEMA)
+        test_json_validator = json_validator.JsonValidator(
+            json_schemas.JSON_COIN_TYPE_SCHEMA
+        )
         # Act
         test_coin_type = coin_type.CoinType(self._name, self._total_number)
         # Assert
-        self.assertTrue(
-            test_json_validator.validate_json(test_coin_type.to_json())
-        )
+        self.assertTrue(test_json_validator.validate_json(test_coin_type.to_json()))

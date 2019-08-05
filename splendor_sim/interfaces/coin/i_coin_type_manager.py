@@ -7,9 +7,11 @@ import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 class ICoinTypeManager(abc.ABC):
     @abc.abstractmethod
     def __init__(
-            self,
-            coin_type_list: typing.Set[i_coin_type.ICoinType],
-            coin_equivalents: typing.Set[typing.Tuple[i_coin_type.ICoinType, i_coin_type.ICoinType]]
+        self,
+        coin_type_list: typing.Set[i_coin_type.ICoinType],
+        coin_equivalents: typing.Set[
+            typing.Tuple[i_coin_type.ICoinType, i_coin_type.ICoinType]
+        ],
     ):
         """
 
@@ -30,8 +32,7 @@ class ICoinTypeManager(abc.ABC):
 
     @abc.abstractmethod
     def get_equivalent_coins(
-            self,
-            coin_type: i_coin_type.ICoinType
+        self, coin_type: i_coin_type.ICoinType
     ) -> typing.Set[i_coin_type.ICoinType]:
         """
 
@@ -43,8 +44,7 @@ class ICoinTypeManager(abc.ABC):
 
     @abc.abstractmethod
     def get_coin_usage(
-            self,
-            coin_type: i_coin_type.ICoinType
+        self, coin_type: i_coin_type.ICoinType
     ) -> typing.Set[i_coin_type.ICoinType]:
         """
 
@@ -55,10 +55,7 @@ class ICoinTypeManager(abc.ABC):
         """
 
     @abc.abstractmethod
-    def get_coin_by_name(
-            self,
-            name: str
-    ) -> i_coin_type.ICoinType:
+    def get_coin_by_name(self, name: str) -> i_coin_type.ICoinType:
         """
 
         :param name: the name of the coin you want to get
@@ -68,10 +65,7 @@ class ICoinTypeManager(abc.ABC):
         """
 
     @abc.abstractmethod
-    def is_coin_in_manager_by_name(
-            self,
-            name: str
-    ) -> bool:
+    def is_coin_in_manager_by_name(self, name: str) -> bool:
         """
 
         :param name: the name of the coin you want to get
@@ -81,9 +75,7 @@ class ICoinTypeManager(abc.ABC):
         """
 
     @abc.abstractmethod
-    def get_name_set(
-            self
-    ) -> typing.Set[str]:
+    def get_name_set(self) -> typing.Set[str]:
         """
 
         :return: returns a set of all coin names

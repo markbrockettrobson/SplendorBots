@@ -8,9 +8,9 @@ import splendor_sim.interfaces.sponsor.i_sponsor_manager as i_sponsor_manager
 class ISponsorReserve(abc.ABC):
     @abc.abstractmethod
     def __init__(
-            self,
-            sponsor_manager: i_sponsor_manager.ISponsorManager,
-            sponsor_set: typing.Set[i_sponsor.ISponsor]
+        self,
+        sponsor_manager: i_sponsor_manager.ISponsorManager,
+        sponsor_set: typing.Set[i_sponsor.ISponsor],
     ):
         """
 
@@ -21,9 +21,7 @@ class ISponsorReserve(abc.ABC):
         """
 
     @abc.abstractmethod
-    def get_sponsor_manager(
-            self,
-    ) -> i_sponsor_manager.ISponsorManager:
+    def get_sponsor_manager(self,) -> i_sponsor_manager.ISponsorManager:
         """
 
         :return: the sponsor manager

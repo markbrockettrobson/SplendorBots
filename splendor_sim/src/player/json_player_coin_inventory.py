@@ -10,22 +10,27 @@ import splendor_sim.src.factories.json_validator as json_validator
 import splendor_sim.src.player.player_coin_inventory as player_coin_inventory
 
 
-class JsonPlayerCoinInventory(player_coin_inventory.PlayerCoinInventory, i_json_buildable_object.IJsonBuildableObject):
+class JsonPlayerCoinInventory(
+    player_coin_inventory.PlayerCoinInventory,
+    i_json_buildable_object.IJsonBuildableObject,
+):
 
-    _JSON_VALIDATOR = json_validator.JsonValidator(json_schemas.JSON_PLAYER_COIN_INVENTORY)
+    _JSON_VALIDATOR = json_validator.JsonValidator(
+        json_schemas.JSON_PLAYER_COIN_INVENTORY
+    )
 
     def __init__(
-            self,
-            coin_type_manager: i_coin_type_manager.ICoinTypeManager,
-            current_coins: typing.Dict[i_coin_type.ICoinType, int]
+        self,
+        coin_type_manager: i_coin_type_manager.ICoinTypeManager,
+        current_coins: typing.Dict[i_coin_type.ICoinType, int],
     ):
         super(JsonPlayerCoinInventory, self).__init__(coin_type_manager, current_coins)
 
     @classmethod
     def build_from_json(
-            cls,
-            json: typing.Dict,
-            incomplete_game_state: i_incomplete_game_state.IIncompleteGameState
+        cls,
+        json: typing.Dict,
+        incomplete_game_state: i_incomplete_game_state.IIncompleteGameState,
     ):
         if not cls._JSON_VALIDATOR.validate_json(json):
             raise ValueError("Json does not meet schema")
@@ -39,10 +44,7 @@ class JsonPlayerCoinInventory(player_coin_inventory.PlayerCoinInventory, i_json_
                 raise ValueError("coin name not in manager.")
             coin_stocks[coin_type_manager.get_coin_by_name(coin_name)] = count
 
-        json_player_coin_inventory = cls(
-            coin_type_manager,
-            coin_stocks
-        )
+        json_player_coin_inventory = cls(coin_type_manager, coin_stocks)
 
         return json_player_coin_inventory
 

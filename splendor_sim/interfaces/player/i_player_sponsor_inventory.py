@@ -5,7 +5,6 @@ import splendor_sim.interfaces.sponsor.i_sponsor as i_sponsor
 
 
 class IPlayerSponsorInventory(abc.ABC):
-
     @abc.abstractmethod
     def __init__(self):
         pass

@@ -6,10 +6,7 @@ import splendor_sim.interfaces.sponsor.i_sponsor as i_sponsor
 
 class ISponsorManager(abc.ABC):
     @abc.abstractmethod
-    def __init__(
-            self,
-            sponsor_set: typing.Set[i_sponsor.ISponsor]
-    ):
+    def __init__(self, sponsor_set: typing.Set[i_sponsor.ISponsor]):
         """
 
         :param sponsor_set: the set of sponsors that can be selected

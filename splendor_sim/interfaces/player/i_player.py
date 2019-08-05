@@ -7,14 +7,14 @@ import splendor_sim.interfaces.player.i_player_sponsor_inventory as i_player_spo
 
 
 class IPlayer(abc.ABC):
-
     @abc.abstractmethod
     def __init__(
-            self,
-            name: str,
-            coin_inventory: i_player_coin_inventory.IPlayerCoinInventory,
-            card_inventory: i_player_card_inventory.IPlayerCardInventory,
-            sponsor_inventory: i_player_sponsor_inventory.IPlayerSponsorInventory):
+        self,
+        name: str,
+        coin_inventory: i_player_coin_inventory.IPlayerCoinInventory,
+        card_inventory: i_player_card_inventory.IPlayerCardInventory,
+        sponsor_inventory: i_player_sponsor_inventory.IPlayerSponsorInventory,
+    ):
         """
 
         :param name: the name of the player
@@ -27,6 +27,7 @@ class IPlayer(abc.ABC):
                <i_player_sponsor_inventory.IPlayerSponsorInventory>
 
         """
+
     @abc.abstractmethod
     def get_name(self) -> str:
         """
@@ -52,12 +53,15 @@ class IPlayer(abc.ABC):
         """
 
     @abc.abstractmethod
-    def get_sponsor_inventory(self) -> i_player_sponsor_inventory.IPlayerSponsorInventory:
+    def get_sponsor_inventory(
+        self
+    ) -> i_player_sponsor_inventory.IPlayerSponsorInventory:
         """
 
         :return: the sponsor inventory of a player
                  <i_player_sponsor_inventory.IPlayerSponsorInventory>
         """
+
     @abc.abstractmethod
     def to_json(self) -> typing.Dict:
         """

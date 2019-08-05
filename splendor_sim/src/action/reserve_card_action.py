@@ -9,13 +9,12 @@ import splendor_sim.interfaces.player.i_player as i_player
 
 
 class ReserveCardAction(i_action.IAction):
-
     def __init__(
-            self,
-            valid_coin_type_set: typing.Set[i_coin_type.ICoinType],
-            current_player: i_player.IPlayer,
-            coins: typing.Dict[i_coin_type.ICoinType, int],
-            card: i_card.ICard
+        self,
+        valid_coin_type_set: typing.Set[i_coin_type.ICoinType],
+        current_player: i_player.IPlayer,
+        coins: typing.Dict[i_coin_type.ICoinType, int],
+        card: i_card.ICard,
     ):
         self._validate_input(valid_coin_type_set, coins)
         self._card = card
@@ -23,8 +22,12 @@ class ReserveCardAction(i_action.IAction):
         self._current_player = current_player
 
     def validate(self, game_state: i_game_state.IGameState) -> bool:
-        number_of_reserved_cards = self._current_player.get_card_inventory().get_number_of_reserved_cards()
-        max_number_of_reserved_cards = self._current_player.get_card_inventory().get_max_number_of_reserved_cards()
+        number_of_reserved_cards = (
+            self._current_player.get_card_inventory().get_number_of_reserved_cards()
+        )
+        max_number_of_reserved_cards = (
+            self._current_player.get_card_inventory().get_max_number_of_reserved_cards()
+        )
         if number_of_reserved_cards < max_number_of_reserved_cards:
             if self._card in game_state.get_card_reserve().get_cards_for_sale():
                 if game_state.get_coin_reserve().has_minimum(self._coin_dictionary):
@@ -41,8 +44,8 @@ class ReserveCardAction(i_action.IAction):
 
     @staticmethod
     def _validate_input(
-            valid_coin_type_set: typing.Set[i_coin_type.ICoinType],
-            coins: typing.Dict[i_coin_type.ICoinType, int]
+        valid_coin_type_set: typing.Set[i_coin_type.ICoinType],
+        coins: typing.Dict[i_coin_type.ICoinType, int],
     ):
         if len(coins.keys()) != 1:
             raise ValueError("can only take 1 type of coin")

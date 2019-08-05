@@ -9,11 +9,11 @@ import splendor_sim.interfaces.card.i_deck as i_deck
 class ICardReserve(abc.ABC):
     @abc.abstractmethod
     def __init__(
-            self,
-            card_manager: i_card_manager.ICardManager,
-            number_of_cards_on_sale: int,
-            decks: typing.Set[i_deck.IDeck],
-            cards_on_sale: typing.Set[i_card.ICard]
+        self,
+        card_manager: i_card_manager.ICardManager,
+        number_of_cards_on_sale: int,
+        decks: typing.Set[i_deck.IDeck],
+        cards_on_sale: typing.Set[i_card.ICard],
     ):
         """
 

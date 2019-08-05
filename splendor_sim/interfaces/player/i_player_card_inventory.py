@@ -6,13 +6,12 @@ import splendor_sim.interfaces.coin.i_coin_type as i_coin_type
 
 
 class IPlayerCardInventory(abc.ABC):
-
     @abc.abstractmethod
     def __init__(
-            self,
-            max_reserved_cards: int,
-            reserved_cards: typing.Set[i_card.ICard],
-            cards: typing.Set[i_card.ICard]
+        self,
+        max_reserved_cards: int,
+        reserved_cards: typing.Set[i_card.ICard],
+        cards: typing.Set[i_card.ICard],
     ):
         """
 

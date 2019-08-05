@@ -8,9 +8,9 @@ import splendor_sim.interfaces.coin.i_coin_type_manager as i_coin_type_manager
 class IPlayerCoinInventory(abc.ABC):
     @abc.abstractmethod
     def __init__(
-            self,
-            coin_type_manager: i_coin_type_manager.ICoinTypeManager,
-            current_coins: typing.Dict[i_coin_type.ICoinType, int]
+        self,
+        coin_type_manager: i_coin_type_manager.ICoinTypeManager,
+        current_coins: typing.Dict[i_coin_type.ICoinType, int],
     ):
         """
 

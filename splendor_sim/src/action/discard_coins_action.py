@@ -8,12 +8,11 @@ import splendor_sim.interfaces.player.i_player as i_player
 
 
 class DiscardCoinsAction(i_action.IAction):
-
     def __init__(
-            self,
-            valid_coin_type_set: typing.Set[i_coin_type.ICoinType],
-            current_player: i_player.IPlayer,
-            coins: typing.Dict[i_coin_type.ICoinType, int],
+        self,
+        valid_coin_type_set: typing.Set[i_coin_type.ICoinType],
+        current_player: i_player.IPlayer,
+        coins: typing.Dict[i_coin_type.ICoinType, int],
     ):
         self._total_coins = self._validate_input(valid_coin_type_set, coins)
         self._coin_dictionary = copy.copy(coins)
@@ -21,7 +20,11 @@ class DiscardCoinsAction(i_action.IAction):
 
     def validate(self, game_state: i_game_state.IGameState) -> bool:
         if self._current_player.get_coin_inventory().has_minimum(self._coin_dictionary):
-            if self._current_player.get_coin_inventory().get_number_of_coins() - self._total_coins == 10:
+            if (
+                self._current_player.get_coin_inventory().get_number_of_coins()
+                - self._total_coins
+                == 10
+            ):
                 return True
         return False
 
@@ -33,8 +36,8 @@ class DiscardCoinsAction(i_action.IAction):
 
     @staticmethod
     def _validate_input(
-            valid_coin_type_set: typing.Set[i_coin_type.ICoinType],
-            coins: typing.Dict[i_coin_type.ICoinType, int]
+        valid_coin_type_set: typing.Set[i_coin_type.ICoinType],
+        coins: typing.Dict[i_coin_type.ICoinType, int],
     ):
         if not coins.keys():
             raise ValueError("must discard at least one types of coins")

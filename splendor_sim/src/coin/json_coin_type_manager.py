@@ -10,39 +10,40 @@ import splendor_sim.src.factories.json_schemas as json_schemas
 import splendor_sim.src.factories.json_validator as json_validator
 
 
-class JsonCoinTypeManager(coin_type_manager.CoinTypeManager, i_json_buildable_object.IJsonBuildableObject):
+class JsonCoinTypeManager(
+    coin_type_manager.CoinTypeManager, i_json_buildable_object.IJsonBuildableObject
+):
 
-    _JSON_VALIDATOR = json_validator.JsonValidator(json_schemas.JSON_COIN_TYPE_MANAGER_SCHEMA)
+    _JSON_VALIDATOR = json_validator.JsonValidator(
+        json_schemas.JSON_COIN_TYPE_MANAGER_SCHEMA
+    )
 
     def __init__(
-            self,
-            coin_type_set: typing.Set[i_coin_type.ICoinType],
-            coin_equivalents: typing.Set[typing.Tuple[i_coin_type.ICoinType, i_coin_type.ICoinType]]
+        self,
+        coin_type_set: typing.Set[i_coin_type.ICoinType],
+        coin_equivalents: typing.Set[
+            typing.Tuple[i_coin_type.ICoinType, i_coin_type.ICoinType]
+        ],
     ):
         super(JsonCoinTypeManager, self).__init__(coin_type_set, coin_equivalents)
 
     @classmethod
     def build_from_json(
-            cls,
-            json: typing.Dict,
-            incomplete_game_state: i_incomplete_game_state.IIncompleteGameState
+        cls,
+        json: typing.Dict,
+        incomplete_game_state: i_incomplete_game_state.IIncompleteGameState,
     ):
 
         if not cls._JSON_VALIDATOR.validate_json(json):
             raise ValueError("Json does not meet schema")
 
         coin_set = JsonCoinTypeManager._build_coin_type_set(
-            json['coin_types'],
-            incomplete_game_state
+            json["coin_types"], incomplete_game_state
         )
         coin_equivalents = JsonCoinTypeManager._build_coin_coin_equivalents(
-            coin_set,
-            json['coin_equivalents']
+            coin_set, json["coin_equivalents"]
         )
-        return cls(
-            coin_set,
-            coin_equivalents
-        )
+        return cls(coin_set, coin_equivalents)
 
     @staticmethod
     def get_json_schema() -> typing.Dict:
@@ -50,29 +51,31 @@ class JsonCoinTypeManager(coin_type_manager.CoinTypeManager, i_json_buildable_ob
 
     @staticmethod
     def _build_coin_type_set(
-            json_coin_list: typing.List,
-            incomplete_game_state: i_incomplete_game_state.IIncompleteGameState
+        json_coin_list: typing.List,
+        incomplete_game_state: i_incomplete_game_state.IIncompleteGameState,
     ) -> typing.Set[i_coin_type.ICoinType]:
         return {
             json_buildable_coin_type.JsonCoinType.build_from_json(
-                json_coin,
-                incomplete_game_state
-            ) for json_coin in json_coin_list
+                json_coin, incomplete_game_state
+            )
+            for json_coin in json_coin_list
         }
 
     @staticmethod
     def _build_coin_coin_equivalents(
-            coin_list: typing.Set[i_coin_type.ICoinType],
-            json_coin_equivalents: typing.List
+        coin_list: typing.Set[i_coin_type.ICoinType], json_coin_equivalents: typing.List
     ) -> typing.Set[typing.Tuple[i_coin_type.ICoinType, i_coin_type.ICoinType]]:
         coin_equivalents = set()
         coin_name_map = {coin.get_name(): coin for coin in coin_list}
 
         for json_coin_equivalent in json_coin_equivalents:
-            if json_coin_equivalent['coin_name'] not in coin_name_map.keys() or \
-                 json_coin_equivalent['equivalent_coins_name'] not in coin_name_map.keys():
+            if (
+                json_coin_equivalent["coin_name"] not in coin_name_map.keys()
+                or json_coin_equivalent["equivalent_coins_name"]
+                not in coin_name_map.keys()
+            ):
                 raise ValueError("Coin equivalent name not in coin_types")
-            coin_one = coin_name_map[json_coin_equivalent['coin_name']]
-            coin_two = coin_name_map[json_coin_equivalent['equivalent_coins_name']]
+            coin_one = coin_name_map[json_coin_equivalent["coin_name"]]
+            coin_two = coin_name_map[json_coin_equivalent["equivalent_coins_name"]]
             coin_equivalents.add((coin_one, coin_two))
         return coin_equivalents

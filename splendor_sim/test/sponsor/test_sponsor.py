@@ -13,9 +13,12 @@ class TestSponsor(unittest.TestCase):
         self._mock_name = "sponsor_name"
 
         self._mock_victory_points = 3
-        self._mock_coin_type_list = [mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True) for _ in range(3)]
+        self._mock_coin_type_list = [
+            mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True)
+            for _ in range(3)
+        ]
         for i, coin in enumerate(self._mock_coin_type_list):
-            coin.get_name.return_value = 'ABCDEF'[i]
+            coin.get_name.return_value = "ABCDEF"[i]
 
         self._mock_cost = {}
         for card in self._mock_coin_type_list:
@@ -24,7 +27,9 @@ class TestSponsor(unittest.TestCase):
     def test_sponsor_init_valid(self):
         # Arrange
         # Act
-        test_sponsor = sponsor.Sponsor(self._mock_name, self._mock_victory_points, self._mock_cost)
+        test_sponsor = sponsor.Sponsor(
+            self._mock_name, self._mock_victory_points, self._mock_cost
+        )
         # Assert
         self.assertEqual(test_sponsor.get_victory_points(), self._mock_victory_points)
         self.assertEqual(test_sponsor.get_cost(), self._mock_cost)
@@ -35,7 +40,9 @@ class TestSponsor(unittest.TestCase):
         # Act
         # Assert
         with self.assertRaises(ValueError):
-            _ = sponsor.Sponsor(self._mock_name, self._mock_victory_points, self._mock_cost)
+            _ = sponsor.Sponsor(
+                self._mock_name, self._mock_victory_points, self._mock_cost
+            )
 
     def test_sponsor_init_invalid_cost_empty(self):
         # Arrange
@@ -43,7 +50,9 @@ class TestSponsor(unittest.TestCase):
         # Act
         # Assert
         with self.assertRaises(ValueError):
-            _ = sponsor.Sponsor(self._mock_name, self._mock_victory_points, self._mock_cost)
+            _ = sponsor.Sponsor(
+                self._mock_name, self._mock_victory_points, self._mock_cost
+            )
 
     def test_sponsor_init_invalid_cost_negative_cost(self):
         # Arrange
@@ -51,11 +60,15 @@ class TestSponsor(unittest.TestCase):
         # Act
         # Assert
         with self.assertRaises(ValueError):
-            _ = sponsor.Sponsor(self._mock_name, self._mock_victory_points, self._mock_cost)
+            _ = sponsor.Sponsor(
+                self._mock_name, self._mock_victory_points, self._mock_cost
+            )
 
     def test_sponsor_init_cost_post_init_immutability(self):
         # Arrange
-        test_sponsor = sponsor.Sponsor(self._mock_name, self._mock_victory_points, self._mock_cost)
+        test_sponsor = sponsor.Sponsor(
+            self._mock_name, self._mock_victory_points, self._mock_cost
+        )
         pre_mutation = copy.copy(self._mock_cost)
         # Act
         self._mock_cost.pop(list(self._mock_cost.keys())[0])
@@ -64,28 +77,36 @@ class TestSponsor(unittest.TestCase):
 
     def test_sponsor_get_name(self):
         # Arrange
-        test_sponsor = sponsor.Sponsor(self._mock_name, self._mock_victory_points, self._mock_cost)
+        test_sponsor = sponsor.Sponsor(
+            self._mock_name, self._mock_victory_points, self._mock_cost
+        )
         # Act
         # Assert
         self.assertEqual(test_sponsor.get_name(), self._mock_name)
 
     def test_sponsor_get_victory_points(self):
         # Arrange
-        test_sponsor = sponsor.Sponsor(self._mock_name, self._mock_victory_points, self._mock_cost)
+        test_sponsor = sponsor.Sponsor(
+            self._mock_name, self._mock_victory_points, self._mock_cost
+        )
         # Act
         # Assert
         self.assertEqual(test_sponsor.get_victory_points(), self._mock_victory_points)
 
     def test_sponsor_get_cost(self):
         # Arrange
-        test_sponsor = sponsor.Sponsor(self._mock_name, self._mock_victory_points, self._mock_cost)
+        test_sponsor = sponsor.Sponsor(
+            self._mock_name, self._mock_victory_points, self._mock_cost
+        )
         # Act
         # Assert
         self.assertEqual(test_sponsor.get_cost(), self._mock_cost)
 
     def test_sponsor_get_cost_immutability(self):
         # Arrange
-        test_sponsor = sponsor.Sponsor(self._mock_name, self._mock_victory_points, self._mock_cost)
+        test_sponsor = sponsor.Sponsor(
+            self._mock_name, self._mock_victory_points, self._mock_cost
+        )
         return_value = test_sponsor.get_cost()
         pre_mutation = copy.copy(return_value)
         # Act
@@ -95,31 +116,32 @@ class TestSponsor(unittest.TestCase):
 
     def test_sponsor_to_json(self):
         # Arrange
-        test_sponsor = sponsor.Sponsor(self._mock_name, self._mock_victory_points, self._mock_cost)
+        test_sponsor = sponsor.Sponsor(
+            self._mock_name, self._mock_victory_points, self._mock_cost
+        )
         # Act
         # Assert
         expected = {
             "name": self._mock_name,
             "victory_points": self._mock_victory_points,
             "cost": [
-                {
-                    'coin_name': coin.get_name(),
-                    'count': number
-                }
+                {"coin_name": coin.get_name(), "count": number}
                 for coin, number in self._mock_cost.items()
-            ]
+            ],
         }
         real = test_sponsor.to_json()
-        self.assertEqual(real['name'], expected['name'])
-        self.assertEqual(real['victory_points'], expected['victory_points'])
-        self.assertCountEqual(real['cost'], expected['cost'])
+        self.assertEqual(real["name"], expected["name"])
+        self.assertEqual(real["victory_points"], expected["victory_points"])
+        self.assertCountEqual(real["cost"], expected["cost"])
 
     def test_sponsor_to_json_complies_with_schema(self):
         # Arrange
-        test_json_validator = json_validator.JsonValidator(json_schemas.JSON_SPONSOR_SCHEMA)
-        # Act
-        test_sponsor = sponsor.Sponsor(self._mock_name, self._mock_victory_points, self._mock_cost)
-        # Assert
-        self.assertTrue(
-            test_json_validator.validate_json(test_sponsor.to_json())
+        test_json_validator = json_validator.JsonValidator(
+            json_schemas.JSON_SPONSOR_SCHEMA
         )
+        # Act
+        test_sponsor = sponsor.Sponsor(
+            self._mock_name, self._mock_victory_points, self._mock_cost
+        )
+        # Assert
+        self.assertTrue(test_json_validator.validate_json(test_sponsor.to_json()))

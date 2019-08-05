@@ -7,11 +7,10 @@ import splendor_sim.interfaces.sponsor.i_sponsor_reserve as i_sponsor_reserve
 
 
 class SponsorReserve(i_sponsor_reserve.ISponsorReserve):
-
     def __init__(
-            self,
-            sponsor_manager: i_sponsor_manager.ISponsorManager,
-            sponsor_set: typing.Set[i_sponsor.ISponsor]
+        self,
+        sponsor_manager: i_sponsor_manager.ISponsorManager,
+        sponsor_set: typing.Set[i_sponsor.ISponsor],
     ):
         self._sponsor_manager = sponsor_manager
         manager_set = self._sponsor_manager.get_sponsor_set()
@@ -35,7 +34,5 @@ class SponsorReserve(i_sponsor_reserve.ISponsorReserve):
     def to_json(self):
         return {
             "sponsor_manager": self._sponsor_manager.to_json(),
-            "sponsors": [
-                sponsor.get_name() for sponsor in self._sponsor_set
-            ]
+            "sponsors": [sponsor.get_name() for sponsor in self._sponsor_set],
         }

@@ -8,9 +8,9 @@ import splendor_sim.interfaces.coin.i_coin_type_manager as i_coin_type_manager
 class ICoinReserve(abc.ABC):
     @abc.abstractmethod
     def __init__(
-            self,
-            coin_type_manager: i_coin_type_manager.ICoinTypeManager,
-            coin_stocks: typing.Dict[i_coin_type.ICoinType, int] = None
+        self,
+        coin_type_manager: i_coin_type_manager.ICoinTypeManager,
+        coin_stocks: typing.Dict[i_coin_type.ICoinType, int] = None,
     ):
         """
 
@@ -63,7 +63,9 @@ class ICoinReserve(abc.ABC):
         """
 
     @abc.abstractmethod
-    def remove_coins(self, removed_coins: typing.Dict[i_coin_type.ICoinType, int]) -> None:
+    def remove_coins(
+        self, removed_coins: typing.Dict[i_coin_type.ICoinType, int]
+    ) -> None:
         """
 
         :param removed_coins: dictionary mapping each coin type in the manager to the amount to remove

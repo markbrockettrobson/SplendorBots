@@ -9,10 +9,11 @@ import splendor_sim.src.factories.json_validator as json_validator
 
 
 class TestDeck(unittest.TestCase):
-
     def setUp(self):
         self._tier = 2
-        self._mock_card_list = [mock.create_autospec(spec=i_card.ICard, spec_set=True) for _ in range(10)]
+        self._mock_card_list = [
+            mock.create_autospec(spec=i_card.ICard, spec_set=True) for _ in range(10)
+        ]
         self._mock_card_set = set(self._mock_card_list)
         for i, card in enumerate(self._mock_card_list):
             card.get_tier.return_value = 2
@@ -169,10 +170,8 @@ class TestDeck(unittest.TestCase):
         # Arrange
         test_deck = deck.Deck(self._tier, self._mock_card_list)
         expected_json = {
-            'cards': [
-                card.get_name() for card in self._mock_card_set
-            ],
-            'tier': self._tier
+            "cards": [card.get_name() for card in self._mock_card_set],
+            "tier": self._tier,
         }
         real_json = test_deck.to_json()
         # Act
@@ -182,10 +181,10 @@ class TestDeck(unittest.TestCase):
 
     def test_deck_to_json_complies_with_schema(self):
         # Arrange
-        test_json_validator = json_validator.JsonValidator(json_schemas.JSON_DECK_SCHEMA)
+        test_json_validator = json_validator.JsonValidator(
+            json_schemas.JSON_DECK_SCHEMA
+        )
         # Act
         test_deck = deck.Deck(self._tier, self._mock_card_list)
         # Assert
-        self.assertTrue(
-            test_json_validator.validate_json(test_deck.to_json())
-        )
+        self.assertTrue(test_json_validator.validate_json(test_deck.to_json()))

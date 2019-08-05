@@ -6,7 +6,6 @@ import splendor_sim.interfaces.sponsor.i_sponsor as i_sponsor
 
 
 class PlayerSponsorInventory(i_player_sponsor_inventory.IPlayerSponsorInventory):
-
     def __init__(self, sponsors: typing.Set[i_sponsor.ISponsor]):
         self._sponsors: typing.Set[i_sponsor.ISponsor] = set()
         self._total_victory_points = 0
@@ -26,6 +25,4 @@ class PlayerSponsorInventory(i_player_sponsor_inventory.IPlayerSponsorInventory)
         return self._total_victory_points
 
     def to_json(self) -> typing.Dict:
-        return {
-            'sponsors': [sponsor.get_name() for sponsor in self._sponsors]
-        }
+        return {"sponsors": [sponsor.get_name() for sponsor in self._sponsors]}

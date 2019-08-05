@@ -6,17 +6,15 @@ import splendor_sim.interfaces.sponsor.i_sponsor_manager as i_sponsor_manager
 
 
 class SponsorManager(i_sponsor_manager.ISponsorManager):
-
-    def __init__(
-            self,
-            sponsor_set: typing.Set[i_sponsor.ISponsor]
-    ):
+    def __init__(self, sponsor_set: typing.Set[i_sponsor.ISponsor]):
 
         self._sponsor_set = copy.copy(sponsor_set)
         self._name_map = {}  # type: typing.Dict[str, i_sponsor.ISponsor]
         for sponsor in sponsor_set:
             if sponsor.get_name() in self._name_map:
-                raise ValueError("manager can not have more then one sponsor with the same name.")
+                raise ValueError(
+                    "manager can not have more then one sponsor with the same name."
+                )
             self._name_map[sponsor.get_name()] = sponsor
 
     def get_sponsor_set(self) -> typing.Set[i_sponsor.ISponsor]:
@@ -31,8 +29,4 @@ class SponsorManager(i_sponsor_manager.ISponsorManager):
         return name in self._name_map
 
     def to_json(self) -> typing.Dict:
-        return {
-            "sponsors": [
-                sponsor.to_json() for sponsor in self._sponsor_set
-            ]
-        }
+        return {"sponsors": [sponsor.to_json() for sponsor in self._sponsor_set]}

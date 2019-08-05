@@ -17,16 +17,13 @@ class JsonCoinType(coin_type.CoinType, i_json_buildable_object.IJsonBuildableObj
 
     @classmethod
     def build_from_json(
-            cls,
-            json: typing.Dict,
-            incomplete_game_state: i_incomplete_game_state.IIncompleteGameState
+        cls,
+        json: typing.Dict,
+        incomplete_game_state: i_incomplete_game_state.IIncompleteGameState,
     ):
         if not cls._JSON_VALIDATOR.validate_json(json):
             raise ValueError("Json does not meet schema")
-        return cls(
-            json['name'],
-            json['total_number']
-        )
+        return cls(json["name"], json["total_number"])
 
     @staticmethod
     def get_json_schema() -> typing.Dict:

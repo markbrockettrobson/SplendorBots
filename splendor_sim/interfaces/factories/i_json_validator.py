@@ -12,10 +12,7 @@ class IJsonValidator(abc.ABC):
         """
 
     @abc.abstractmethod
-    def validate_json(
-            self,
-            json: typing.Dict
-    ) -> bool:
+    def validate_json(self, json: typing.Dict) -> bool:
         """
 
         :param json: the json dict
