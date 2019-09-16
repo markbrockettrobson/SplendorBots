@@ -1,3 +1,5 @@
+import typing
+
 import splendor_sim.interfaces.card.i_card_reserve as i_card_reserve
 import splendor_sim.interfaces.coin.i_coin_reserve as i_coin_reserve
 import splendor_sim.interfaces.coin.i_payment_manager as i_payment_manager
@@ -35,3 +37,11 @@ class GameState(i_game_state.IGameState):
 
     def get_payment_manager(self) -> i_payment_manager.IPaymentManager:
         return self._payment_manager
+
+    def to_json(self) -> typing.Dict:
+        return {
+            "player_manager": self._player_manager.to_json(),
+            "coin_reserve": self._coin_reserve.to_json(),
+            "card_reserve": self._card_reserve.to_json(),
+            "sponsor_reserve": self._sponsor_reserve.to_json(),
+        }
