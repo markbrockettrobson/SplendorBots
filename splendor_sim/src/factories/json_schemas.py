@@ -158,3 +158,9 @@ JSON_PLAYER_MANAGER = {
     "current_player": {"required": True, "type": "string"},
     "turn_number": {"required": True, "type": "integer"},
 }
+JSON_GAME_STATE = {
+    "player_manager": {"required": True, "type": "dict"},
+    "coin_reserve": {"required": True, "type": "dict"},
+    "card_reserve": {"required": True, "type": "dict"},
+    "sponsor_reserve": {"required": True, "type": "dict"},
+}
