@@ -1,4 +1,5 @@
 import abc
+import typing
 
 import splendor_sim.interfaces.card.i_card_reserve as i_card_reserve
 import splendor_sim.interfaces.coin.i_coin_reserve as i_coin_reserve
@@ -69,4 +70,12 @@ class IGameState(abc.ABC):
 
         :return: the payment_manager that is used to test if payments are valid
                  <i_payment_manager.IPaymentManager>
+        """
+
+    @abc.abstractmethod
+    def to_json(self) -> typing.Dict:
+        """
+
+        :return: a json dict of the player sponsor inventory object
+                 <typing.Dict>
         """
