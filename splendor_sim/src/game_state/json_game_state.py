@@ -31,7 +31,11 @@ class JsonGameState(game_state.GameState, i_json_buildable_object.IJsonBuildable
         coin_payment_manager: i_payment_manager.IPaymentManager,
     ):
         super(JsonGameState, self).__init__(
-            player_manager, coin_reserve, card_reserve, sponsor_reserve, coin_payment_manager
+            player_manager,
+            coin_reserve,
+            card_reserve,
+            sponsor_reserve,
+            coin_payment_manager,
         )
 
     @classmethod
@@ -68,7 +72,11 @@ class JsonGameState(game_state.GameState, i_json_buildable_object.IJsonBuildable
         )
 
         json_game_state = cls(
-            player_manager, coin_reserve, card_reserve, sponsor_reserve, coin_payment_manager
+            player_manager,
+            coin_reserve,
+            card_reserve,
+            sponsor_reserve,
+            coin_payment_manager,
         )
         return json_game_state
 

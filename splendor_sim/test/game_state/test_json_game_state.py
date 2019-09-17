@@ -28,9 +28,7 @@ class TestJsonGameState(unittest.TestCase):
             "splendor_sim.src.game_state.json_game_state.json_coin_reserve.JsonCoinReserve",
             autospec=True,
         )
-        self._mock_coin_reserve_init = (
-            self._json_coin_reserve_patcher.start()
-        )
+        self._mock_coin_reserve_init = self._json_coin_reserve_patcher.start()
         self.addCleanup(self._json_coin_reserve_patcher.stop)
         self._mock_coin_reserve = mock.create_autospec(
             spec=i_coin_reserve.ICoinReserve, spec_set=True
@@ -48,9 +46,7 @@ class TestJsonGameState(unittest.TestCase):
             "splendor_sim.src.game_state.json_game_state.json_card_reserve.JsonCardReserve",
             autospec=True,
         )
-        self._mock_card_reserve_init = (
-            self._json_card_reserve_patcher.start()
-        )
+        self._mock_card_reserve_init = self._json_card_reserve_patcher.start()
         self.addCleanup(self._json_card_reserve_patcher.stop)
         self._mock_card_reserve = mock.create_autospec(
             spec=i_card_reserve.ICardReserve, spec_set=True
@@ -64,9 +60,7 @@ class TestJsonGameState(unittest.TestCase):
             "splendor_sim.src.game_state.json_game_state.json_sponsor_reserve.JsonSponsorReserve",
             autospec=True,
         )
-        self._mock_sponsor_reserve_init = (
-            self._json_sponsor_reserve_patcher.start()
-        )
+        self._mock_sponsor_reserve_init = self._json_sponsor_reserve_patcher.start()
         self.addCleanup(self._json_sponsor_reserve_patcher.stop)
         self._mock_sponsor_reserve = mock.create_autospec(
             spec=i_sponsor_reserve.ISponsorReserve, spec_set=True
@@ -80,9 +74,7 @@ class TestJsonGameState(unittest.TestCase):
             "splendor_sim.src.game_state.json_game_state.json_player_manager.JsonPlayerManager",
             autospec=True,
         )
-        self._mock_player_manager_init = (
-            self._json_player_manager_patcher.start()
-        )
+        self._mock_player_manager_init = self._json_player_manager_patcher.start()
         self.addCleanup(self._json_player_manager_patcher.stop)
         self._mock_player_manager = mock.create_autospec(
             spec=i_player_manager.IPlayerManager, spec_set=True
@@ -96,21 +88,18 @@ class TestJsonGameState(unittest.TestCase):
             "splendor_sim.src.game_state.json_game_state.payment_manager.PaymentManager",
             autospec=True,
         )
-        self._mock_payment_manager_init = (
-            self._json_payment_manager_patcher.start()
-        )
+        self._mock_payment_manager_init = self._json_payment_manager_patcher.start()
         self.addCleanup(self._json_payment_manager_patcher.stop)
         self._mock_payment_manager = mock.create_autospec(
             spec=i_payment_manager.IPaymentManager, spec_set=True
         )
-        self._mock_payment_manager_init.return_value = (
-            self._mock_payment_manager
-        )
+        self._mock_payment_manager_init.return_value = self._mock_payment_manager
 
     def setUp(self):
 
         self._game_state_patcher = mock.patch(
-            "splendor_sim.src.game_state.json_game_state.game_state.GameState.__init__", autospec=True
+            "splendor_sim.src.game_state.json_game_state.game_state.GameState.__init__",
+            autospec=True,
         )
         self._mock_game_state = self._game_state_patcher.start()
         self.addCleanup(self._game_state_patcher.stop)
@@ -141,7 +130,7 @@ class TestJsonGameState(unittest.TestCase):
             self._mock_card_reserve,
             self._mock_sponsor_reserve,
             self._mock_player_manager,
-            self._mock_payment_manager
+            self._mock_payment_manager,
         )
         # Assert
         self._mock_game_state.assert_called_once_with(
@@ -150,7 +139,7 @@ class TestJsonGameState(unittest.TestCase):
             self._mock_card_reserve,
             self._mock_sponsor_reserve,
             self._mock_player_manager,
-            self._mock_payment_manager
+            self._mock_payment_manager,
         )
 
     def test_json_game_state_build_from_json_valid(self):
@@ -167,7 +156,7 @@ class TestJsonGameState(unittest.TestCase):
             self._mock_coin_reserve,
             self._mock_card_reserve,
             self._mock_sponsor_reserve,
-            self._mock_payment_manager
+            self._mock_payment_manager,
         )
 
         self._mock_player_manager_init.build_from_json.assert_called_once_with(
@@ -204,7 +193,7 @@ class TestJsonGameState(unittest.TestCase):
             self._mock_card_reserve,
             self._mock_sponsor_reserve,
             self._mock_player_manager,
-            self._mock_payment_manager
+            self._mock_payment_manager,
         )
         # Act
         # Assert
@@ -217,7 +206,7 @@ class TestJsonGameState(unittest.TestCase):
             self._mock_card_reserve,
             self._mock_sponsor_reserve,
             self._mock_player_manager,
-            self._mock_payment_manager
+            self._mock_payment_manager,
         )
         # Act
         object_pointer.get_json_schema().pop(list(object_pointer.get_json_schema())[0])
