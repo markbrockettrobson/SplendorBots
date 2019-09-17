@@ -16,12 +16,12 @@ class CoinTypeManager(i_coin_type_manager.ICoinTypeManager):
 
         self._coin_type_set = copy.copy(coin_type_set)
 
-        self._usage_map = (
-            {}
-        )  # type: typing.Dict[i_coin_type.ICoinType, typing.Set[i_coin_type.ICoinType]]
-        self._equivalent_map = (
-            {}
-        )  # type: typing.Dict[i_coin_type.ICoinType, typing.Set[i_coin_type.ICoinType]]
+        self._usage_map: typing.Dict[
+            i_coin_type.ICoinType, typing.Set[i_coin_type.ICoinType]
+        ] = ({})
+        self._equivalent_map: typing.Dict[
+            i_coin_type.ICoinType, typing.Set[i_coin_type.ICoinType]
+        ] = ({})
         for coin in self._coin_type_set:
             self._usage_map[coin] = {coin}
             self._equivalent_map[coin] = {coin}
@@ -52,7 +52,7 @@ class CoinTypeManager(i_coin_type_manager.ICoinTypeManager):
         return copy.copy(self._usage_map[coin_type])
 
     def _create_name_map(self):
-        self._name_map = {}  # type: typing.Dict[str, i_coin_type.ICoinType]
+        self._name_map: typing.Dict[str, i_coin_type.ICoinType] = {}
         for coin in self._coin_type_set:
             if coin.get_name() in self._name_map:
                 raise ValueError("Two coins can not have the same name.")

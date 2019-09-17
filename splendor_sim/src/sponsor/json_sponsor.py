@@ -31,7 +31,7 @@ class JsonSponsor(sponsor.Sponsor, i_json_buildable_object.IJsonBuildableObject)
             raise ValueError("Json does not meet schema")
 
         coin_manager = incomplete_game_state.get_coin_reserve().get_manager()
-        cost = {}  # type: typing.Dict[i_coin_type.ICoinType, int]
+        cost: typing.Dict[i_coin_type.ICoinType, int] = {}
 
         for coin_json in json["cost"]:
             coin_name = coin_json["coin_name"]

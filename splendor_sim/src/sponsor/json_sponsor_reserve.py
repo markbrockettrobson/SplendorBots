@@ -39,7 +39,7 @@ class JsonSponsorReserve(
             json["sponsor_manager"], incomplete_game_state
         )
 
-        sponsor_set = set()  # type: typing.Set[i_sponsor.ISponsor]
+        sponsor_set: typing.Set[i_sponsor.ISponsor] = set()
         for sponsor_name in json["sponsors"]:
             if not sponsor_manager.is_sponsor_in_manager_by_name(sponsor_name):
                 raise ValueError("sponsor not in manager")

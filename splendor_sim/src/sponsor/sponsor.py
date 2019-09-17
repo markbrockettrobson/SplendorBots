@@ -25,7 +25,7 @@ class Sponsor(i_sponsor.ISponsor):
 
     @staticmethod
     def _validate_cost(cost: typing.Dict):
-        seen_cards = set()  # type: typing.Set[i_coin_type.ICoinType]
+        seen_cards: typing.Set[i_coin_type.ICoinType] = set()
         for coin, amount in cost.items():
             if amount < 0:
                 raise ValueError("coin type amount must be zero or greater")

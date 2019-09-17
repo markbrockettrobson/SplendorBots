@@ -1,3 +1,4 @@
+import typing
 import unittest
 import unittest.mock as mock
 
@@ -24,7 +25,7 @@ class TestJsonSponsor(unittest.TestCase):
         )
         self._mock_sponsor = self._sponsor_patcher.start()
         self.addCleanup(self._sponsor_patcher.stop)
-        self._mock_coin_name_map = {}  # type: typing.Dict[i_coin_type.ICoinType, int]
+        self._mock_coin_name_map: typing.Dict[i_coin_type.ICoinType, int] = {}
         self._mock_coins = [
             mock.create_autospec(spec=i_coin_type.ICoinType, spec_set=True)
             for _ in range(10)

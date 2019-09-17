@@ -35,21 +35,19 @@ class CardReserve(i_card_reserve.ICardReserve):
         if not decks:
             raise ValueError("must have one or more deck")
 
-        tiers = set()  # type: typing.Set[int]
+        tiers: typing.Set[int] = set()
         for deck in decks:
             if deck.get_tier() in tiers:
                 raise ValueError("more than one deck has the same tier")
             tiers.add(deck.get_tier())
 
     def _create_decks_by_tier(self, decks: typing.Set[i_deck.IDeck]) -> None:
-        self._decks_by_tier = {}  # type: typing.Dict[int,i_deck.IDeck]
+        self._decks_by_tier: typing.Dict[int, i_deck.IDeck] = {}
         for deck in decks:
             self._decks_by_tier[deck.get_tier()] = deck
 
     def _create_cards_on_sale(self, cards_on_sale: typing.Set[i_card.ICard]) -> None:
-        self._cards_on_sale_by_tier = (
-            {}
-        )  # type: typing.Dict[int,typing.Set[i_card.ICard]]
+        self._cards_on_sale_by_tier: typing.Dict[int, typing.Set[i_card.ICard]] = ({})
 
         for card in cards_on_sale:
             tier = card.get_tier()
@@ -76,7 +74,7 @@ class CardReserve(i_card_reserve.ICardReserve):
         return self._card_manager
 
     def get_cards_for_sale(self) -> typing.Set[i_card.ICard]:
-        card_set = set()  # type: typing.Set[i_card.ICard]
+        card_set: typing.Set[i_card.ICard] = set()
         for tier in self._cards_on_sale_by_tier:
             card_set = card_set.union(self._cards_on_sale_by_tier[tier])
         return card_set
@@ -106,7 +104,7 @@ class CardReserve(i_card_reserve.ICardReserve):
         raise ValueError("deck is empty")
 
     def get_remaining_cards(self) -> typing.Set[i_card.ICard]:
-        total_cards = set()  # type: typing.Set[i_card.ICard]
+        total_cards: typing.Set[i_card.ICard] = set()
         for tier in self._decks_by_tier:
             total_cards = total_cards.union(
                 self._decks_by_tier[tier].get_remaining_cards()
