@@ -146,7 +146,7 @@ class TestJsonPlayerCoinInventory(unittest.TestCase):
                 self._mock_json, self._mock_game_state
             )
 
-    def test_json_player_sponsor_inventory_get_json_schema(self):
+    def test_json_player_get_json_schema(self):
         # Arrange
         object_pointer = json_player.JsonPlayer.build_from_json(
             self._mock_json, self._mock_game_state
@@ -155,7 +155,7 @@ class TestJsonPlayerCoinInventory(unittest.TestCase):
         # Assert
         self.assertEqual(object_pointer.get_json_schema(), json_schemas.JSON_PLAYER)
 
-    def test_json_player_sponsor_inventory_get_json_schema_immutability(self):
+    def test_json_player_get_json_schema_immutability(self):
         # Arrange
         object_pointer = json_player.JsonPlayer.build_from_json(
             self._mock_json, self._mock_game_state
