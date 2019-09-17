@@ -16,12 +16,12 @@ class CoinTypeManager(i_coin_type_manager.ICoinTypeManager):
 
         self._coin_type_set = copy.copy(coin_type_set)
 
-        self._usage_map: typing.Dict[i_coin_type.ICoinType, typing.Set[i_coin_type.ICoinType]] = (
-            {}
-        )
-        self._equivalent_map: typing.Dict[i_coin_type.ICoinType, typing.Set[i_coin_type.ICoinType]] = (
-            {}
-        )
+        self._usage_map: typing.Dict[
+            i_coin_type.ICoinType, typing.Set[i_coin_type.ICoinType]
+        ] = ({})
+        self._equivalent_map: typing.Dict[
+            i_coin_type.ICoinType, typing.Set[i_coin_type.ICoinType]
+        ] = ({})
         for coin in self._coin_type_set:
             self._usage_map[coin] = {coin}
             self._equivalent_map[coin] = {coin}

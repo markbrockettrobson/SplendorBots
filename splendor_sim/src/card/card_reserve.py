@@ -42,14 +42,12 @@ class CardReserve(i_card_reserve.ICardReserve):
             tiers.add(deck.get_tier())
 
     def _create_decks_by_tier(self, decks: typing.Set[i_deck.IDeck]) -> None:
-        self._decks_by_tier: typing.Dict[int,i_deck.IDeck] = {}
+        self._decks_by_tier: typing.Dict[int, i_deck.IDeck] = {}
         for deck in decks:
             self._decks_by_tier[deck.get_tier()] = deck
 
     def _create_cards_on_sale(self, cards_on_sale: typing.Set[i_card.ICard]) -> None:
-        self._cards_on_sale_by_tier: typing.Dict[int,typing.Set[i_card.ICard]] = (
-            {}
-        )
+        self._cards_on_sale_by_tier: typing.Dict[int, typing.Set[i_card.ICard]] = ({})
 
         for card in cards_on_sale:
             tier = card.get_tier()
