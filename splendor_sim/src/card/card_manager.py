@@ -11,7 +11,7 @@ class CardManager(i_card_manager.ICardManager):
         self._card_set = copy.copy(card_set)
         self._cards_by_tier = self._sort_cards_by_tier(self._card_set)
 
-        self._name_dictionary = {}  # type: typing.Dict[str, i_card.ICard]
+        self._name_dictionary: typing.Dict[str, i_card.ICard] = {}
         for card in self._card_set:
             name = card.get_name()
             if name in self._name_dictionary:
@@ -44,7 +44,7 @@ class CardManager(i_card_manager.ICardManager):
     def _sort_cards_by_tier(
         card_set: typing.Set[i_card.ICard]
     ) -> typing.Dict[int, typing.Set[i_card.ICard]]:
-        cards_by_tier = {}  # type: typing.Dict[int, typing.Set[i_card.ICard]]
+        cards_by_tier: typing.Dict[int, typing.Set[i_card.ICard]] = {}
         for card in card_set:
             tier = card.get_tier()
             if tier not in cards_by_tier:

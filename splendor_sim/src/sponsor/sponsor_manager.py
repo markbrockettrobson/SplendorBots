@@ -9,7 +9,7 @@ class SponsorManager(i_sponsor_manager.ISponsorManager):
     def __init__(self, sponsor_set: typing.Set[i_sponsor.ISponsor]):
 
         self._sponsor_set = copy.copy(sponsor_set)
-        self._name_map = {}  # type: typing.Dict[str, i_sponsor.ISponsor]
+        self._name_map: typing.Dict[str, i_sponsor.ISponsor] = {}
         for sponsor in sponsor_set:
             if sponsor.get_name() in self._name_map:
                 raise ValueError(
