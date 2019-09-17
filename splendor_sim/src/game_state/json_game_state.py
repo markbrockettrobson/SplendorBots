@@ -1,21 +1,21 @@
 import copy
 import typing
 
-import splendor_sim.interfaces.factories.i_json_buildable_object as i_json_buildable_object
-import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
 import splendor_sim.interfaces.card.i_card_reserve as i_card_reserve
 import splendor_sim.interfaces.coin.i_coin_reserve as i_coin_reserve
 import splendor_sim.interfaces.coin.i_payment_manager as i_payment_manager
+import splendor_sim.interfaces.factories.i_json_buildable_object as i_json_buildable_object
+import splendor_sim.interfaces.game_state.i_incomplete_game_state as i_incomplete_game_state
 import splendor_sim.interfaces.player.i_player_manager as i_player_manager
 import splendor_sim.interfaces.sponsor.i_sponsor_reserve as i_sponsor_reserve
-import splendor_sim.src.factories.json_schemas as json_schemas
-import splendor_sim.src.factories.json_validator as json_validator
-import splendor_sim.src.player.json_player_manager as json_player_manager
 import splendor_sim.src.card.json_card_reserve as json_card_reserve
 import splendor_sim.src.coin.json_coin_reserve as json_coin_reserve
 import splendor_sim.src.coin.payment_manager as payment_manager
-import splendor_sim.src.sponsor.json_sponsor_reserve as json_sponsor_reserve
+import splendor_sim.src.factories.json_schemas as json_schemas
+import splendor_sim.src.factories.json_validator as json_validator
 import splendor_sim.src.game_state.game_state as game_state
+import splendor_sim.src.player.json_player_manager as json_player_manager
+import splendor_sim.src.sponsor.json_sponsor_reserve as json_sponsor_reserve
 
 
 class JsonGameState(game_state.GameState, i_json_buildable_object.IJsonBuildableObject):
